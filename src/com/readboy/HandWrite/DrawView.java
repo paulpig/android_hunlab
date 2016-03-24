@@ -2,6 +2,11 @@ package com.readboy.HandWrite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.readboy.game.Watched;
+import com.readboy.game.Watcher;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,13 +16,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 
-public class DrawView extends View
+public class DrawView extends View implements Watched
 {
 	float preX;
 	float preY;
@@ -25,29 +32,30 @@ public class DrawView extends View
 	public Paint paint = null;
 	final int VIEW_WIDTH = 1;
 	final int VIEW_HEIGHT = 1;
+	private  Timer timer; 
+	private List<Watcher> list = new ArrayList<Watcher>();  
 	public List<Short> points = new ArrayList<Short>();
-	// ∂®“Â“ª∏ˆƒ⁄¥Ê÷–µƒÕº∆¨£¨∏√Õº∆¨Ω´◊˜Œ™ª∫≥Â«¯
+	// ÂÆö‰πâ‰∏Ä‰∏™ÂÜÖÂ≠ò‰∏≠ÁöÑÂõæÁâáÔºåËØ•ÂõæÁâáÂ∞Ü‰Ωú‰∏∫ÁºìÂÜ≤Âå∫
 	Bitmap cacheBitmap = null;
-	// ∂®“ÂcacheBitmap…œµƒCanvas∂‘œÛ
+	// ÂÆö‰πâcacheBitmap‰∏äÁöÑCanvasÂØπË±°
 	Canvas cacheCanvas = null;
-
 	public DrawView(Context context, AttributeSet set)
 	{
 		super(context, set);
-		// ¥¥Ω®“ª∏ˆ”Î∏√Viewœ‡Õ¨¥Û–°µƒª∫¥Ê«¯
+		// ÂàõÂª∫‰∏Ä‰∏™‰∏éËØ•ViewÁõ∏ÂêåÂ§ßÂ∞èÁöÑÁºìÂ≠òÂå∫
 		cacheBitmap = Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,
 				Config.ARGB_8888);
 		cacheCanvas = new Canvas();
 		path = new Path();
-		// …Ë÷√cacheCanvasΩ´ª·ªÊ÷∆µΩƒ⁄¥Ê÷–µƒcacheBitmap…œ
+		// ËÆæÁΩÆcacheCanvasÂ∞Ü‰ºöÁªòÂà∂Âà∞ÂÜÖÂ≠ò‰∏≠ÁöÑcacheBitmap‰∏ä
 		cacheCanvas.setBitmap(cacheBitmap);
-		// …Ë÷√ª≠± µƒ—’…´
+		// ËÆæÁΩÆÁîªÁ¨îÁöÑÈ¢úËâ≤
 		paint = new Paint(Paint.DITHER_FLAG);
 		paint.setColor(Color.RED);
-		// …Ë÷√ª≠± ∑Á∏Ò
+		// ËÆæÁΩÆÁîªÁ¨îÈ£éÊ†º
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(1);
-		// ∑¥æ‚≥›
+		// ÂèçÈîØÈΩø
 		paint.setAntiAlias(true);
 		paint.setDither(true);
 	}
@@ -55,7 +63,8 @@ public class DrawView extends View
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		// ªÒ»°Õœ∂Ø ¬º˛µƒ∑¢…˙Œª÷√
+		// Ëé∑ÂèñÊãñÂä®‰∫ã‰ª∂ÁöÑÂèëÁîü‰ΩçÁΩÆ
+		
 		float x = event.getX();
 		float y = event.getY();
 		switch (event.getAction())
@@ -64,10 +73,9 @@ public class DrawView extends View
 				path.moveTo(x, y);
 				preX = x;
 				preY = y;
-				
 				points.add((short)x);
 	    		points.add((short)y);
-				
+	    		timer.cancel();
 				break;
 			case MotionEvent.ACTION_MOVE:
 				path.quadTo(preX, preY, x, y);
@@ -79,13 +87,28 @@ public class DrawView extends View
 				
 				break;
 			case MotionEvent.ACTION_UP:
-				cacheCanvas.drawPath(path, paint); // ¢Ÿ
+				cacheCanvas.drawPath(path, paint); // ‚ë†
 				points.add((short) -1);
 	    		points.add((short) -1);
+	    		
+	    		
+	    		timer = new Timer();  
+	    		timer.schedule(new TimerTask() {
+					//int i=10;
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+//						Log.i("yao",Thread.currentThread().getName()); 
+//						Message msg =new Message();
+//						msg.what=i--;
+//						handler.sendMessage(msg);
+						notifyWatcher();
+					}
+				}, 2000);
 				break;
 		}
 		invalidate();
-		// ∑µªÿtrue±Ì√˜¥¶¿Ì∑Ω∑®“—æ≠¥¶¿Ì∏√ ¬º˛
+		// ËøîÂõûtrueË°®ÊòéÂ§ÑÁêÜÊñπÊ≥ïÂ∑≤ÁªèÂ§ÑÁêÜËØ•‰∫ã‰ª∂
 		return true;
 	}
 
@@ -93,18 +116,54 @@ public class DrawView extends View
 	public void onDraw(Canvas canvas)
 	{
 		Paint bmpPaint = new Paint();
-		// Ω´cacheBitmapªÊ÷∆µΩ∏√View◊Èº˛…œ
-		canvas.drawBitmap(cacheBitmap, 0, 0, bmpPaint); // ¢⁄
-		// —ÿ◊≈pathªÊ÷∆
+		// Â∞ÜcacheBitmapÁªòÂà∂Âà∞ËØ•ViewÁªÑ‰ª∂‰∏ä
+		canvas.drawBitmap(cacheBitmap, 0, 0, bmpPaint); // ‚ë°
+		// Ê≤øÁùÄpathÁªòÂà∂
 		canvas.drawPath(path, paint);
 	}
 	
 
 	/**
-	 * ÷ÿ÷√ª≠± 
+	 * ÈáçÁΩÆÁîªÁ¨î
 	 */
 	public void reSetPath(){ 
 		path.reset();
 		points.clear();
 	}
+	
+	 final Handler handler = new Handler() {   
+		  
+         @Override  
+         public void handleMessage(Message msg) {   
+             super.handleMessage(msg);   
+             //handlerÂ§ÑÁêÜÊ∂àÊÅØ   
+             if(msg.what>0){   
+                // tv1.setText("" + msg.what);   
+             }else{   
+                 //Âú®handlerÈáåÂèØ‰ª•Êõ¥ÊîπUIÁªÑ‰ª∂   
+//                 tv1.setText("ÁÇπÁÅ´ÔºÅ");   
+                 //timer.cancel();   
+             }   
+         }   
+     };
+
+	@Override
+	public void add(Watcher watcher) {
+		// TODO Auto-generated method stub
+		 list.add(watcher); 
+	}
+
+	@Override
+	public void remove(Watcher watcher) {
+		// TODO Auto-generated method stub
+		list.remove(watcher);  
+	}
+
+	@Override
+	public void notifyWatcher() {
+		// TODO Auto-generated method stub
+		for (Watcher watcher : list) {  
+            watcher.updateNotify();  
+        }  
+	}   
 }
