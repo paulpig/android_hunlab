@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    android:scrollbars="none"
+    android:id="@+id/scroll1"
+
+>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/item_1_textview1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grade_1_down_q1" 
+        android:textColor="#FFA500"
+        android:textSize="25dp"/>
+
+  <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview1" >
+
+        <TextView
+            android:id="@+id/grade_1_down_11"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="十几减9的计算方法"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_2_down_12"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="十几减几的计算方法"
+            android:textSize="25dp" />
+
+       
+
+    </RelativeLayout>
+	<TextView
+        android:id="@+id/item_1_textview2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grade_1_down_q2" 
+        android:layout_marginTop="40dp"
+        android:textColor="#FFA500"
+        android:textSize="25dp"/>
+       
+<RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <TextView
+            android:id="@+id/grade_1_down_21"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="整十数加一位数的计算方法"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_1_down_22"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="与整十数加一位数对应的减法的计算方法"
+            android:textSize="25dp" />
+    </RelativeLayout>
+    
+   	<TextView
+        android:id="@+id/item_1_textview3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grade_1_down_q3" 
+        android:layout_marginTop="40dp"
+        android:textColor="#FFA500"
+        android:textSize="25dp"/>
+       
+	<RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <TextView
+            android:id="@+id/grade_1_down_31"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="整十数加整十数的计算方法"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_1_down_32"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="整十数加整十数的计算方法"
+            android:textSize="25dp" />
+
+         <TextView
+             android:id="@+id/grade_1_top_33"
+             android:layout_width="200dp"
+             android:layout_height="100dp"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:background="@drawable/rect_org" 
+             android:gravity="center"
+             android:text="两位数加一位数（不进位）的计算方法"
+            android:textSize="25dp"/>
+        
+          <TextView
+            android:id="@+id/grade_1_down_34"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:layout_marginTop="140dp"
+            android:gravity="center"
+            android:text="两位数加上整十数的计算方法"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_1_down_35"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignBottom="@id/grade_1_down_34"
+             android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="两位数加一位数（进位）的计算方法"
+            android:textSize="25dp" />
+
+         <TextView
+             android:id="@+id/grade_1_down_36"
+             android:layout_width="200dp"
+             android:layout_height="100dp"
+             android:layout_alignParentRight="true"
+   			 android:layout_alignBottom="@id/grade_1_down_34"
+             android:background="@drawable/rect_org" 
+             android:gravity="center"
+             android:text="两位数减一位数（不退位）的计算方法"
+            android:textSize="25dp"/>
+         
+          <TextView
+            android:id="@+id/grade_1_down_37"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:layout_marginTop="280dp"
+            android:gravity="center"
+            android:text="两位数减整十数的计算方法"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_1_down_38"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignBottom="@id/grade_1_down_37"
+             android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="两位数减一位数（退位）的计算方法"
+            android:textSize="25dp" />
+
+        
+     </RelativeLayout>
+	  
+</LinearLayout>
+</ScrollView>

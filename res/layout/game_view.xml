@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/backgrond_below">
+   	
+   <RelativeLayout
+      android:id="@+id/relativeLayout1"
+      android:layout_width="fill_parent"
+      android:layout_height="80dp"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="30dp"
+      android:layout_marginLeft="40dp"
+      android:layout_marginRight="40dp"
+      android:background="@drawable/top_menu"
+      android:gravity="center_vertical" >
+       <ImageView
+            android:id="@+id/back_bt"
+            android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/back" />
+        <TextView
+            android:id="@+id/type_view"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textSize="25sp"
+            />
+         <ImageView
+            android:id="@+id/draft"
+             android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="1000dp"
+            android:background="@drawable/draft" />
+          <ImageView
+            android:id="@+id/ranking"
+            android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="1100dp"
+            android:background="@drawable/ranking" />
+    </RelativeLayout>
+
+   <LinearLayout 
+       android:layout_marginTop="33dp"
+       android:layout_marginLeft="40dp"
+       android:layout_marginRight="40dp"
+       android:layout_marginBottom="40dp"
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:orientation="vertical"
+       android:background="@drawable/badkground_top">
+    <RelativeLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
+        
+        <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/game_time"
+	        android:layout_marginLeft="60dp"
+	        >
+        </TextView>
+        <TextView 
+            android:id="@+id/number_of_game"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="1"
+	        android:textSize="30sp"
+	        android:layout_marginTop="3dp"
+	        android:layout_marginLeft="175dp">
+        </TextView>
+        
+       
+          <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/grade"
+	        android:layout_marginLeft="500dp">
+        </TextView>
+        <TextView 
+            android:id="@+id/grade_of_game"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="0"
+	        android:textSize="30sp"
+	        android:layout_marginTop="3dp"
+	        android:layout_marginLeft="650dp">
+	     </TextView>
+            
+         <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/time"
+	        android:layout_marginLeft="900dp">
+        </TextView>
+        <TextView 
+            android:id="@+id/time_of_game"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="30sp"
+	        android:layout_marginTop="3dp"
+	        android:layout_marginLeft="1050dp">
+        </TextView>
+    </RelativeLayout>
+    
+    <TextView android:id="@+id/content_of_game"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="30sp"
+	        android:text="0"
+	        android:textColor="#ffffff"
+	        android:layout_marginTop="40dp"
+	        android:layout_marginLeft="80dp"/>
+    
+    
+    
+    <ImageView
+    android:id="@+id/imageview_animation_list_filling"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/animation_list_filling"
+    />
+    
+    
+      <com.readboy.HandWrite.DrawView
+	      android:id="@+id/draw"
+	      android:layout_width="wrap_content"
+	      android:layout_marginLeft="200dp"
+	      android:layout_marginRight="200dp"
+	      android:layout_height="0dp"
+	      android:layout_weight="0.41"
+	      android:background="@drawable/write_place"
+	      android:height="480dp"
+	      android:width="320dp" />
+      
+     <Button 
+         	android:id="@+id/sure"
+         	android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="确定"/>
+     </LinearLayout>
+</LinearLayout>

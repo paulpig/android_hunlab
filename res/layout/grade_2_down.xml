@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    android:scrollbars="none"
+    android:id="@+id/scroll1"
+
+>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/item_1_textview1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grade_2_down_q1" 
+        android:textColor="#FFA500"
+        android:textSize="25dp"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview1" >
+
+        <TextView
+            android:id="@+id/grade_2_down_11"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="用加法和减法两步计算解决问题"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_2_down_12"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="用小括号列综合算式解决问题"
+            android:textSize="25dp" />
+
+         <TextView
+             android:id="@+id/grade_2_down_13"
+             android:layout_width="200dp"
+             android:layout_height="100dp"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:background="@drawable/rect_org" 
+             android:gravity="center"
+             android:text="用乘法和加法两步计算解决问题"
+            android:textSize="25dp"/>
+           <TextView
+            android:id="@+id/grade_2_down_14"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/item_1_textview1"
+             android:layout_marginLeft="10dp"
+             android:layout_marginTop="140dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="用乘法和减法两步解决问题"
+            android:textSize="25dp"/>
+
+    </RelativeLayout>
+	<TextView
+        android:id="@+id/item_1_textview2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grade_2_down_q2" 
+        android:layout_marginTop="40dp"
+        android:textColor="#FFA500"
+        android:textSize="25dp"/>
+       
+<RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <TextView
+            android:id="@+id/grade_2_down_21"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="除法算式各部分的名称"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_2_down_22"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="求商的方法"
+            android:textSize="25dp" />
+
+         <TextView
+             android:id="@+id/grade_2_down_23"
+             android:layout_width="200dp"
+             android:layout_height="100dp"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:background="@drawable/rect_org" 
+             android:gravity="center"
+             android:text="用乘法和除法两步计算解决实际问题"
+            android:textSize="25dp"/>
+         
+          
+    </RelativeLayout>
+    
+   	<TextView
+        android:id="@+id/item_1_textview3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grade_2_down_q3" 
+        android:layout_marginTop="40dp"
+        android:textColor="#FFA500"
+        android:textSize="25dp"/>
+       
+	<RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <TextView
+            android:id="@+id/grade_2_down_31"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="用7、8、9的乘法口诀求商"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_2_down_32"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="求“一个数是另一个数的几倍”的解题方法"
+            android:textSize="25dp" />
+
+         <TextView
+             android:id="@+id/grade_2_down_33"
+             android:layout_width="200dp"
+             android:layout_height="100dp"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:background="@drawable/rect_org" 
+             android:gravity="center"
+             android:text="乘除混合运算的顺序"
+            android:textSize="25dp"/>
+        
+        
+     </RelativeLayout>
+      	<TextView
+        android:id="@+id/item_1_textview4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grade_2_down_q4" 
+        android:layout_marginTop="40dp"
+        android:textColor="#FFA500"
+        android:textSize="25dp"/>
+	  <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <TextView
+            android:id="@+id/grade_3_down_31"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="两位数加两位数的口算方法"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_3_down_32"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rect_pop"
+            android:gravity="center"
+            android:text="两位数减两位数的口算方法"
+            android:textSize="25dp" />
+
+         <TextView
+             android:id="@+id/grade_3_down_33"
+             android:layout_width="200dp"
+             android:layout_height="100dp"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentTop="true"
+             android:background="@drawable/rect_org" 
+             android:gravity="center"
+             android:text="几百几十加几百几十的计算方法"
+            android:textSize="25dp"/>
+         <TextView
+            android:id="@+id/grade_3_down_14"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/item_1_textview1"
+             android:layout_marginLeft="10dp"
+             android:layout_marginTop="140dp"
+            android:background="@drawable/rect_blue" 
+            android:gravity="center"
+            android:text="几百几十减几百几十的计算方法"
+            android:textSize="25dp"/>
+        
+     </RelativeLayout>
+</LinearLayout>
+</ScrollView>

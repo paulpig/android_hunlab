@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main_bak"
+     >
+
+  <RelativeLayout
+      android:id="@+id/relativeLayout1"
+      android:layout_width="fill_parent"
+      android:layout_height="60dp"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="30dp"
+      android:layout_marginLeft="40dp"
+      android:layout_marginRight="40dp"
+      android:background="@drawable/top_menu"
+      android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/rapid_calculation"
+            android:textColor="#ff4500"
+            android:textSize="28sp" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/menu"
+            android:onClick="OpenRightMenu" />
+
+    </RelativeLayout>
+
+     <RelativeLayout
+         android:id="@+id/relativeLayout2"
+         android:layout_width="wrap_content"
+         android:layout_height="fill_parent"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/relativeLayout1"
+         android:layout_marginTop="33dp"
+         android:layout_marginLeft="40dp"
+         android:layout_marginRight="40dp"
+         android:layout_marginBottom="10dp"
+         android:background="@drawable/background" >
+
+         <RelativeLayout
+             android:id="@+id/relativeLayout3"
+             android:layout_width="200dp"
+             android:layout_height="30dp"
+             android:layout_alignParentBottom="true"
+             android:layout_centerHorizontal="true" >
+         </RelativeLayout>
+
+         <TextView
+             android:id="@+id/title_bar_name"
+             android:layout_width="fill_parent"
+             android:layout_height="30dp"
+             android:gravity="center_horizontal"
+             android:text="@string/first_grade" 
+             android:textSize="20dp"/>
+
+         <Button
+             android:id="@+id/first_volume"
+             android:layout_width="80dp"
+             android:layout_height="40dp"
+           	 android:layout_marginTop="30dp"
+             android:layout_toLeftOf="@+id/second_volume"
+             android:background="@drawable/left_button"
+             android:text="@string/top_grade" />
+
+         <Button
+             android:id="@+id/second_volume"
+             android:layout_width="80dp"
+             android:layout_height="40dp"
+             android:layout_alignBaseline="@+id/first_volume"
+             android:layout_alignBottom="@+id/first_volume"
+             android:layout_alignRight="@+id/relativeLayout3"
+             android:layout_marginRight="22dp"
+             android:background="@drawable/right_button"
+             android:text="@string/bottom_grade" />
+
+     </RelativeLayout>
+     
+      <RelativeLayout android:id="@+id/relative"
+	         android:layout_width="fill_parent"
+	          android:layout_height="fill_parent"
+	          android:layout_marginTop="200dp"
+				android:layout_marginBottom="39dp" 
+			   android:layout_marginLeft="100dp"
+    			android:layout_marginRight="100dp">
+		 <fragment
+			    android:id="@+id/MyFragment_Grade_1"
+			    android:name="com.readboy.mentalcalculation.MyFragment_Grade_1_top"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    
+	    	 />
+		 </RelativeLayout>
+
+</RelativeLayout>
