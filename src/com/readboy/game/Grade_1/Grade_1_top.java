@@ -15,8 +15,10 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.readboy.game.GameActivity;
+import com.readboy.game.Watched;
+import com.readboy.game.Watcher;
 
-public class Grade_1_top extends GameActivity{
+public class Grade_1_top extends GameActivity implements Watcher{
 
 	protected Object Alock;
 	private Boolean correct;
@@ -27,9 +29,13 @@ public class Grade_1_top extends GameActivity{
         Alock=new Object();
         correct = false;
 		GetProAndAns(type);
+		initTimer();
 		IsRight();
     }
 	
+	protected void initTimer(){
+		Watched watched = new DrawView();  
+	}
 	
 	protected void GetProAndAns(int type){
 		 Handler problem_hander=new Handler(){
@@ -48,27 +54,27 @@ public class Grade_1_top extends GameActivity{
 	
 	 
 	protected void IsRight(){
-		 sure.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				
-				int count = dv.points.size();
-				short[] prolong = new short[count];
-				for (int i = 0; i < prolong.length; i++) {
-					prolong[i] = dv.points.get(i);
-				}
-			
-				dv.reSetPath();
-				try {
-					judgeHandPut("8", count/2 -1, prolong);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-		});
+//		 sure.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View arg0) {
+//				
+//				int count = dv.points.size();
+//				short[] prolong = new short[count];
+//				for (int i = 0; i < prolong.length; i++) {
+//					prolong[i] = dv.points.get(i);
+//				}
+//			
+//				dv.reSetPath();
+//				try {
+//					judgeHandPut("8", count/2 -1, prolong);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		});
 	 }
 	
 	protected void onDestroy() {
@@ -175,6 +181,25 @@ public class Grade_1_top extends GameActivity{
     		             }
     		        }, duration);
     }
+
+
+	@Override
+	public void updateNotify() {
+		// TODO Auto-generated method stub
+		int count = dv.points.size();
+		short[] prolong = new short[count];
+		for (int i = 0; i < prolong.length; i++) {
+			prolong[i] = dv.points.get(i);
+		}
+	
+		dv.reSetPath();
+		try {
+			judgeHandPut("8", count/2 -1, prolong);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
 
 
