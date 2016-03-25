@@ -2,53 +2,79 @@ package com.readboy.HandWrite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.readboy.game.Watched;
+import com.readboy.game.Watcher;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Xfermode;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class DraftView extends View {
-	
+
+public class DraftView extends View 
+{
 	float preX;
 	float preY;
 	private Path path;
+	private Path path_erase;
 	public Paint paint = null;
+	public Paint clearPaint=null;
 	final int VIEW_WIDTH = 1;
 	final int VIEW_HEIGHT = 1;
-	public List<Short> points = new ArrayList<Short>();
-	// ¶¨ÒåÒ»¸öÄÚ´æÖĞµÄÍ¼Æ¬£¬¸ÃÍ¼Æ¬½«×÷Îª»º³åÇø
+	private  Timer timer; 
+	private boolean is_erase;
+	private List<Watcher> list = new ArrayList<Watcher>();  
+	// ç€¹æ°«ç®Ÿæ¶“ï¿½æ¶“î„å”´ç€›æ¨¹è…‘é¨å‹«æµ˜é—å›·ç´ç’‡ãƒ¥æµ˜é—å›§çš¢æµ£æ»€è´Ÿç¼‚æ’³å•¿é–ï¿½
 	Bitmap cacheBitmap = null;
-	// ¶¨ÒåcacheBitmapÉÏµÄCanvas¶ÔÏó
+	// ç€¹æ°«ç®ŸcacheBitmapæ¶“å©„æ®‘Canvasç€µç¡…è–„
 	Canvas cacheCanvas = null;
-
 	public DraftView(Context context, AttributeSet set)
 	{
 		super(context, set);
-		// ´´½¨Ò»¸öÓë¸ÃViewÏàÍ¬´óĞ¡µÄ»º´æÇø
+		// é’æ¶˜ç¼“æ¶“ï¿½æ¶“îƒç¬Œç’‡î™œiewé©ç¨¿æ‚“æ¾¶Ñƒçš¬é¨å‹­ç´¦ç€›æ¨ºå°¯
+		is_erase=false;
 		cacheBitmap = Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,
 				Config.ARGB_8888);
 		cacheCanvas = new Canvas();
 		path = new Path();
-		// ÉèÖÃcacheCanvas½«»á»æÖÆµ½ÄÚ´æÖĞµÄcacheBitmapÉÏ
+		path_erase= new Path();
+		// ç’å‰§ç–†cacheCanvasçå—•ç´°ç¼æ¨ºåŸ—é’æ¿å”´ç€›æ¨¹è…‘é¨åˆ¢acheBitmapæ¶“ï¿½
 		cacheCanvas.setBitmap(cacheBitmap);
-		// ÉèÖÃ»­±ÊµÄÑÕÉ«
+		
+		clearPaint = new Paint();
+		clearPaint.setAntiAlias(true);
+		//clearPaint.setColor(Color.WHITE);
+		clearPaint.setColor(Color.TRANSPARENT); 
+		clearPaint.setAlpha(100);
+		clearPaint.setStrokeWidth(10);
+		clearPaint.setStyle(Paint.Style.STROKE);
+		clearPaint.setAntiAlias(true);
+		clearPaint.setDither(true);
+		clearPaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
+		
+		
+		// ç’å‰§ç–†é¢è¤ç‘ªé¨å‹¯î–é‘¹ï¿½
 		paint = new Paint(Paint.DITHER_FLAG);
-		paint.setColor(Color.GRAY);
-		// ÉèÖÃ»­±Ê·ç¸ñ
+		paint.setColor(Color.RED);
+		// ç’å‰§ç–†é¢è¤ç‘ªæ¤‹åº¢ç‰¸
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(1);
-		// ·´¾â³İ
+		// é™å¶‰æ•®æ¦»ï¿½
 		paint.setAntiAlias(true);
 		paint.setDither(true);
 	}
@@ -56,28 +82,45 @@ public class DraftView extends View {
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		// »ñÈ¡ÍÏ¶¯ÊÂ¼şµÄ·¢ÉúÎ»ÖÃ
+		// é‘¾å³°å½‡é·æ §å§©æµœå¬©æ¬¢é¨å‹«å½‚é¢ç†¶ç¶…ç¼ƒï¿½
+		
 		float x = event.getX();
 		float y = event.getY();
 		switch (event.getAction())
 		{
 			case MotionEvent.ACTION_DOWN:
-				path.moveTo(x, y);
-				preX = x;
-				preY = y;
+				if(is_erase==false){
+					path.moveTo(x, y);
+					preX = x;
+					preY = y;
+				}
+				else{
+					path_erase.moveTo(x, y);
+					preX = x;
+					preY = y;
+				}
 				break;
 			case MotionEvent.ACTION_MOVE:
-				path.quadTo(preX, preY, x, y);
-				preX = x;
-				preY = y;
-				
+				if(is_erase==false){
+					path.quadTo(preX, preY, x, y);
+					preX = x;
+					preY = y;
+				}
+				else{
+					path_erase.quadTo(preX, preY, x, y);
+					preX = x;
+					preY = y;
+				}
 				break;
 			case MotionEvent.ACTION_UP:
-				cacheCanvas.drawPath(path, paint); // ¢Ù
+				if(is_erase==false)
+					cacheCanvas.drawPath(path, paint); // éˆ¶ï¿½
+				else
+					cacheCanvas.drawPath(path_erase, clearPaint);
 				break;
 		}
 		invalidate();
-		// ·µ»Øtrue±íÃ÷´¦Àí·½·¨ÒÑ¾­´¦Àí¸ÃÊÂ¼ş
+		// æ©æ–¿æ´–trueç›ã„¦æ§‘æ¾¶å‹­æ‚Šé‚è§„ç¡¶å®¸èŒ¬ç²¡æ¾¶å‹­æ‚Šç’‡ãƒ¤ç°¨æµ ï¿½
 		return true;
 	}
 
@@ -85,35 +128,28 @@ public class DraftView extends View {
 	public void onDraw(Canvas canvas)
 	{
 		Paint bmpPaint = new Paint();
-		// ½«cacheBitmap»æÖÆµ½¸ÃView×é¼şÉÏ
-		canvas.drawBitmap(cacheBitmap, 0, 0, bmpPaint); // ¢Ú
-		// ÑØ×Åpath»æÖÆ
-		canvas.drawPath(path, paint);
+		// çå“»acheBitmapç¼æ¨ºåŸ—é’æ‹Œî‡šViewç¼å‹ªæ¬¢æ¶“ï¿½
+		canvas.drawBitmap(cacheBitmap, 0, 0, bmpPaint); // éˆ¶ï¿½
+		// å¨Œè·¨æ½ƒpathç¼æ¨ºåŸ—
+		//if(is_erase==false)
+			canvas.drawPath(path, paint);
+	///	else{
+			canvas.drawPath(path_erase, clearPaint);
+		//}
 	}
 	
 
 	/**
-	 * ÖØÖÃ»­±Ê
+	 * é–²å¶‡ç–†é¢è¤ç‘ª
 	 */
 	public void reSetPath(){ 
+		Log.i("e","reSetPath");
+		path_erase.reset();
 		path.reset();
-		points.clear();
+		invalidate();
 	}
 	
-	
-	/*
-	 * ÏğÆ¤²Á¹¦ÄÜ
-	 * */
-	
-	public void erasePaint(){
-		
+	public void erase(){
+		is_erase=true;
 	}
-	
-	
-	
-	public void clearScreen(){
-   	 invalidate();
-    }
-	
-	
 }

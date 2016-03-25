@@ -108,8 +108,8 @@ public final class R {
         public static final int draft_clean_button=0x7f090006;
         public static final int draft_erase_button=0x7f090004;
         public static final int draft_finished_button=0x7f090007;
-        public static final int draft_layout=0x7f090008;
         public static final int draft_move_button=0x7f090005;
+        public static final int draft_screen=0x7f090008;
         public static final int draft_write_button=0x7f090003;
         public static final int draftname=0x7f090002;
         public static final int draw=0x7f090015;
