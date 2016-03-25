@@ -1,15 +1,11 @@
 package com.readboy.game;
 
 import com.readboy.HandWrite.DraftView;
-import com.readboy.HandWrite.DrawView;
-import com.readboy.HandWrite.HandWrite;
 import com.readboy.mentalcalculation.R;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
