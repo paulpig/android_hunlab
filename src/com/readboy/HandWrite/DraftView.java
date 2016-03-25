@@ -38,6 +38,8 @@ public class DraftView extends View
 	final int VIEW_HEIGHT = 1;
 	private  Timer timer; 
 	private boolean is_erase;
+	float[] pointPrev; 
+    float[] pointStop;
 	private List<Watcher> list = new ArrayList<Watcher>();  
 	// 瀹氫箟涓�涓唴瀛樹腑鐨勫浘鐗囷紝璇ュ浘鐗囧皢浣滀负缂撳啿鍖�
 	Bitmap cacheBitmap = null;
@@ -57,15 +59,16 @@ public class DraftView extends View
 		cacheCanvas.setBitmap(cacheBitmap);
 		
 		clearPaint = new Paint();
-		clearPaint.setAntiAlias(true);
-		//clearPaint.setColor(Color.WHITE);
-		clearPaint.setColor(Color.TRANSPARENT); 
-		clearPaint.setAlpha(100);
-		clearPaint.setStrokeWidth(10);
-		clearPaint.setStyle(Paint.Style.STROKE);
-		clearPaint.setAntiAlias(true);
-		clearPaint.setDither(true);
-		clearPaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
+		clearPaint.reset();  
+		clearPaint.setColor(Color.TRANSPARENT);  
+		clearPaint.setAntiAlias(false);  
+		clearPaint.setStyle(Paint.Style.STROKE);  
+        clearPaint.setStrokeWidth(16);  
+        clearPaint.setStrokeJoin(Paint.Join.ROUND);  
+        clearPaint.setStrokeCap(Paint.Cap.ROUND);  
+        clearPaint.setAlpha(0);     
+        clearPaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));  
+        clearPaint.setStrokeWidth(10);  
 		
 		
 		// 璁剧疆鐢荤瑪鐨勯鑹�
@@ -107,9 +110,14 @@ public class DraftView extends View
 					preY = y;
 				}
 				else{
+					pointPrev = new float[]{preX,preY};  
+				    pointStop= new float[]{event.getX(), event.getY()}; 
 					path_erase.quadTo(preX, preY, x, y);
 					preX = x;
 					preY = y;
+					//prev.set(event.getX(), event.getY());   
+                    
+                    //ImageTouchView.this.setImageBitmap(cacheBitmap);
 				}
 				break;
 			case MotionEvent.ACTION_UP:
@@ -134,7 +142,8 @@ public class DraftView extends View
 		//if(is_erase==false)
 			canvas.drawPath(path, paint);
 	///	else{
-			canvas.drawPath(path_erase, clearPaint);
+			cacheCanvas.drawLine(pointPrev[0],pointPrev[1],pointStop[0],pointStop[1], clearPaint);  
+			//canvas.drawPath(path_erase, clearPaint);
 		//}
 	}
 	
