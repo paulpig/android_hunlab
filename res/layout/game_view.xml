@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/relative"
+    >
+<LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
+    android:id="@+id/liner"
     android:background="@drawable/backgrond_below">
    	
    <RelativeLayout
@@ -47,7 +53,7 @@
             android:background="@drawable/ranking" />
     </RelativeLayout>
 
-   <LinearLayout 
+  <LinearLayout 
        android:layout_marginTop="33dp"
        android:layout_marginLeft="40dp"
        android:layout_marginRight="40dp"
@@ -126,25 +132,21 @@
     android:id="@+id/imageview_animation_list_filling"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/animation_list_filling"
+    android:background="@drawable/animation_list_filling_success"
+    android:visibility="invisible"
+    android:layout_marginLeft="560dp"
+    
     />
-    
-    
+
       <com.readboy.HandWrite.DrawView
 	      android:id="@+id/draw"
 	      android:layout_width="wrap_content"
 	      android:layout_marginLeft="200dp"
 	      android:layout_marginRight="200dp"
-	      android:layout_height="0dp"
-	      android:layout_weight="0.41"
+	      android:layout_height="300dp"
 	      android:background="@drawable/write_place"
-	      android:height="480dp"
 	      android:width="320dp" />
-      
-     <Button 
-         	android:id="@+id/sure"
-         	android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="确定"/>
+
      </LinearLayout>
 </LinearLayout>
+</RelativeLayout>

@@ -71,7 +71,7 @@ public  class Supply_Grade_1_top implements Runnable  {
 			while(ele_two+ele_one>5){
 				ele_two=(int)(Math.random()*5);
 			}
-			problem.add(ele_one+"+"+ele_two);
+			problem.add(ele_one+"+"+ele_two+"=");
 			answer.add(ele_one+ele_two);
 			break;
 		case SUBINFIVE://5以内的减法
@@ -89,10 +89,10 @@ public  class Supply_Grade_1_top implements Runnable  {
 		case ZERTWO://0的计算2
 			ele_one=(int)(Math.random()*5);
 			if(choose==0){
-				problem.add(ele_one+"-"+0);
+				problem.add(ele_one+"-"+0+"=");
 			}
 			else{
-				problem.add(ele_one+"+"+0);
+				problem.add(ele_one+"+"+0+"=");
 			}
 			answer.add(ele_one);
 			break;
@@ -143,7 +143,7 @@ public  class Supply_Grade_1_top implements Runnable  {
 				ele_two=(int)(Math.random()*10);
 				ele_three=(int)(Math.random()*10);
 			}
-			problem.add(ele_one+"+"+ele_two+"+"+ele_three);
+			problem.add(ele_one+"+"+ele_two+"+"+ele_three+"=");
 			answer.add(ele_one+ele_two+ele_three);
 			break;
 			
@@ -161,16 +161,16 @@ public  class Supply_Grade_1_top implements Runnable  {
 			ele_one=(int)(Math.random()*10);
 			ele_two=(int)(Math.random()*ele_one);
 			if(choose==0 && xposition==0){
-				problem.add("x"+"+"+ele_two+"="+ele_one);
+				problem.add("x"+"+"+ele_two+"="+ele_one+"  x=");
 			}
 			else if(choose==0 && xposition==1){
-				problem.add(ele_two+"+"+"x"+"="+ele_one);
+				problem.add(ele_two+"+"+"x"+"="+ele_one+"   x=");
 			}
 			else if(choose==1 && xposition==0){
-				problem.add(ele_one+"-"+"x"+"="+ele_two);
+				problem.add(ele_one+"-"+"x"+"="+ele_two+"    x=");
 			}
 			else{
-				problem.add(ele_one+"-"+"x"+"="+ele_two);
+				problem.add(ele_one+"-"+"x"+"="+ele_two+"    x=");
 			}
 			answer.add(ele_one-ele_two);
 			break;
@@ -184,7 +184,7 @@ public  class Supply_Grade_1_top implements Runnable  {
 				ele_two=(int)(Math.random()*10);
 				ele_three=(int)(Math.random()*10);
 			}
-			problem.add(ele_one+"+"+ele_two+"-"+ele_three);
+			problem.add(ele_one+"+"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one+ele_two-ele_three);
 			break;
 			
@@ -197,7 +197,7 @@ public  class Supply_Grade_1_top implements Runnable  {
 				ele_two=(int)(Math.random()*10);
 				ele_three=(int)(Math.random()*10);
 			}
-			problem.add(ele_one+"-"+ele_two+"+"+ele_three);
+			problem.add(ele_one+"-"+ele_two+"+"+ele_three+"=");
 			answer.add(ele_one-ele_two+ele_three);
 			break;
 		case ADDFOREIGHT:     //一图四式和8的加减法
@@ -291,12 +291,12 @@ public  class Supply_Grade_1_top implements Runnable  {
 	/*计算加减法*/
 	public void AddAndSubMethod(int num1,int num2,int choose){
 		if(choose==1){
-			problem.add(num1+"+"+num2);
+			problem.add(num1+"+"+num2+"=");
 			answer.add(num1+num2);
 		}
 		else{
 			int ele_sum=num1+num2;
-			problem.add(ele_sum+"-"+num1);
+			problem.add(ele_sum+"-"+num1+"=");
 			answer.add(num2);
 		}
 	}

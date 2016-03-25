@@ -11,6 +11,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Bitmap.Config;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Xfermode;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -96,4 +99,21 @@ public class DraftView extends View {
 		path.reset();
 		points.clear();
 	}
+	
+	
+	/*
+	 * ÏðÆ¤²Á¹¦ÄÜ
+	 * */
+	
+	public void erasePaint(){
+		
+	}
+	
+	
+	
+	public void clearScreen(){
+   	 invalidate();
+    }
+	
+	
 }

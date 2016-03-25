@@ -35,27 +35,27 @@ public class DrawView extends View implements Watched
 	private  Timer timer; 
 	private List<Watcher> list = new ArrayList<Watcher>();  
 	public List<Short> points = new ArrayList<Short>();
-	// 定义一个内存中的图片，该图片将作为缓冲区
+	// 瀹氫箟涓�涓唴瀛樹腑鐨勫浘鐗囷紝璇ュ浘鐗囧皢浣滀负缂撳啿鍖�
 	Bitmap cacheBitmap = null;
-	// 定义cacheBitmap上的Canvas对象
+	// 瀹氫箟cacheBitmap涓婄殑Canvas瀵硅薄
 	Canvas cacheCanvas = null;
 	public DrawView(Context context, AttributeSet set)
 	{
 		super(context, set);
-		// 创建一个与该View相同大小的缓存区
+		// 鍒涘缓涓�涓笌璇iew鐩稿悓澶у皬鐨勭紦瀛樺尯
 		cacheBitmap = Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,
 				Config.ARGB_8888);
 		cacheCanvas = new Canvas();
 		path = new Path();
-		// 设置cacheCanvas将会绘制到内存中的cacheBitmap上
+		// 璁剧疆cacheCanvas灏嗕細缁樺埗鍒板唴瀛樹腑鐨刢acheBitmap涓�
 		cacheCanvas.setBitmap(cacheBitmap);
-		// 设置画笔的颜色
+		// 璁剧疆鐢荤瑪鐨勯鑹�
 		paint = new Paint(Paint.DITHER_FLAG);
 		paint.setColor(Color.RED);
-		// 设置画笔风格
+		// 璁剧疆鐢荤瑪椋庢牸
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(1);
-		// 反锯齿
+		// 鍙嶉敮榻�
 		paint.setAntiAlias(true);
 		paint.setDither(true);
 	}
@@ -63,7 +63,7 @@ public class DrawView extends View implements Watched
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		// 获取拖动事件的发生位置
+		// 鑾峰彇鎷栧姩浜嬩欢鐨勫彂鐢熶綅缃�
 		
 		float x = event.getX();
 		float y = event.getY();
@@ -75,7 +75,8 @@ public class DrawView extends View implements Watched
 				preY = y;
 				points.add((short)x);
 	    		points.add((short)y);
-	    		timer.cancel();
+	    		if(timer!=null)
+	    			timer.cancel();
 				break;
 			case MotionEvent.ACTION_MOVE:
 				path.quadTo(preX, preY, x, y);
@@ -87,7 +88,7 @@ public class DrawView extends View implements Watched
 				
 				break;
 			case MotionEvent.ACTION_UP:
-				cacheCanvas.drawPath(path, paint); // ①
+				cacheCanvas.drawPath(path, paint); // 鈶�
 				points.add((short) -1);
 	    		points.add((short) -1);
 	    		
@@ -108,7 +109,7 @@ public class DrawView extends View implements Watched
 				break;
 		}
 		invalidate();
-		// 返回true表明处理方法已经处理该事件
+		// 杩斿洖true琛ㄦ槑澶勭悊鏂规硶宸茬粡澶勭悊璇ヤ簨浠�
 		return true;
 	}
 
@@ -116,15 +117,15 @@ public class DrawView extends View implements Watched
 	public void onDraw(Canvas canvas)
 	{
 		Paint bmpPaint = new Paint();
-		// 将cacheBitmap绘制到该View组件上
-		canvas.drawBitmap(cacheBitmap, 0, 0, bmpPaint); // ②
-		// 沿着path绘制
+		// 灏哻acheBitmap缁樺埗鍒拌View缁勪欢涓�
+		canvas.drawBitmap(cacheBitmap, 0, 0, bmpPaint); // 鈶�
+		// 娌跨潃path缁樺埗
 		canvas.drawPath(path, paint);
 	}
 	
 
 	/**
-	 * 重置画笔
+	 * 閲嶇疆鐢荤瑪
 	 */
 	public void reSetPath(){ 
 		path.reset();
@@ -136,17 +137,19 @@ public class DrawView extends View implements Watched
          @Override  
          public void handleMessage(Message msg) {   
              super.handleMessage(msg);   
-             //handler处理消息   
+             //handler澶勭悊娑堟伅   
              if(msg.what>0){   
                 // tv1.setText("" + msg.what);   
              }else{   
-                 //在handler里可以更改UI组件   
-//                 tv1.setText("点火！");   
+                 //鍦╤andler閲屽彲浠ユ洿鏀筓I缁勪欢   
+//                 tv1.setText("鐐圭伀锛�");   
                  //timer.cancel();   
              }   
          }   
      };
-
+     public void clearScreen(){
+    	 invalidate();
+     }
 	@Override
 	public void add(Watcher watcher) {
 		// TODO Auto-generated method stub

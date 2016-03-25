@@ -3,7 +3,9 @@ package com.readboy.game.Grade_1;
 import com.readboy.mentalcalculation.R;
 import com.readboy.HandWrite.*;
 import android.R.bool;
+import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -22,8 +24,10 @@ public class Grade_1_top extends GameActivity implements Watcher{
 
 	protected Object Alock;
 	private Boolean correct;
-	private AnimationDrawable animation;
 	Supply_Grade_1_top supply_project_thread;
+	private static final int COMPLETED = 0; 
+	private AnimationDrawable animation;
+	private ImageView mImageViewFilling = null;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Alock=new Object();
@@ -34,7 +38,8 @@ public class Grade_1_top extends GameActivity implements Watcher{
     }
 	
 	protected void initTimer(){
-		Watched watched = new DrawView();  
+		//Watched watched = new DrawView();  
+		dv.add(this);
 	}
 	
 	protected void GetProAndAns(int type){
@@ -54,27 +59,6 @@ public class Grade_1_top extends GameActivity implements Watcher{
 	
 	 
 	protected void IsRight(){
-//		 sure.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View arg0) {
-//				
-//				int count = dv.points.size();
-//				short[] prolong = new short[count];
-//				for (int i = 0; i < prolong.length; i++) {
-//					prolong[i] = dv.points.get(i);
-//				}
-//			
-//				dv.reSetPath();
-//				try {
-//					judgeHandPut("8", count/2 -1, prolong);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				
-//			}
-//		});
 	 }
 	
 	protected void onDestroy() {
@@ -133,38 +117,60 @@ public class Grade_1_top extends GameActivity implements Watcher{
     					 correct = true;
     					 problem+=answerStr;
     					 content_of_game.setText(problem);
+    					 //correct = false;
         				 /*播放正确动画*/
     					 Animal(true);              
         			 }
     				 break;
     			}
     			if(!correct){
+    				/*播放错误动画*/
+//    				for(int i=0;i<result.length;i++){
+//    					if(result[i]<='9'||result[i]>='0'){
+//    						
+//    					}
+//    				}
+    				problem+=result[1];
+    				content_of_game.setText(problem);
+    				Animal(false);
     			}
     			 
     		}
     		Log.i("word score",score + "");
+    		correct = false;
     		HandWrite.exitHandWriteInit();
     	}
     	return score;
     }
+   
+    
     
     /*选择播放动画*/
     public void Animal(boolean choosing){
     	int duration=0;  // duration是记录第一个动画播放的总时间
-    	ImageView mImageViewFilling = null;
     	if(choosing==true){
-    	mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
-		animation=((AnimationDrawable) mImageViewFilling.getBackground());
+    		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
+    		mImageViewFilling.setVisibility(0);
+    		Resources resources=getBaseContext().getResources();
+    		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_success);
+    		mImageViewFilling.setBackgroundDrawable(right_b);
+    		animation=((AnimationDrawable) mImageViewFilling.getBackground());
     	}
     	else{
-    		
+    		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
+    		mImageViewFilling.setVisibility(0);
+    		Resources resources=getBaseContext().getResources();
+    		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_fail);
+    		mImageViewFilling.setBackgroundDrawable(right_b);
+    		animation=((AnimationDrawable) mImageViewFilling.getBackground());
     	}
-		mImageViewFilling.post(new Runnable() {    //在异步线程中执行启动的方法
+    	mImageViewFilling.post(new Runnable() {    //在异步线程中执行启动的方法
     		                     
     		                    @Override
     		                    public void run() {
     		                        // TODO Auto-generated method stub
     		                    	animation.start();   //启动动画
+    		                    	dv.clearScreen();
     	                   }
     		                });
     		                 for(int i=0;i<animation.getNumberOfFrames();i++){
@@ -174,6 +180,7 @@ public class Grade_1_top extends GameActivity implements Watcher{
     		         handler.postDelayed(new Runnable() {
     		            public void run() {
     		            	 animation.stop();
+    		            	 mImageViewFilling.setVisibility(4);
     		            	 UpSuccessAndGrade();
         					 synchronized (Alock) {  
            					 Alock.notifyAll();
@@ -182,24 +189,47 @@ public class Grade_1_top extends GameActivity implements Watcher{
     		        }, duration);
     }
 
-
 	@Override
 	public void updateNotify() {
-		// TODO Auto-generated method stub
-		int count = dv.points.size();
-		short[] prolong = new short[count];
-		for (int i = 0; i < prolong.length; i++) {
-			prolong[i] = dv.points.get(i);
-		}
-	
-		dv.reSetPath();
-		try {
-			judgeHandPut("8", count/2 -1, prolong);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new WorkThread().start(); 
 	}
+	
+	private class WorkThread extends Thread {  
+        @Override  
+        public void run() {  
+            //......处理比较耗时的操作  
+              
+            //处理完成后给handler发送消息  
+            Message msg = new Message();  
+            msg.what = COMPLETED;  
+            handler.sendMessage(msg);  
+        	
+        }  
+        
+	}
+	
+	private Handler handler = new Handler() {  
+        @Override  
+        public void handleMessage(Message msg) {  
+            if (msg.what == COMPLETED) {  
+                //stateText.setText("completed");
+            	// TODO Auto-generated method stub
+        		int count = dv.points.size();
+        		short[] prolong = new short[count];
+        		for (int i = 0; i < prolong.length; i++) {
+        			prolong[i] = dv.points.get(i);
+        		}
+        	
+        		dv.reSetPath();
+        		try {
+        			judgeHandPut("8", count/2 -1, prolong);
+        		} catch (InterruptedException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+            }  
+        }  
+    };  
 }
 
 

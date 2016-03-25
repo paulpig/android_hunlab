@@ -48,7 +48,7 @@ public class Grade_1_down extends GameActivity{
 				 int in_put_answer=Integer.parseInt(answer_of_game.getText().toString());  
 				 if(in_put_answer==answer){
 					 /*播放正确动画并更新分数*/
-					 UpSuccessAndGrade();
+					 //UpSuccessAndGrade();
 					 
 					 synchronized (Alock) {  
 						 Alock.notifyAll();  
@@ -58,7 +58,7 @@ public class Grade_1_down extends GameActivity{
 				 
 				 else{
 					 /*播放错误动画*/
-					 UpFail();
+					 //UpFail();
 					 
 				 }
 			}

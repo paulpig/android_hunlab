@@ -2,6 +2,7 @@ package com.readboy.game;
 
 import java.util.ArrayList;
 
+import com.readboy.game.Grade_1.Grade_1_top;
 import com.readboy.mentalcalculation.R;
 
 import com.readboy.HandWrite.*;
@@ -12,16 +13,20 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public  abstract class GameActivity  extends Activity{
@@ -41,9 +46,13 @@ public  abstract class GameActivity  extends Activity{
 	protected ArrayList<Integer> keep_grade;
 	protected Object Alock;
 	protected int type;  //题目类型
-	protected int count_time=10;
+	protected int count_time=100;
 	protected CountDownThread count_down_thread;
 	protected boolean stopThread=false;
+	protected ImageView draft;
+	protected ImageView ranking;
+	protected DraftView draft_view;
+	protected RelativeLayout liner;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
@@ -52,6 +61,7 @@ public  abstract class GameActivity  extends Activity{
         initView();
         backToStartView();
         CountTimeThread();
+        draftButton();
     }
 	
 	protected void onDestroy() {
@@ -79,9 +89,12 @@ public  abstract class GameActivity  extends Activity{
 		type_view=(TextView) findViewById(R.id.type_view);
 		time_of_game=(TextView) findViewById(R.id.time_of_game);
 		content_of_game=(TextView) findViewById(R.id.content_of_game);
-		sure=(Button)findViewById(R.id.sure);
 		//answer_of_game=(EditText) findViewById(R.id.answer_of_game);
 		grade_of_game=(TextView) findViewById(R.id.grade_of_game);
+		draft=(ImageView) findViewById(R.id.draft);
+		ranking=(ImageView) findViewById(R.id.ranking);
+		//draft_view=(DraftView) findViewById(R.id.draft_layout);
+		liner=(RelativeLayout) findViewById(R.id.relative);
 		dv = (DrawView) findViewById(R.id.draw);
 		dv.paint.setColor(Color.RED);
 		dv.paint.setStrokeWidth(5);
@@ -100,7 +113,17 @@ public  abstract class GameActivity  extends Activity{
 			}
 		});
 	 }
-	 
+	 protected void draftButton(){
+		 draft.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					 Intent intent = new Intent();  
+		             intent.setClass(GameActivity.this, draftActivity.class);  
+		             startActivity(intent);   
+				}
+			});
+	 }
 	
 	
 	/*时间计时线程*/
@@ -128,47 +151,13 @@ public  abstract class GameActivity  extends Activity{
 	 
 	 /*从 “出题”（supply_project_thread）线程中获取线程*/
 	protected   abstract void GetProAndAns( int type);
-		/* Handler problem_hander=new Handler(){
-			 public void handleMessage(Message msg) {
-	             // process incoming messages here
-				Log.i("information", "receive_problem");
-				Bundle b = msg.getData();
-				answer = b.getInt("answer");
-				problem=b.getString("problem");
-				content_of_game.setText(problem);
-	         }
-		};
-		SupplyProjectGrade_1_AddInFive supply_project_thread=new SupplyProjectGrade_1_AddInFive(problem_hander,Alock);
-		new Thread(supply_project_thread).start();*/
 	 
 	 
 	 /*判断输入的答案正确性，正确重新出题，错误无*/
 	protected  abstract void IsRight();
-		/* sure.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				 int in_put_answer=Integer.parseInt(answer_of_game.getText().toString());  
-				 if(in_put_answer==answer){
-					// 播放正确动画并更新分数
-					 UpSuccessAndGrade();
-					 
-					 synchronized (Alock) {  
-						 Alock.notifyAll();  
-	                     Log.v("information","notify");  
-	                    }                     
-				 }
-				 
-				 else{
-					// 播放错误动画
-					 UpFail();
-					 
-				 }
-			}
-		});*/
 
-	 
+	
+
 	 
 	 /*播放正确动画，并且更新分数*/
 	protected void UpSuccessAndGrade(){
