@@ -2,30 +2,27 @@ package com.readboy.game;
 
 import java.util.ArrayList;
 
-import com.readboy.game.Grade_1.Grade_1_top;
 import com.readboy.mentalcalculation.R;
 
 import com.readboy.HandWrite.*;
-import com.readboy.mentalcalculation.MainActivity;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -53,6 +50,12 @@ public  abstract class GameActivity  extends Activity{
 	protected ImageView ranking;
 	protected DraftView draft_view;
 	protected RelativeLayout liner;
+	
+	protected static final int COMPLETED = 0;
+	protected AnimationDrawable animation;
+	protected ImageView mImageViewFilling = null;
+	protected Boolean correct;
+	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
@@ -106,7 +109,6 @@ public  abstract class GameActivity  extends Activity{
 			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				 stopThread=true;
 		         count_down_thread.setTag(stopThread);
 				GameActivity.this.finish();
@@ -139,15 +141,11 @@ public  abstract class GameActivity  extends Activity{
 	protected void CountTimeThread(){
 		 Handler time_hander=new Handler(){
 			 public void handleMessage(Message msg) {
-	             // process incoming messages here
 				Bundle b = msg.getData();
 				int time = b.getInt("time");
 				time_of_game.setText(time+"");
 				Log.i("stopThread", "no");
 				if(time==0){
-					//content_of_game.setText("时间到啦");
-					//sure.setVisibility(4);
-					//keep_grade.add(Integer.parseInt(grade_of_game.getText().toString()));
 					grade_of_game.setText("0");
 					student_grade=0;
 				}
@@ -165,9 +163,6 @@ public  abstract class GameActivity  extends Activity{
 	 /*判断输入的答案正确性，正确重新出题，错误无*/
 	protected  abstract void IsRight();
 
-	
-
-	 
 	 /*播放正确动画，并且更新分数*/
 	protected void UpSuccessAndGrade(){
 		 student_grade+=10;
@@ -180,4 +175,160 @@ public  abstract class GameActivity  extends Activity{
 	protected void UpFail(){
 		 Log.i("information", "错误");
 	 }
+	
+	
+	/**
+     * 判断该手写的字是否正确
+     * @param word	正确的字
+     * @param ncout	写了多少点
+     * @param polongArray	点阵
+     * @return	返回分数， 第一个字返回 5，第二个返回4，其他返回3，没找到返回0
+	 * @throws InterruptedException 
+     */
+    @SuppressWarnings("unused")
+	public  int judgeHandPut(String word, int ncout, short[] polongArray) throws InterruptedException
+    {
+    	short[] rgResultBuff = new short[1024];
+    	char[] tempArray;
+    	int score = 0;
+    	//Log.e("judgeHandPut",word + "");
+    	int err = HandWrite.initHandWrite(Environment.getExternalStorageDirectory()+"/Aiwrite.dat");
+    	//HandWrite.iHCR_SetParam(HandWrite.iHCR_PARAM.iHCR_PARAM_LANGUAGE.ordinal(), HandWrite.iHCR_LANGUAGE_Numerals);
+    	//HandWrite.iHCR_SetParam(HandWrite.iHCR_PARAM.iHCR_PARAM_MAXCANDNUM.ordinal(), 10);
+    	HandWrite.setReconizeEngilish();
+    	HandWrite.iHCR_SetParam(HandWrite.iHCR_PARAM.iHCR_PARAM_RECOGMANNER.ordinal(), HandWrite.iHCR_RECOGNITION_SENT_LINE);
+    	if(err == 0){
+    		return 0;
+    	}else{
+    		err = HandWrite.reconizePoint(ncout, polongArray,rgResultBuff);
+    		if(err <= 0){
+    			HandWrite.exitHandWriteInit();
+    			return 0;
+    		}else{
+    			tempArray=new char[err];
+    			for(int i=0;i<err;i++){
+    				if((int)rgResultBuff[i] == 0){
+    					tempArray[i]= '-';
+    				}else{
+    					tempArray[i]=(char)rgResultBuff[i];
+    				}
+    			}
+    			String str=String.valueOf(tempArray);
+    			Log.i("-----str", str);
+    			String[] result = str.split("");//分割字符串
+    			String answerStr = String.valueOf(answer);
+    			
+    			for (int i = 1; i < result.length; i++) 
+    			{
+    				 if(answerStr.equalsIgnoreCase(result[i])){
+    					 correct = true;
+    					 problem+=answerStr;
+    					 content_of_game.setText(problem);
+    					 //correct = false;
+        				 /*播放正确动画*/
+    					 Animal(true);              
+        			 }
+    				 break;
+    			}
+    			if(!correct){
+    				problem+=result[1];
+    				content_of_game.setText(problem);
+    				Animal(false);
+    			}
+    			 
+    		}
+    		Log.i("word score",score + "");
+    		correct = false;
+    		HandWrite.exitHandWriteInit();
+    	}
+    	return score;
+    }
+   
+    
+    
+    /*选择播放动画*/
+    @SuppressWarnings("deprecation")
+	public void Animal(boolean choosing){
+    	int duration=0;  // duration是记录第一个动画播放的总时间
+    	if(choosing==true){
+    		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
+    		mImageViewFilling.setVisibility(0);
+    		Resources resources=getBaseContext().getResources();
+    		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_success);
+    		mImageViewFilling.setBackgroundDrawable(right_b);
+    		animation=((AnimationDrawable) mImageViewFilling.getBackground());
+    	}
+    	else{
+    		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
+    		mImageViewFilling.setVisibility(0);
+    		Resources resources=getBaseContext().getResources();
+    		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_fail);
+    		mImageViewFilling.setBackgroundDrawable(right_b);
+    		animation=((AnimationDrawable) mImageViewFilling.getBackground());
+    	}
+    	mImageViewFilling.post(new Runnable() {    //在异步线程中执行启动的方法
+    		                     
+    		                    @Override
+    		                    public void run() {
+    		                        // TODO Auto-generated method stub
+    		                    	animation.start();   //启动动画
+    		                    	dv.clearScreen();
+    	                   }
+    		                });
+    		                 for(int i=0;i<animation.getNumberOfFrames();i++){
+    		                    duration+=animation.getDuration(i);     //计算动画播放的时间
+    		                 }
+    		         Handler handler=new Handler();
+    		         handler.postDelayed(new Runnable() {
+    		            public void run() {
+    		            	 animation.stop();
+    		            	 mImageViewFilling.setVisibility(4);
+    		            	 UpSuccessAndGrade();
+        					 synchronized (Alock) {  
+           					 Alock.notifyAll();
+                               }      
+    		             }
+    		        }, duration);
+    }
+
+    
+	public void updateNotify() {
+		new WorkThread().start(); 
+	}
+	
+	public class WorkThread extends Thread {  
+        @Override  
+        public void run() {  
+            //......处理比较耗时的操作  
+              
+            //处理完成后给handler发送消息  
+            Message msg = new Message();  
+            msg.what = COMPLETED;  
+            handler.sendMessage(msg);  
+        }  
+        
+	}
+	
+	private Handler handler = new Handler() {  
+        @Override  
+        public void handleMessage(Message msg) {  
+            if (msg.what == COMPLETED) {  
+                //stateText.setText("completed");
+            	// TODO Auto-generated method stub
+        		int count = dv.points.size();
+        		short[] prolong = new short[count];
+        		for (int i = 0; i < prolong.length; i++) {
+        			prolong[i] = dv.points.get(i);
+        		}
+        	
+        		dv.reSetPath();
+        		try {
+        			judgeHandPut("8", count/2 -1, prolong);
+        		} catch (InterruptedException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+            }  
+        }  
+    };  
 }
