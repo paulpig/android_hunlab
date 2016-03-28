@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class draftActivity extends Activity{
 	protected DraftView d_v; 
@@ -24,6 +25,12 @@ public class draftActivity extends Activity{
 	private Button move_button;
 	private Button clear_button;
 	private Button end_button;
+	private Button delete_button;
+	private Button add_button;
+	private Button left_button;
+	private Button right_button;
+	private TextView draft_current;
+	private TextView draft_all;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
@@ -34,14 +41,22 @@ public class draftActivity extends Activity{
 	
 	
 	protected void init(){
+		
 		write_button=(Button) findViewById(R.id.draft_write_button);
 		earse_button=(Button) findViewById(R.id.draft_erase_button);
 		move_button=(Button) findViewById(R.id.draft_move_button);
 		clear_button=(Button) findViewById(R.id.draft_clean_button);
 		end_button=(Button) findViewById(R.id.draft_finished_button);
 		d_v = (DraftView) findViewById(R.id.draft_screen);
+		delete_button=(Button) findViewById(R.id.draft_remove_button);
+		add_button=(Button) findViewById(R.id.draft_add_button);
+		left_button=(Button) findViewById(R.id.draft_left_button);
+		right_button=(Button) findViewById(R.id.draft_right_button);
+		draft_current=(TextView) findViewById(R.id.draft_current);
+		draft_all=(TextView) findViewById(R.id.draft_all);
 		//d_v.paint.setColor(Color.RED);
 		//d_v.paint.setStrokeWidth(5);
+		whichButtonShow(0);
 	}
 	
 	protected void listenerEvent(){
@@ -65,7 +80,7 @@ public class draftActivity extends Activity{
 					@Override
 					public void onClick(View arg0) {
 						whichButtonShow(2);
-						
+						d_v.move();
 					}
 				});
 		//²Á³ý°´Å¥
@@ -81,9 +96,78 @@ public class draftActivity extends Activity{
 		write_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				whichButtonShow(0);
+				d_v.write();
 				
 			}
 		});
+		
+		//É¾³ý²Ý¸åÖ½
+		delete_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				int current_num=Integer.parseInt(draft_current.getText().toString());
+				int all_num=Integer.parseInt(draft_all.getText().toString());
+				if(all_num>=2){
+					draft_current.setText(1+"");
+					draft_all.setText(all_num-1+"");
+					d_v.deleteButton(current_num-1);
+					//whichButtonShow(0);
+				}
+				
+			
+			}
+		});
+		
+		//Ôö¼Ó²Ý¸åÖ½
+		add_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				int current_num=Integer.parseInt(draft_current.getText().toString())+1;
+				int all_num=Integer.parseInt(draft_all.getText().toString())+1;
+				draft_current.setText(current_num+"");
+				draft_all.setText(all_num+"");
+				d_v.addButton(current_num-1);
+				//whichButtonShow(0);
+			}
+		});
+		
+		//²é¿´left²Ý¸åÖ½
+		left_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				int current_num=Integer.parseInt(draft_current.getText().toString())-1;
+				
+				if(current_num>=1){
+					draft_current.setText(current_num+"");
+					d_v.leftButton(current_num-1);
+					//whichButtonShow(0);
+				}
+				
+			}
+		});
+		
+		//²é¿´right²Ý¸åÖ½
+		right_button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				int current_num=Integer.parseInt(draft_current.getText().toString())+1;
+				
+				int all_num=Integer.parseInt(draft_all.getText().toString());
+				if(current_num<=all_num){
+					draft_current.setText(current_num+"");
+					d_v.leftButton(current_num-1);
+					//whichButtonShow(0);
+				}
+				
+			}
+		});
+		
+		
+		
 	}
 	
 	

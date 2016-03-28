@@ -123,6 +123,15 @@ public  abstract class GameActivity  extends Activity{
 		             startActivity(intent);   
 				}
 			});
+		 ranking.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					 Intent intent = new Intent();  
+		             intent.setClass(GameActivity.this, rankingList.class);  
+		             startActivity(intent);   
+				}
+			});
 	 }
 	
 	

@@ -64,11 +64,76 @@
 
 </LinearLayout>
 
+
 <com.readboy.HandWrite.DraftView
 	      android:id="@+id/draft_screen"
 	      android:layout_width="fill_parent"
 	      android:layout_marginTop="10dp"
-	      android:layout_height="700dp"
+	      android:layout_height="590dp"
 />
-
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+<Button
+       android:id="@+id/draft_remove_button"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:layout_marginLeft="50dp"
+       android:background="@drawable/delete"
+         />
+<Button
+        android:id="@+id/draft_left_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="400dp"
+        android:background="@drawable/right"
+         />
+      
+      
+      <TextView 
+        android:id="@+id/draft_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="6dp"
+        android:text="1"
+        android:textSize="30sp"
+        android:textColor="#778899"
+       />
+      <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:text="/"
+        android:textSize="30sp"
+        android:textColor="#778899"/>
+      <TextView 
+        android:id="@+id/draft_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="20dp"
+        android:text="1"
+        android:textSize="30sp"
+        android:textColor="#778899"/>
+      
+      <Button
+        android:id="@+id/draft_right_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/left"
+         />
+    
+    <Button
+        android:id="@+id/draft_add_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="370dp"
+        android:background="@drawable/add" />
+</LinearLayout>
+     
 </LinearLayout>
