@@ -168,6 +168,7 @@ public class draftActivity extends Activity{
 	
 	
 	/*显示当前按钮状态*/
+	@SuppressWarnings("deprecation")
 	public void whichButtonShow(int type){
 		Resources resources=getBaseContext().getResources();
 		Drawable bWrite1 = resources.getDrawable(R.drawable.write2);

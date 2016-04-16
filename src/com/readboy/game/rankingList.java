@@ -48,19 +48,24 @@ public class rankingList extends Activity{
 		content_view=(TextView) findViewById(R.id.content_rank);
 		relative_layout=(RelativeLayout) findViewById(R.id.relative_view);
 	}
-	//监听整个屏幕除了
+
+	/**
+	 * 监听整个屏幕
+	 */
 	public void ListenAllScreen(){
 		relative_layout.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				//Log.i("dianji", "screen");
 				rankingList.this.finish();
 			}
 		});
 	}
-	//监听显示内容
+
+	/**
+	 * 监听显示内容
+	 */
 	public void ListenButton(){
 		content_view.setOnClickListener(new OnClickListener() {
 			
@@ -71,7 +76,12 @@ public class rankingList extends Activity{
 		});
 	}
 	
-	//设置保存的数据
+	/** 
+	 * 更新分数排名
+	 * @param fist_grade
+	 * @param second_grade
+	 * @param third_grade
+	 */
 	public void updateGrade(int fist_grade,int second_grade,int third_grade){
 		//实例化SharedPreferences对象（第一步） 
 		String name="test";
@@ -87,7 +97,9 @@ public class rankingList extends Activity{
 		editor.commit(); 
 	}
 	
-	//获取保存的内容
+	/**
+	 * 获取数据
+	 */
 	public void readFile(){
 		String name="test";
 		SharedPreferences sharedPreferences= getSharedPreferences(name, 
