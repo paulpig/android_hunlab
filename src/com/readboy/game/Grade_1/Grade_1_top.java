@@ -2,6 +2,8 @@ package com.readboy.game.Grade_1;
 
 import com.readboy.mentalcalculation.R;
 import com.readboy.HandWrite.*;
+
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -10,26 +12,30 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.readboy.game.GameActivity;
 import com.readboy.game.Watcher;
+import com.readboy.game.rankingList;
 import com.readboy.game.GameActivity.WorkThread;
 
 public class Grade_1_top extends GameActivity implements Watcher{
 
-	protected Object Alock;
+	//protected Object Alock;
 	
 	Supply_Grade_1_top supply_project_thread;
 	 
 	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Alock=new Object();
         correct = false;
 		GetProAndAns(type);
 		initTimer();
 		IsRight();
+		intent_type="10"+type;
+		rankingListen();
     }
 	
 	protected void initTimer(){
@@ -63,6 +69,22 @@ public class Grade_1_top extends GameActivity implements Watcher{
         supply_project_thread.setTag(stopThread);
         super.onDestroy();
 	}
+	
+	
+	//不同页面的传递rankingList的数据不相同,传递数据：1.储存数据的xml名字  2.当前的分数
+	protected void rankingListen(){
+		 ranking.setOnClickListener(new OnClickListener() {
+				public void onClick(View arg0) {
+					 Intent intent = new Intent();  
+		             intent.setClass(Grade_1_top.this, rankingList.class);
+		             intent.putExtra("game_type",intent_type);
+		             intent.putExtra("grade",student_grade);
+		             startActivity(intent);
+				}
+			});
+	}
+	
+	
 	
 	
 }

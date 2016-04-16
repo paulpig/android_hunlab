@@ -77,13 +77,13 @@ public  class Supply_Grade_1_top implements Runnable  {
 		case SUBINFIVE://5以内的减法
 			ele_one=(int)(Math.random()*5);
 			ele_two=(int)(Math.random()*ele_one);
-			problem.add(ele_one+"-"+ele_two);
+			problem.add(ele_one+"-"+ele_two+"=");
 			answer.add(ele_one-ele_two);
 			break;
 		case ZEROONE://0的计算1
 			ele_one=(int)(Math.random()*5);
 			ele_two=ele_one;
-			problem.add(ele_one+"-"+ele_two);
+			problem.add(ele_one+"-"+ele_two+"=");
 			answer.add(ele_one-ele_two);
 			break;
 		case ZERTWO://0的计算2
@@ -97,61 +97,53 @@ public  class Supply_Grade_1_top implements Runnable  {
 			answer.add(ele_one);
 			break;
 		case ADDINFIVEANDSIX://6和7的加减法
-			ele_one=(int)(Math.random()*7);
-			ele_two=(int)(Math.random()*7);
-			while(ele_two+ele_one!=6||ele_two+ele_one!=7){
-				ele_two=(int)(Math.random()*7);
-			}
-			AddAndSubMethod(ele_one,ele_two,choose);
+			ele_one=6+(int)(Math.random()*1);
+			ele_two=(int)(Math.random()*6);
+			ele_three=ele_one-ele_two;
+//			while(ele_two+ele_one!=6||ele_two+ele_one!=7){
+//				ele_two=(int)(Math.random()*7);
+//			}
+			//if(choose==1){
+				AddAndSubMethod(ele_three,ele_two,choose);
+			//}
+			//else{
+				//AddAndSubMethod(ele_three,ele_two,0);
+			//}
 			break;
 		
 		case ADDFORNINE://9的加减法
 			ele_one=(int)(Math.random()*9);
-			ele_two=(int)(Math.random()*9);
-			while(ele_two+ele_one!=9){
-				ele_two=(int)(Math.random()*9);
-			}
-			
+			ele_two=9-ele_one;
 			AddAndSubMethod(ele_one,ele_two,choose);
 			break;
 			
 			
 		case ADDINNINE://9以内的加减法
-			ele_one=(int)(Math.random()*9);
-			ele_two=(int)(Math.random()*9);
-			while(ele_two+ele_one>9){
-				ele_two=(int)(Math.random()*9);
-			}
+			ele_one=4+(int)(Math.random()*5);
+			ele_two=(int)(Math.random()*(9-ele_one));
 			AddAndSubMethod(ele_one,ele_two,choose);
 			break;
 			
 			
 		case ADDFORTEN://10的加减法
 			ele_one=(int)(Math.random()*10);
-			ele_two=(int)(Math.random()*10);
-			while(ele_two+ele_one!=10){
-				ele_two=(int)(Math.random()*10);
-			}
+			ele_two=10-ele_one;
 			AddAndSubMethod(ele_one,ele_two,choose);
 			break;
 			
 		case CONTINUEADD://连加
-			ele_one=(int)(Math.random()*10);
-			ele_two=(int)(Math.random()*10);
-			ele_three=(int)(Math.random()*10);
-			while(ele_two+ele_one+ele_three>10){
-				ele_two=(int)(Math.random()*10);
-				ele_three=(int)(Math.random()*10);
-			}
+			ele_one=(int)(Math.random()*4);
+			ele_two=(int)(Math.random()*4);
+			ele_three=(int)(Math.random()*2);
 			problem.add(ele_one+"+"+ele_two+"+"+ele_three+"=");
 			answer.add(ele_one+ele_two+ele_three);
 			break;
 			
 		case CONTINUESUD://连减
-			ele_one=(int)(Math.random()*10);
+			ele_one=2+(int)(Math.random()*8);
 			ele_two=(int)(Math.random()*ele_one);
-			ele_three=(int)(Math.random()*ele_two);
-			problem.add(ele_one+"-"+ele_two+"-"+ele_three);
+			ele_three=(int)(Math.random()*(ele_one-ele_two));
+			problem.add(ele_one+"-"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one-ele_two-ele_three);
 			break;
 			
@@ -177,13 +169,10 @@ public  class Supply_Grade_1_top implements Runnable  {
 			
 			
 		case ADDTHENSUB: //先加后减
-			ele_one=(int)(Math.random()*10);
-			ele_two=(int)(Math.random()*10);
-			ele_three=(int)(Math.random()*10);
-			while(ele_one+ele_two>10 || ele_one+ele_two-ele_three<0){
-				ele_two=(int)(Math.random()*10);
-				ele_three=(int)(Math.random()*10);
-			}
+			ele_one=(int)(Math.random()*8);
+			ele_two=(int)(Math.random()*(10-ele_one));
+			ele_three=(int)(Math.random()*(ele_one+ele_two));
+			
 			problem.add(ele_one+"+"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one+ele_two-ele_three);
 			break;
@@ -192,20 +181,14 @@ public  class Supply_Grade_1_top implements Runnable  {
 		case SUBTHENADD: //先减后加
 			ele_one=(int)(Math.random()*10);
 			ele_two=(int)(Math.random()*ele_one);
-			ele_three=(int)(Math.random()*10);
-			while(ele_one-ele_two+ele_three>10){
-				ele_two=(int)(Math.random()*10);
-				ele_three=(int)(Math.random()*10);
-			}
+			ele_three=(int)(Math.random()*(10-ele_one-ele_two));
 			problem.add(ele_one+"-"+ele_two+"+"+ele_three+"=");
 			answer.add(ele_one-ele_two+ele_three);
 			break;
+			
 		case ADDFOREIGHT:     //一图四式和8的加减法
 			ele_one=(int)(Math.random()*8);
-			ele_two=(int)(Math.random()*8);
-			while(ele_two+ele_one!=8){
-				ele_two=(int)(Math.random()*8);
-			}
+			ele_two=8-ele_one;
 			AddAndSubMethod(ele_one,ele_two,choose);
 			break;
 			
@@ -213,34 +196,22 @@ public  class Supply_Grade_1_top implements Runnable  {
 		case TENADD:  		//十加几
 			ele_one=10;
 			ele_two=(int)(Math.random()*10);
-			while(ele_two+ele_one>20){
-				ele_two=(int)(Math.random()*10);
-			}
 			AddAndSubMethod(ele_one,ele_two,1);
 			break;
 		case ADDNAME:		//加减法的个部分名称
 			ele_one=(int)(Math.random()*20);
-			ele_two=(int)(Math.random()*ele_one);
-			while(ele_two+ele_one>20){
-				ele_two=(int)(Math.random()*ele_one);
-			}
+			ele_two=(int)(Math.random()*(20-ele_one));
 			AddAndSubMethod(ele_one,ele_two,choose);
 			break;
 		case ADDFORTWI: 	//十几加几和相应的减
 			ele_one=(int)(10+Math.random()*9);
-			ele_two=(int)(Math.random()*9);
-			while(ele_two+ele_one>20){
-				ele_two=(int)(Math.random()*9);
-			}
+			ele_two=(int)(Math.random()*(20-ele_one));
 			AddAndSubMethod(ele_one,ele_two,choose);
 			
 			break;
 		case NINEADDWHAT:		//九加几相应的计算
 			ele_one=9;
-			ele_two=(int)(Math.random()*10);
-			while(ele_two+ele_one>20){
-				ele_two=(int)(Math.random()*10);
-			}
+			ele_two=1+(int)(Math.random()*8);
 			AddAndSubMethod(ele_one,ele_two,1);
 			break;
 		case SEVENEIGHT:		//876加几的计算方法
@@ -256,28 +227,25 @@ public  class Supply_Grade_1_top implements Runnable  {
 			else{
 				ele_one=6;
 			}
-			ele_two=(int)(Math.random()*20);
-			while(ele_two+ele_one>20){
-				ele_two=(int)(Math.random()*20);
-			}
+			ele_two=4+(int)(Math.random()*5);
 			AddAndSubMethod(ele_one,ele_two,1);
 			break;
 		case FIVETOTWO:			//5432加几的计算方法
 			if(choose==1&&choose_num==1){
 				ele_one=5;
+				ele_two=5+(int)(Math.random()*4);
 			}
 			else if(choose==0&&choose_num==1){
 				ele_one=4;
+				ele_two=6+(int)(Math.random()*3);
 			}
 			else if(choose==1&&choose_num==0){
 				ele_one=3;
+				ele_two=7+(int)(Math.random()*2);
 			}
 			else{
 				ele_one=2;
-			}
-			ele_two=(int)(Math.random()*20);
-			while(ele_two+ele_one>20){
-				ele_two=(int)(Math.random()*20);
+				ele_two=8+(int)(Math.random()*1);
 			}
 			AddAndSubMethod(ele_one,ele_two,1);
 			break;

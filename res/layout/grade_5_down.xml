@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/grade_5_down_q1" 
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -34,7 +34,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="长方体表面积的计算方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_5_down_12"
             android:layout_width="200dp"
@@ -44,7 +44,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="正方体表面积的计算方法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_5_down_13"
@@ -55,18 +55,17 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="长方体的体积的计算公式"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
            <TextView
             android:id="@+id/grade_5_down_14"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_below="@id/item_1_textview1"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="140dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="140dp"
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="正方体的体积公式"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
 
     </RelativeLayout>
 	<TextView
@@ -76,7 +75,7 @@
         android:text="@string/grade_5_down_q2" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -93,7 +92,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="求两个数最大公因数的方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_5_down_22"
             android:layout_width="200dp"
@@ -103,7 +102,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="求两个数最小公倍数的方法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_5_down_23"
@@ -114,7 +113,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="分数化为小数的方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          
           
          
@@ -128,7 +127,7 @@
         android:text="@string/grade_5_down_q3" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
@@ -145,7 +144,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="分数加法的含义和同分母分数加法的计算方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_5_down_32"
             android:layout_width="200dp"
@@ -155,7 +154,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="分数减法的含义和同分母分数减法的计算方法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_5_down_33"
@@ -166,39 +165,38 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="同分母分数连加、连减的计算方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
         <TextView
             android:id="@+id/grade_5_down_34"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_below="@id/item_1_textview1"
              android:layout_marginLeft="10dp"
              android:layout_marginTop="140dp"
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="异分母分数加、减法的计算方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
             <TextView
             android:id="@+id/grade_5_down_35"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_alignBottom="@id/grade_1_top_24"
+            android:layout_alignBottom="@id/grade_5_down_34"
             android:layout_centerHorizontal="true"
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="分数加减混合运算的运算顺序"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_5_down_36"
              android:layout_width="200dp"
              android:layout_height="100dp"
              android:layout_alignParentRight="true"
-             android:layout_alignBottom="@id/grade_1_top_24"
+            android:layout_alignBottom="@id/grade_5_down_34"
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="分数加法的简算"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
         
      </RelativeLayout>
 	  

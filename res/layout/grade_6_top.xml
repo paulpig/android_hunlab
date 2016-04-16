@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/grade_6_top_q1" 
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -34,7 +34,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="分数乘整数的计算方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_6_top_12"
             android:layout_width="200dp"
@@ -44,7 +44,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="分数乘分数的计算方法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_6_top_13"
@@ -55,18 +55,17 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="分数乘分数的简便算法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
            <TextView
             android:id="@+id/grade_6_top_14"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_below="@id/item_1_textview1"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="140dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="140dp"
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="连续求一个数的几分之几是多少的问题的解法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
 
     </RelativeLayout>
 	<TextView
@@ -76,7 +75,7 @@
         android:text="@string/grade_6_top_q2" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -93,7 +92,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="分数除以整数的计算方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_6_top_22"
             android:layout_width="200dp"
@@ -103,7 +102,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="一个数除以分数的计算方法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_6_top_23"
@@ -114,7 +113,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="求比中未知项的方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          
        
     </RelativeLayout>
@@ -126,7 +125,7 @@
         android:text="@string/grade_6_top_q3" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
@@ -143,7 +142,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="圆的周长计算公式"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_6_top_32"
             android:layout_width="200dp"
@@ -153,7 +152,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="圆的面积计算公式的应用"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
       
         

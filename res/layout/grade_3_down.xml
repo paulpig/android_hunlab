@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/grade_3_down_q1" 
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -34,7 +34,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="用一位数除商是整十、整百、整千的口算方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_3_down_12"
             android:layout_width="200dp"
@@ -44,7 +44,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="一位数除两位数（被除数各个数位上的数都能被整除）的计算方法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_3_down_13"
@@ -55,18 +55,17 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="关于0的除法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
            <TextView
             android:id="@+id/grade_3_down_14"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_below="@id/item_1_textview1"
              android:layout_marginLeft="10dp"
              android:layout_marginTop="140dp"
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="商中间有0的除法的计算方法（除的过程中没有余数）"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
            <TextView
             android:id="@+id/grade_3_down_15"
             android:layout_width="200dp"
@@ -76,7 +75,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="商末尾有0的除法的计算方法（商没有余数）"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_3_down_16"
@@ -87,19 +86,18 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="商中间有0的除法的计算方法（除的过程中有余数）"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          
            <TextView
             android:id="@+id/grade_3_down_17"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_below="@id/item_1_textview1"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="280dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="280dp"
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="商末尾有0的除法的计算方法 （商中有余数）"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
 
     </RelativeLayout>
 	<TextView
@@ -109,7 +107,7 @@
         android:text="@string/grade_3_down_q2" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -126,7 +124,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="平均数的含义及平均数的方法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          
     </RelativeLayout>
     
@@ -137,7 +135,7 @@
         android:text="@string/grade_3_down_q3" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
@@ -154,7 +152,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="两位数乘两位数（不进位）的笔算方法"
-            android:textSize="25dp"/>   
+            android:textSize="18dp"/>   
      </RelativeLayout>
 	  
 	
@@ -165,10 +163,9 @@
         android:text="@string/grade_3_down_q4" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 	<RelativeLayout
-        android:id="@+id/relativeLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
        >
@@ -182,7 +179,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="小数加法的计算方法"
-            android:textSize="25dp"/>   
+            android:textSize="18dp"/>   
              <TextView
             android:id="@+id/grade_3_down_42"
             android:layout_width="200dp"
@@ -192,21 +189,19 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="小数减法的计算方法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
      </RelativeLayout>
      
 	
 		<TextView
-        android:id="@+id/item_1_textview3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_3_down_q5" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 	<RelativeLayout
-        android:id="@+id/relativeLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
        >
@@ -220,7 +215,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="用乘法两步计算解决问题"
-            android:textSize="25dp"/>   
+            android:textSize="18dp"/>   
      </RelativeLayout>
 </LinearLayout>
 </ScrollView>

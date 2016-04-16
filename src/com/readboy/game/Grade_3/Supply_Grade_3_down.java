@@ -13,9 +13,11 @@ public class Supply_Grade_3_down implements Runnable{
 		int count_float=0;
 		int type; //出题类型
 		boolean is_float=false;
-		ArrayList<String> problem;
-		ArrayList<Integer> answer;
-		ArrayList<Float> answer2;
+		private ArrayList<String> problem=new ArrayList<String>();
+		private ArrayList<Integer> answer=new ArrayList<Integer>();
+		private ArrayList<String> answer1=new ArrayList<String>();
+		private ArrayList<String> problem1=new ArrayList<String>();
+		boolean stopThread;
 		
 		  final private int MULANDDIV=1;  //商末尾有0的除法的计算方法（商中有余数）
 		  final private int CANDIVALL=2;	//商末尾有0的除法计算方法（商没有余数）
@@ -45,6 +47,11 @@ public class Supply_Grade_3_down implements Runnable{
 			this.handler_program=handler_program;
 			this.Alock=Alock;
 			this.type=type;
+			stopThread=false;
+		}
+		
+		public void setTag(boolean stopThread){
+			this.stopThread=stopThread;
 		}
 		
 		/*产生题目*/
@@ -59,11 +66,10 @@ public class Supply_Grade_3_down implements Runnable{
 			switch (type) {
 			case MULANDDIV://商末尾有0的除法的计算方法（商中有余数）
 				is_float=true;
-				ele_one=(int)(1+Math.random()*98)*10;
+				ele_one=(int)(11+Math.random()*88)*10;
 				ele_two=(int)(2+Math.random()*7);
 				ele_three=(int)(1+Math.random()*(ele_two-2));
-				problem.add(ele_one*ele_two+ele_three+"÷"+ele_two+"=");
-				answer2.add((float)(ele_one*ele_two+ele_three)/ele_two);
+				addStrElement((ele_one*ele_two+ele_three),ele_two);
 				break;
 			case CANDIVALL://商末尾有0的除法计算方法（商没有余数）
 				ele_one=(int)(1+Math.random()*98)*10;
@@ -77,8 +83,7 @@ public class Supply_Grade_3_down implements Runnable{
 				ele_two=(int)(1+Math.random()*8)+ele_one;
 				ele_three=(int)(2+Math.random()*7);
 				ele_four=(int)(1+Math.random()*(ele_three-2));
-				problem.add(ele_three*ele_two+ele_four+"÷"+ele_three+"=");
-				answer2.add((float)(ele_three*ele_two+ele_four)/ele_three);
+				addStrElement((ele_three*ele_two+ele_four),ele_three);
 				break;
 			case DIVSPACE://商中间有0的除法的计算方法（除的过程中没有余数）
 				ele_one=(int)(1+Math.random()*8)*100;
@@ -110,7 +115,7 @@ public class Supply_Grade_3_down implements Runnable{
 				else{
 					ele_two=(int)(100+Math.random()*899)*10;
 				}
-				problem.add(ele_one*ele_two+"÷"+ele_one);
+				problem.add(ele_one*ele_two+"÷"+ele_one+"=");
 				answer.add((ele_one*ele_two)/ele_one);
 				break;
 				
@@ -131,26 +136,50 @@ public class Supply_Grade_3_down implements Runnable{
 				break;
 				
 			case ADDANDSUB://两位数乘两位数（不进位）的笔算方法
-				ele_one=(int)(Math.random()*9);
+				ele_one=(int)(2+Math.random()*7);
 				ele_two=(int)(Math.random()*(int)(10/ele_one));
-				ele_three=(int)(1+Math.random()*8);
-				ele_four=(int)(1+Math.random()*((int)(10/ele_one)-1));
-				while(ele_two==10 || ele_four==10){
-					ele_two=(int)(Math.random()*(int)(10/ele_one));
-					ele_four=(int)(1+Math.random()*((int)(10/ele_one)-1));
-				}
-				problem.add(ele_one+ele_three*10+"*"+ele_two+ele_four*10+"=");
+				ele_three=(int)(2+Math.random()*7);
+				ele_four=(int)(1+Math.random()*((int)(10/ele_three)-1));
+				int temp=ele_two+ele_four*10;
+				problem.add(ele_one+ele_three*10+"*"+temp+"=");
 				answer.add((ele_one+ele_three*10)*(ele_two+ele_four*10));
 				break;
 				
 			case SMALLBRACKET://平均数的含义及求平均数的方法
+				is_float=true;
 				ele_one=(int)(10+Math.random()*989);
 				ele_two=(int)(10+Math.random()*989);
 				ele_three=(int)(10+Math.random()*989);
 				ele_four=(int)(10+Math.random()*989);
 				int num_this=(int)(1+Math.random()*3);
-				problem.add("("+ele_one+"+"+ele_three+"+"+ele_two+"+"+ele_four+")"+"÷"+num_this+"=");
-				answer2.add((float)((ele_one+ele_two+ele_three+ele_four)/num_this));
+				int temp1=ele_one+ele_two+ele_three+ele_four;
+				String str = String.valueOf((float)(temp1*1.0/num_this));
+				int index=str.indexOf(".");
+				if(temp1%num_this!=0){
+					problem1.add("("+ele_one+"+"+ele_three+"+"+ele_two+"+"+ele_four+")"+"÷"+num_this+"=");
+					if(index==1 && str.length()==3)
+						answer1.add(str.substring(0, 3));
+					else if(index==1 && str.length()>=4){
+						answer1.add(str.substring(0, 4));
+					}
+					else if(index ==2 && str.length()==4)
+						answer1.add(str.substring(0, 4));
+					else if(index ==2 && str.length()>=5)
+						answer1.add(str.substring(0, 5));
+					else if(index ==3 && str.length()==5)
+						answer1.add(str.substring(0, 5));
+					else if(index ==3 && str.length()>=6)
+						answer1.add(str.substring(0, 6));
+					else if(index ==4 && str.length()==6)
+						answer1.add(str.substring(0, 6));
+					else if(index ==4 && str.length()>=7)
+						answer1.add(str.substring(0, 7));
+				}
+				else{
+					answer.add((temp1)/num_this);
+					problem.add("("+ele_one+"+"+ele_three+"+"+ele_two+"+"+ele_four+")"+"÷"+num_this+"=");
+					is_float=false;
+				}
 				break;
 				
 				
@@ -160,8 +189,22 @@ public class Supply_Grade_3_down implements Runnable{
 				ele_two=(int)(1+Math.random()*8);
 				ele_three=(int)(10+Math.random()*89);
 				ele_four=(int)(1+Math.random()*8);
-				problem.add(ele_one+"."+ele_two+"+"+ele_three+"."+ele_four+"=");
-				answer2.add((float)(ele_one+ele_two*0.1)+(float)(ele_three+ele_four*0.1));
+				double temp2=ele_one+ele_two*0.1+ele_three+ele_four*0.1;
+				String str1 = String.valueOf(temp2);
+				int index1=str1.indexOf(".");
+				if(str1.charAt(index1+1)!='0'){
+					problem1.add(ele_one+"."+ele_two+"+"+ele_three+"."+ele_four+"=");
+					if(index1==2)
+						answer1.add(str1.substring(0, 4));
+					else if(index1==3){
+						answer1.add(str1.substring(0, 5));
+					}
+				}
+				else{
+					problem.add(ele_one+"."+ele_two+"+"+ele_three+"."+ele_four+"=");
+					answer.add((int)(temp2));
+					is_float=false;
+				}
 				break;
 				
 				
@@ -171,8 +214,25 @@ public class Supply_Grade_3_down implements Runnable{
 				ele_two=(int)(1+Math.random()*8);
 				ele_three=(int)(10+Math.random()*(ele_one-11));
 				ele_four=(int)(1+Math.random()*8);
-				problem.add(ele_one+"."+ele_two+"-"+ele_three+"."+ele_four+"=");
-				answer2.add((float)(ele_one+ele_two*0.1)-(float)(ele_three+ele_four*0.1));
+				double temp3=ele_one+ele_two*0.1-(ele_three+ele_four*0.1);
+				String str3 = String.valueOf(temp3);
+				int index3=str3.indexOf(".");
+				if(str3.charAt(index3+1)!='0'){
+					problem1.add(ele_one+"."+ele_two+"-"+ele_three+"."+ele_four+"=");
+					if(index3==2)
+						answer1.add(str3.substring(0, 4));
+					else if(index3==3){
+						answer1.add(str3.substring(0, 5));
+					}
+					else if(index3==1){
+						answer1.add(str3.substring(0, 3));
+					}
+				}
+				else{
+					problem.add(ele_one+"."+ele_two+"-"+ele_three+"."+ele_four+"=");
+					answer.add((int)(temp3));
+					is_float=false;
+				}
 				break;
 			default:
 				break;
@@ -223,16 +283,44 @@ public class Supply_Grade_3_down implements Runnable{
 			return result[choose_which];
 		}
 		
+		/*具体题目添加*/
+		public void addStrElement(int d,int e){
+			String str = String.valueOf((d*1.0/(e*1.0)));
+			int index=str.indexOf(".");
+			if(d%e!=0){
+				problem1.add(d+"÷"+e+"=");
+				if(index==1 && str.length()==3)
+					answer1.add(str.substring(0, 3));
+				else if(index==1 && str.length()>=4){
+					answer1.add(str.substring(0, 4));
+				}
+				else if(index ==2 && str.length()==4)
+					answer1.add(str.substring(0, 4));
+				else if(index ==2 && str.length()>=5)
+					answer1.add(str.substring(0, 5));
+				else if(index==3 && str.length()==5)
+					answer1.add(str.substring(0,5));
+				else if(index==3 && str.length()>=6)
+					answer1.add(str.substring(0,6));
+			}
+			else{
+				answer.add((int)d/(int)e);
+				problem.add(d+"÷"+e+"=");
+				is_float=false;
+			}
+		}
+		
+		
 		public void run() {
 			problem=new ArrayList<String>();
 			answer=new ArrayList<Integer>();
-			while(true){
+			while(!stopThread){
 				is_float=false;
 				CreateSubject();
 				Message message = new Message(); 
 				Bundle bundle=new Bundle();
-				bundle.putString("problem",problem.get(count));
 				if(!is_float){
+					bundle.putString("problem",problem.get(count));
 					bundle.putInt("answer", answer.get(count));
 					bundle.putBoolean("is_float",false);
 					message.setData(bundle);
@@ -240,7 +328,8 @@ public class Supply_Grade_3_down implements Runnable{
 					count++;
 				}
 				else{
-					bundle.putFloat("answer", answer2.get(count_float));
+					bundle.putString("problem",problem1.get(count_float));
+					bundle.putString("answer", answer1.get(count_float));
 					bundle.putBoolean("is_float",true);
 					message.setData(bundle);
 					handler_program.sendMessage(message);

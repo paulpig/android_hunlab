@@ -1,27 +1,47 @@
 package com.readboy.game.Grade_3;
 
+import com.readboy.mentalcalculation.R;
+import com.readboy.HandWrite.*;
+
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Switch;
+import android.widget.ImageView;
 
-import com.readboy.mentalcalculation.R;
 import com.readboy.game.GameActivity;
+import com.readboy.game.Watcher;
+import com.readboy.game.rankingList;
+import com.readboy.game.GameActivity.WorkThread;
 
-public class Grade_3_top extends GameActivity{
+public class Grade_3_top extends GameActivity implements Watcher{
 
-	protected Object Alock;
+	//protected Object Alock;
+	
+	Supply_Grade_3_top supply_project_thread;
+	 
 	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Alock=new Object();
+        correct = false;
 		GetProAndAns(type);
+		initTimer();
 		IsRight();
+		intent_type="30"+type;
+		rankingListen();
     }
 	
+	protected void initTimer(){
+		//Watched watched = new DrawView();  
+		dv.add(this);
+	}
 	
 	protected void GetProAndAns(int type){
 		 Handler problem_hander=new Handler(){
@@ -31,65 +51,50 @@ public class Grade_3_top extends GameActivity{
 				Bundle b = msg.getData();
 				if(!b.getBoolean("is_float")){
 					answer = b.getInt("answer");
+					Log.i("answer_this",answer+"");
 					is_float=false;
 				}
 				else{
-					answer_float= b.getFloat("answer");
+					answer_float= b.getString("answer");
+					Log.i("answer_this",answer_float);
 					is_float=true;
 				}
 				problem=b.getString("problem");
 				content_of_game.setText(problem);
 	         }
 		};
-		Supply_Grade_3_top supply_project_thread=new Supply_Grade_3_top(problem_hander,Alock,type);
+		supply_project_thread=new Supply_Grade_3_top(problem_hander,Alock,type);
 		new Thread(supply_project_thread).start();
 	 }
 	
 	 
 	protected void IsRight(){
-		 sure.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(is_float==false){
-					 int in_put_answer=Integer.parseInt(answer_of_game.getText().toString());  
-					 if(in_put_answer==answer){
-						 /*播放正确动画并更新分数*/
-						 UpSuccessAndGrade();
-						 
-						 synchronized (Alock) {  
-							 Alock.notifyAll();  
-		                     Log.v("information","notify");  
-		                    }                     
-					 }
-					 
-					 else{
-						 /*播放错误动画*/
-						 UpFail();
-						 
-					 }
-				}
-			else{
-				float in_put_answer=Float.parseFloat(answer_of_game.getText().toString());  
-				float change_result=(float)((int)(in_put_answer*100)/100.0);
-				 if(in_put_answer==change_result){
-					 /*播放正确动画并更新分数*/
-					 UpSuccessAndGrade();
-					 
-					 synchronized (Alock) {  
-						 Alock.notifyAll();  
-	                     Log.v("information","notify");  
-	                    }                     
-				 }
-				 
-				 else{
-					 /*播放错误动画*/
-					 UpFail();
-					 
-				 }
-			}
-			}
-		});
 	 }
+	
+	protected void onDestroy() {
+		System.out.println("-----------onDestroy------");
+        stopThread=true;
+        count_down_thread.setTag(stopThread);
+        supply_project_thread.setTag(stopThread);
+        super.onDestroy();
+	}
+	
+	
+	//不同页面的传递rankingList的数据不相同,传递数据：1.储存数据的xml名字  2.当前的分数
+	protected void rankingListen(){
+		 ranking.setOnClickListener(new OnClickListener() {
+				public void onClick(View arg0) {
+					 Intent intent = new Intent();  
+		             intent.setClass(Grade_3_top.this, rankingList.class);
+		             
+		             intent.putExtra("game_type",intent_type);
+		             intent.putExtra("grade",student_grade);
+		             startActivity(intent);
+				}
+			});
+	}
+	
+	
 }
+
+

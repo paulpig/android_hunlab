@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    >
+
+    <RelativeLayout
+        android:layout_width="500dp"
+        android:layout_height="300dp"
+        android:background="@drawable/rect_blue" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="提示"
+            android:textSize="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:text="1.π取3.14."
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:text="3.若除不尽，保留两位小数。"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"
+            android:text="3.若题目中有分数，则结果输入分数。"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="250dp"
+            android:background="@drawable/rect_org"
+            android:gravity="center"
+            android:text="下次提醒"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="360dp"
+            android:layout_marginTop="250dp"
+            android:gravity="center"
+            android:text="不再提醒"
+            android:textSize="20sp" />
+        
+        <TextView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="360dp"
+            android:layout_marginTop="260dp"
+         	android:background="@drawable/click_back"
+            
+            />
+        <TextView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="360dp"
+            android:layout_marginTop="260dp"
+            android:background="@drawable/click_ok"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    
+ </RelativeLayout>

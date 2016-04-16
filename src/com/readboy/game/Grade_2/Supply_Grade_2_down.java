@@ -13,7 +13,7 @@ public class Supply_Grade_2_down implements Runnable  {
 	int type; //出题类型
 	ArrayList<String> problem;
 	ArrayList<Integer> answer;
-	
+	boolean stopThread;
 	
 	  final private int MULANDDIV=1;  //乘除混合运算的顺序
 	  final private int CANDIVALL=2;	//求一个数是另一个数几倍的解题方法
@@ -42,8 +42,12 @@ public class Supply_Grade_2_down implements Runnable  {
 		this.handler_program=handler_program;
 		this.Alock=Alock;
 		this.type=type;
+		stopThread=false;
 	}
 	
+	public void setTag(boolean stopThread){
+		this.stopThread=stopThread;
+	}
 	/*产生题目*/
 	
 	public  void CreateSubject(){
@@ -57,7 +61,7 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=IntFactor(ele_one*ele_two);
-			problem.add(ele_one+"*"+ele_two+"÷"+ele_three);
+			problem.add(ele_one+"*"+ele_two+"÷"+ele_three+"=");
 			answer.add(ele_one*ele_two/ele_three);
 			break;
 		case CANDIVALL://求一个数是另一个数几倍的解题方法
@@ -93,7 +97,7 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=IntFactor(ele_one*ele_two);
-			problem.add(ele_one+"*"+ele_two+"÷"+ele_three);
+			problem.add(ele_one+"*"+ele_two+"÷"+ele_three+"=");
 			answer.add(ele_one*ele_two/ele_three);
 			break;
 			
@@ -101,7 +105,7 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=(int)(1+Math.random()*8);
-			problem.add(ele_one+"*"+ele_two+"+"+ele_three);
+			problem.add(ele_one+"*"+ele_two+"+"+ele_three+"=");
 			answer.add(ele_one*ele_two+ele_three);
 			break;
 			
@@ -110,18 +114,15 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=(int)(1+Math.random()*(ele_one*ele_two-1));
-			problem.add(ele_one+"*"+ele_two+"-"+ele_three);
+			problem.add(ele_one+"*"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one*ele_two-ele_three);
 			break;
 			
 		case ADDANDSUB://用加法和减法两步计算解决问题
 			ele_one=(int)(10+Math.random()*79);
-			ele_two=(int)(10+Math.random()*79);
-			while(ele_one+ele_two>100){
-				ele_two=(int)(10+Math.random()*79);
-			}
+			ele_two=(int)(10+Math.random()*(90-ele_one));
 			ele_three=(int)(10+Math.random()*(ele_one+ele_two-10));
-			problem.add(ele_one+"+"+ele_two+"-"+ele_three);
+			problem.add(ele_one+"+"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one+ele_two-ele_three);
 			break;
 			
@@ -130,12 +131,12 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_two=(int)(10+Math.random()*79);
 			ele_three=(int)(10+Math.random()*79);
 			if(choose==1){
-				problem.add(ele_one+"+ ("+ele_two+"+"+ele_three+")");
+				problem.add(ele_one+"+ ("+ele_two+"+"+ele_three+")"+"=");
 				answer.add(ele_one+ele_two+ele_three);
 			}
 			else{
 				ele_three=(int)(Math.random()*(ele_two-10));
-				problem.add(ele_one+"+ ("+ele_two+"-"+ele_three+")");
+				problem.add(ele_one+"+ ("+ele_two+"-"+ele_three+")"+"=");
 				answer.add(ele_one+(ele_two-ele_three));
 			}
 			break;
@@ -176,12 +177,12 @@ public class Supply_Grade_2_down implements Runnable  {
 	/*计算加减法*/
 	public void AddAndSubMethod(int num1,int num2,int choose){
 		if(choose==1){
-			problem.add(num1+"+"+num2);
+			problem.add(num1+"+"+num2+"=");
 			answer.add(num1+num2);
 		}
 		else{
 			int ele_sum=num1+num2;
-			problem.add(ele_sum+"-"+num1);
+			problem.add(ele_sum+"-"+num1+"=");
 			answer.add(num2);
 		}
 	}
@@ -190,12 +191,12 @@ public class Supply_Grade_2_down implements Runnable  {
 	/*计算乘除*/
 	public void MulAndDivMethod(int num1,int num2,int choose){
 		if(choose==1){
-			problem.add(num1+"*"+num2);
+			problem.add(num1+"*"+num2+"=");
 			answer.add(num1*num2);
 		}
 		else{
 			int ele_sum=num1*num2;
-			problem.add(ele_sum+"÷"+num1);
+			problem.add(ele_sum+"÷"+num1+"=");
 			answer.add(num2);
 		}
 	}
@@ -218,7 +219,7 @@ public class Supply_Grade_2_down implements Runnable  {
 	public void run() {
 		problem=new ArrayList<String>();
 		answer=new ArrayList<Integer>();
-		while(true){
+		while(!stopThread){
 			CreateSubject();
 			Message message = new Message(); 
 			Bundle bundle=new Bundle();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.renderscript.Program;
+//import android.renderscript.Program;
 
 public class Supply_Grade_2_top implements Runnable{
 	Handler handler_program;
@@ -14,7 +14,7 @@ public class Supply_Grade_2_top implements Runnable{
 	int type; //出题类型
 	ArrayList<String> problem;
 	ArrayList<Integer> answer;
-	
+	boolean stopThread;
 	
 	  final private int NOINADD=1;  //100以内不进位加法
 	  final private int NOINSUB=2;	//100以内不退位减法
@@ -45,6 +45,10 @@ public class Supply_Grade_2_top implements Runnable{
 		this.handler_program=handler_program;
 		this.Alock=Alock;
 		this.type=type;
+		stopThread=false;
+	}
+	public void setTag(boolean stopThread){
+		this.stopThread=stopThread;
 	}
 	
 	/*产生题目*/
@@ -55,46 +59,45 @@ public class Supply_Grade_2_top implements Runnable{
 		int ele_three=-1;
 		int choose=Math.random()>0.5?1:0;   //选择加减
 		int choose_num=Math.random()>0.5?1:0;//选择数字
+		int temp;
 		switch (type) {
 		case NOINADD://100以内不进位加法
 			ele_one=(int)(10+Math.random()*89);
-			ele_two=(int)(10+Math.random()*(90-ele_one));
-			while(ele_one%10+ele_two%10>=10){
-				ele_two=(int)(Math.random()*(100-ele_one));
-			}
+			int judge_num1=ele_one%10;
+			temp=ele_one/10;
+			ele_two=(int)(Math.random()*(9-judge_num1))+(int)(Math.random()*(9-temp))*10;
 			AddAndSubMethod(ele_one,ele_two,1);
 			break;
 		case NOINSUB://100以内不退位减法
 			ele_one=(int)(10+Math.random()*89);
-			ele_two=(int)(Math.random()*ele_one);
-			while(ele_one%10<ele_two%10){
-				ele_two=(int)(Math.random()*ele_one);
-			}
+			int judge_num3=ele_one%10;
+			temp=ele_one/10;
+			ele_two=(int)(Math.random()*(judge_num3))+(int)(Math.random()*(temp))*10;
 			AddAndSubMethod(ele_one,ele_two,0);
 			break;
 		case ADDANDSUB:////加减混合
 			ele_one=(int)(10+Math.random()*79);
-			ele_two=(int)(10+Math.random()*79);
-			while(ele_one+ele_two>100){
-				ele_two=(int)(10+Math.random()*79);
-			}
+			ele_two=(int)(10+Math.random()*(90-ele_one));
 			ele_three=(int)(10+Math.random()*(ele_one+ele_two-10));
-			problem.add(ele_one+"+"+ele_two+"-"+ele_three);
+			problem.add(ele_one+"+"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one+ele_two-ele_three);
 			break;
 		case INADD://进位加法
-			ele_one=(int)(10+Math.random()*89);
-			ele_two=(int)(10+Math.random()*(90-ele_one));
-			while(ele_one%10+ele_two%10<10){
-				ele_two=(int)(10+Math.random()*(90-ele_one));
+			ele_one=(int)(20+Math.random()*59);
+			int judge_num2=ele_one%10;
+			while(judge_num2==0){
+				ele_one=(int)(10+Math.random()*89);
+				judge_num2=ele_one%10;
 			}
+			temp=ele_one/10;
+			ele_two=10-judge_num2+(int)(Math.random()*(judge_num2-1))+(int)(Math.random()*(8-temp))*10;
 			AddAndSubMethod(ele_one,ele_two,1);
 			break;
 		case ADDADD://连加
 			ele_one=(int)(10+Math.random()*69);
 			ele_two=(int)(10+Math.random()*(80-ele_one));
 			ele_three=(int)(10+Math.random()*(90-ele_one-ele_two));
-			problem.add(ele_one+"+"+ele_two+"+"+ele_three);
+			problem.add(ele_one+"+"+ele_two+"+"+ele_three+"=");
 			answer.add(ele_one+ele_two+ele_three);
 			break;
 		
@@ -102,17 +105,20 @@ public class Supply_Grade_2_top implements Runnable{
 			ele_one=(int)(30+Math.random()*70);
 			ele_two=(int)(10+Math.random()*(ele_one-30));
 			ele_three=(int)(10+Math.random()*(ele_one-ele_two-10));
-			problem.add(ele_one+"-"+ele_two+"-"+ele_three);
+			problem.add(ele_one+"-"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one-ele_two-ele_three);
 			break;
 			
 			
 		case INSUB://退位减法
-			ele_one=(int)(10+Math.random()*89);
-			ele_two=(int)(10+Math.random()*(ele_one-10));
-			while(ele_one%10>=ele_two){
-				ele_two=(int)(10+Math.random()*(ele_one-10));
+			ele_one=(int)(20+Math.random()*78);
+			int judge_num4=ele_one%10;
+			while(judge_num4==9){
+				ele_one=(int)(10+Math.random()*89);
+				judge_num4=ele_one%10;
 			}
+			temp=ele_one/10;
+			ele_two=judge_num4+1+(int)(Math.random()*(8-judge_num4))+(int)(Math.random()*(temp-1))*10;
 			AddAndSubMethod(ele_one,ele_two,0);
 			break;
 			
@@ -235,12 +241,12 @@ public class Supply_Grade_2_top implements Runnable{
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=(int)(Math.random()*9);
 			if(choose==1){
-				problem.add(ele_one+"*"+ele_two+"+"+ele_three);
+				problem.add(ele_one+"*"+ele_two+"+"+ele_three+"=");
 				answer.add(ele_one*ele_two+ele_three);
 			}
 			else{
 				ele_three=(int)(Math.random()*(ele_one*ele_two));
-				problem.add(ele_one+"*"+ele_two+"-"+ele_three);
+				problem.add(ele_one+"*"+ele_two+"-"+ele_three+"=");
 				answer.add(ele_one*ele_two-ele_three);
 			}
 			break;
@@ -254,12 +260,12 @@ public class Supply_Grade_2_top implements Runnable{
 	/*计算加减法*/
 	public void AddAndSubMethod(int num1,int num2,int choose){
 		if(choose==1){
-			problem.add(num1+"+"+num2);
+			problem.add(num1+"+"+num2+"=");
 			answer.add(num1+num2);
 		}
 		else{
-			int ele_sum=num1+num2;
-			problem.add(ele_sum+"-"+num1);
+			//int ele_sum=num1+num2;
+			problem.add(num1+"-"+num2+"=");
 			answer.add(num2);
 		}
 	}
@@ -269,12 +275,12 @@ public class Supply_Grade_2_top implements Runnable{
 	/*计算乘除*/
 	public void MulAndDivMethod(int num1,int num2,int choose){
 		if(choose==1){
-			problem.add(num1+"*"+num2);
+			problem.add(num1+"*"+num2+"=");
 			answer.add(num1*num2);
 		}
 		else{
 			int ele_sum=num1*num2;
-			problem.add(ele_sum+"÷"+num1);
+			problem.add(ele_sum+"÷"+num1+"=");
 			answer.add(num2);
 		}
 	}
@@ -282,7 +288,7 @@ public class Supply_Grade_2_top implements Runnable{
 	public void run() {
 		problem=new ArrayList<String>();
 		answer=new ArrayList<Integer>();
-		while(true){
+		while(!stopThread){
 			CreateSubject();
 			Message message = new Message(); 
 			Bundle bundle=new Bundle();

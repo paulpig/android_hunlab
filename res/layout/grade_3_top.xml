@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/grade_3_top_q1" 
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -34,7 +34,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="两位数加两位数的连续进位加法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          
 
     </RelativeLayout>
@@ -45,7 +45,7 @@
         android:text="@string/grade_3_top_q2" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -62,7 +62,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="长方形的周长"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
         
     </RelativeLayout>
     
@@ -73,7 +73,7 @@
         android:text="@string/grade_3_top_q3" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
@@ -90,7 +90,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="余数和除数的关系"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
         
      </RelativeLayout>
      <TextView
@@ -100,9 +100,8 @@
         android:text="@string/grade_3_top_q4" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
 	 <RelativeLayout
-        android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_1_textview4" >
@@ -116,7 +115,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="两位数乘一位数（不进位）的笔算乘法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_3_top_42"
             android:layout_width="200dp"
@@ -126,7 +125,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="两、三位数乘一位数（不连续进位）的笔算乘法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_3_top_43"
@@ -137,18 +136,17 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="中间带0的三位数乘一位数"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
            <TextView
             android:id="@+id/grade_3_top_44"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:layout_below="@id/item_1_textview1"
              android:layout_marginLeft="10dp"
              android:layout_marginTop="140dp"
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="末尾带0的三位数乘一位数"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
 
     </RelativeLayout>
     
@@ -160,9 +158,8 @@
         android:text="@string/grade_3_top_q5" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="25dp"/>
+        android:textSize="18dp"/>
 	 <RelativeLayout
-        android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_1_textview4" >
@@ -176,7 +173,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="同分母分数加法"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
          <TextView
             android:id="@+id/grade_3_top_52"
             android:layout_width="200dp"
@@ -186,7 +183,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="同分母分数减法"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
          <TextView
              android:id="@+id/grade_3_top_53"
@@ -197,7 +194,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="1减去几分之几"
-            android:textSize="25dp"/>
+            android:textSize="18dp"/>
           
 
     </RelativeLayout>

@@ -216,8 +216,36 @@ public class MainActivity extends FragmentActivity{
 						FragmentTransaction transaction2;
 						transaction2 =manager.beginTransaction()  
 				                .hide(mFragments1).hide(mFragments1);
-					    transaction2.replace(R.id.relative,new MyFragment_Grade_3_top());
+					    transaction2.replace(R.id.relative,new MyFragment_Grade_2_top());
 					    transaction2.commit();
+						break;
+					case 5:
+						FragmentTransaction transaction3;
+						transaction3 =manager.beginTransaction()  
+				                .hide(mFragments1).hide(mFragments1);
+					    transaction3.replace(R.id.relative,new MyFragment_Grade_3_top());
+					    transaction3.commit();
+						break;
+					case 7:
+						FragmentTransaction transaction4;
+						transaction4 =manager.beginTransaction()  
+				                .hide(mFragments1).hide(mFragments1);
+					    transaction4.replace(R.id.relative,new MyFragment_Grade_4_top());
+					    transaction4.commit();
+						break;
+					case 9:
+						FragmentTransaction transaction5;
+						transaction5 =manager.beginTransaction()  
+				                .hide(mFragments1).hide(mFragments1);
+					    transaction5.replace(R.id.relative,new MyFragment_Grade_5_top());
+					    transaction5.commit();
+						break;
+					case 11:
+						FragmentTransaction transaction6;
+						transaction6 =manager.beginTransaction()  
+				                .hide(mFragments1).hide(mFragments1);
+					    transaction6.replace(R.id.relative,new MyFragment_Grade_6_top());
+					    transaction6.commit();
 						break;
 					default:
 						break;
@@ -248,9 +276,38 @@ public class MainActivity extends FragmentActivity{
 					FragmentTransaction transaction3;
 					transaction3 =manager.beginTransaction()  
 			                .hide(mFragments1).hide(mFragments1);
-				    transaction3.replace(R.id.relative,new MyFragment_Grade_4_top());
+				    transaction3.replace(R.id.relative,new MyFragment_Grade_2_down());
 				    transaction3.commit();
 					break;
+				case 6:
+					FragmentTransaction transaction4;
+					transaction4 =manager.beginTransaction()  
+			                .hide(mFragments1).hide(mFragments1);
+				    transaction4.replace(R.id.relative,new MyFragment_Grade_3_down());
+				    transaction4.commit();
+					break;
+				case 8:
+					FragmentTransaction transaction5;
+					transaction5 =manager.beginTransaction()  
+			                .hide(mFragments1).hide(mFragments1);
+				    transaction5.replace(R.id.relative,new MyFragment_Grade_4_down());
+				    transaction5.commit();
+					break;
+				case 10:
+					FragmentTransaction transaction6;
+					transaction6 =manager.beginTransaction()  
+			                .hide(mFragments1).hide(mFragments1);
+				    transaction6.replace(R.id.relative,new MyFragment_Grade_5_down());
+				    transaction6.commit();
+					break;
+				case 12:
+					FragmentTransaction transaction7;
+					transaction7 =manager.beginTransaction()  
+			                .hide(mFragments1).hide(mFragments1);
+				    transaction7.replace(R.id.relative,new MyFragment_Grade_6_down());
+				    transaction7.commit();
+					break;
+					
 				default:
 					break;
 			}

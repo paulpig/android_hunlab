@@ -1,11 +1,13 @@
 package com.readboy.game.Grade_3;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.renderscript.Program;
+//import android.renderscript.Program;
 
 public class Supply_Grade_3_top implements Runnable{
 		Handler handler_program;
@@ -14,9 +16,11 @@ public class Supply_Grade_3_top implements Runnable{
 		int count_float=0;
 		int type; //出题类型
 		boolean is_float=false;
-		ArrayList<String> problem;
-		ArrayList<Integer> answer;
-		ArrayList<Float> answer2;
+		private ArrayList<String> problem=new ArrayList<String>();
+		private ArrayList<Integer> answer=new ArrayList<Integer>();
+		private ArrayList<String> answer1=new ArrayList<String>();
+		private ArrayList<String> problem1=new ArrayList<String>();
+		boolean stopThread;
 		
 		
 		  final private int MULANDDIV=1;  //两、三位数乘一位数不连续进位的笔算乘法
@@ -43,8 +47,12 @@ public class Supply_Grade_3_top implements Runnable{
 			this.handler_program=handler_program;
 			this.Alock=Alock;
 			this.type=type;
+			stopThread=false;
 		}
 		
+		public void setTag(boolean stopThread){
+			this.stopThread=stopThread;
+		}
 		/*产生题目*/
 		
 		public  void CreateSubject(){
@@ -54,6 +62,7 @@ public class Supply_Grade_3_top implements Runnable{
 			int denominator=1;
 			int choose=Math.random()>0.5?1:0;   //选择加减
 			int choose_num=Math.random()>0.5?1:0;//选择数字
+			int maxdivide;//最大公约数
 			switch (type) {
 			case MULANDDIV://两、三位数乘一位数不连续进位的笔算乘法
 				ele_one=(int)(10+Math.random()*89);
@@ -88,8 +97,9 @@ public class Supply_Grade_3_top implements Runnable{
 				ele_one=(int)(1+Math.random()*(denominator-1));
 				ele_two=(int)(1+Math.random()*(denominator-1));
 				ele_three=(int)(1+Math.random()*(denominator-1));
-				problem.add(ele_one+"/"+denominator+"+"+ele_two+"/"+denominator+"+"+ele_three+"/"+denominator);
-				answer2.add((float)(ele_one/denominator)+(float)(ele_two/denominator)+(float)(ele_three/denominator));
+				maxdivide=greatestCommonDivisor(ele_one+ele_two+ele_three,denominator);
+				problem1.add(ele_one+"/"+denominator+"+"+ele_two+"/"+denominator+"+"+ele_three+"/"+denominator+"=");
+				answer1.add((ele_one+ele_two+ele_three)/maxdivide+"/"+denominator/maxdivide);
 				break;
 			
 			case MULDIV://同分母分数减法
@@ -98,8 +108,9 @@ public class Supply_Grade_3_top implements Runnable{
 				ele_one=(int)(10+Math.random()*(denominator-1));
 				ele_two=(int)(1+Math.random()*(ele_one-1));
 				ele_three=(int)(1+Math.random()*(ele_one-ele_two-1));
-				problem.add(ele_one+"/"+denominator+"-"+ele_two+"/"+denominator+"-"+ele_three+"/"+denominator);
-				answer2.add((float)(ele_one/denominator)-(float)(ele_two/denominator)-(float)(ele_three/denominator));
+				maxdivide=greatestCommonDivisor(ele_one-ele_two-ele_three,denominator);
+				problem1.add(ele_one+"/"+denominator+"-"+ele_two+"/"+denominator+"-"+ele_three+"/"+denominator+"=");
+				answer1.add((ele_one+ele_two+ele_three)/maxdivide+"/"+denominator/maxdivide);
 				break;
 				
 			case MULANDADD://一减去几分之几
@@ -108,8 +119,9 @@ public class Supply_Grade_3_top implements Runnable{
 				ele_one=1;
 				ele_two=(int)(1+Math.random()*(denominator-1));
 				ele_three=(int)(1+Math.random()*(denominator-ele_two-1));
-				problem.add("1"+"-"+ele_two+"/"+denominator+"-"+ele_three+"/"+denominator);
-				answer2.add((float)(1)-(float)(ele_two/denominator)-(float)(ele_three/denominator));
+				maxdivide=greatestCommonDivisor(denominator-ele_two-ele_three,denominator);
+				problem1.add("1"+"-"+ele_two+"/"+denominator+"-"+ele_three+"/"+denominator+"=");
+				answer1.add((denominator-ele_two-ele_three)/maxdivide+"/"+denominator/maxdivide);
 				break;
 				
 				
@@ -121,18 +133,20 @@ public class Supply_Grade_3_top implements Runnable{
 					answer.add(ele_one*2+ele_two*2);
 				}
 				else{
-					problem.add("("+ele_one+"+"+ele_two+")*2");
+					problem.add("("+ele_one+"+"+ele_two+")*2"+"=");
 					answer.add(ele_one*2+ele_two*2);
 				}
 				break;
 				
 			case ADDANDSUB://两位数加两位数的连续进位加法
 				ele_one=(int)(11+Math.random()*89);
-				ele_two=(int)(10+Math.random()*89);
-				while(ele_one%10+ele_two%10<10 || ele_one%10==0 || ele_two%10==0){
+				int remainder=ele_one%10;
+				while(remainder==0){
 					ele_one=(int)(11+Math.random()*89);
-					ele_two=(int)(10+Math.random()*89);
+					remainder=ele_one%10;
 				}
+				int div=ele_one/10;
+				ele_two=10-remainder+(int)(Math.random()*(remainder-1))+(9-div+(int)(Math.random()*div))*10;
 				AddAndSubMethod(ele_one,ele_two,1);
 				break;
 				
@@ -140,8 +154,27 @@ public class Supply_Grade_3_top implements Runnable{
 				is_float=true;
 				ele_one=(int)(11+Math.random()*88);
 				ele_two=(int)(1+Math.random()*8);
-				problem.add(ele_one+"÷"+ele_two+"=");
-				answer2.add((float)(ele_one/ele_two));
+				//ele_one=97;
+				//ele_two=7;
+				String str = String.valueOf((float)(ele_one*1.0/ele_two));
+				int index=str.indexOf(".");
+				if(ele_one%ele_two!=0){
+					problem1.add(ele_one+"÷"+ele_two+"=");
+					if(index==1 && str.length()==3)
+						answer1.add(str.substring(0, 3));
+					else if(index==1 && str.length()>=4){
+						answer1.add(str.substring(0, 4));
+					}
+					else if(index ==2 && str.length()==4)
+						answer1.add(str.substring(0, 4));
+					else if(index ==2 && str.length()>=5)
+						answer1.add(str.substring(0, 5));
+				}
+				else{
+					answer.add(ele_one/ele_two);
+					problem.add(ele_one+"÷"+ele_two+"=");
+					is_float=false;
+				}
 				break;
 			default:
 				break;
@@ -153,38 +186,26 @@ public class Supply_Grade_3_top implements Runnable{
 		/*计算加减法*/
 		public void AddAndSubMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"+"+num2);
+				problem.add(num1+"+"+num2+"=");
 				answer.add(num1+num2);
 			}
 			else{
 				int ele_sum=num1+num2;
-				problem.add(ele_sum+"-"+num1);
+				problem.add(ele_sum+"-"+num1+"=");
 				answer.add(num2);
 			}
 		}
 		
 		
-		public void AddAndSubMethodFloat(float num1,float num2,int choose){
-			if(choose==1){
-				problem.add(num1+"+"+num2);
-				answer2.add(num1+num2);
-			}
-			else{
-				float ele_sum=num1+num2;
-				problem.add(ele_sum+"-"+num1);
-				answer2.add(num2);
-			}
-		}
-		
 		/*计算乘除*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2);
+				problem.add(num1+"*"+num2+"=");
 				answer.add(num1*num2);
 			}
 			else{
 				int ele_sum=num1*num2;
-				problem.add(ele_sum+"÷"+num1);
+				problem.add(ele_sum+"÷"+num1+"=");
 				answer.add(num2);
 			}
 		}
@@ -205,16 +226,29 @@ public class Supply_Grade_3_top implements Runnable{
 		}
 		
 		
+		
+		/*最大公约数*/
+		public int greatestCommonDivisor(int a,int b){
+			 int c = a%b;
+		        while(c!=0){
+		                a = b;
+		                b = c;
+		                c = a % b;
+		        }
+		        return b;
+		}
+		
+		
 		public void run() {
 			problem=new ArrayList<String>();
 			answer=new ArrayList<Integer>();
-			while(true){
+			while(!stopThread){
 				is_float=false;
 				CreateSubject();
 				Message message = new Message(); 
 				Bundle bundle=new Bundle();
-				bundle.putString("problem",problem.get(count));
 				if(!is_float){
+					bundle.putString("problem",problem.get(count));
 					bundle.putInt("answer", answer.get(count));
 					bundle.putBoolean("is_float",false);
 					message.setData(bundle);
@@ -222,7 +256,8 @@ public class Supply_Grade_3_top implements Runnable{
 					count++;
 				}
 				else{
-					bundle.putFloat("answer", answer2.get(count_float));
+					bundle.putString("problem",problem1.get(count_float));
+					bundle.putString("answer", answer1.get(count_float));
 					bundle.putBoolean("is_float",true);
 					message.setData(bundle);
 					handler_program.sendMessage(message);

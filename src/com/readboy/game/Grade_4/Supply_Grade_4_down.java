@@ -13,9 +13,11 @@ public class Supply_Grade_4_down implements Runnable{
 		int count_float=0;
 		int type; //出题类型
 		boolean is_float=false;
-		ArrayList<String> problem;
-		ArrayList<Integer> answer;
-		ArrayList<Float> answer2;
+		private ArrayList<String> problem=new ArrayList<String>();
+		private ArrayList<Integer> answer=new ArrayList<Integer>();
+		private ArrayList<String> answer1=new ArrayList<String>();
+		private ArrayList<String> problem1=new ArrayList<String>();
+		boolean stopThread;
 		
 		  final private int MULANDDIV=1;  //有关0的运算
 		  
@@ -30,7 +32,12 @@ public class Supply_Grade_4_down implements Runnable{
 			this.handler_program=handler_program;
 			this.Alock=Alock;
 			this.type=type;
+			stopThread=false;
 		}
+		public void setTag(boolean stopThread){
+			this.stopThread=stopThread;
+		}
+		
 		
 		/*产生题目*/
 		
@@ -40,7 +47,6 @@ public class Supply_Grade_4_down implements Runnable{
 			int ele_three=-1;
 			int ele_four=-1;
 			int choose=Math.random()>0.5?1:0;   //选择加减
-			int choose_num=Math.random()>0.5?1:0;//选择数字
 			switch (type) {
 			case MULANDDIV://有关0的运算
 				ele_one=0;
@@ -101,12 +107,12 @@ public class Supply_Grade_4_down implements Runnable{
 		/*计算加减法*/
 		public void AddAndSubMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"+"+num2);
+				problem.add(num1+"+"+num2+"=");
 				answer.add(num1+num2);
 			}
 			else{
 				int ele_sum=num1+num2;
-				problem.add(ele_sum+"-"+num1);
+				problem.add(ele_sum+"-"+num1+"=");
 				answer.add(num2);
 			}
 		}
@@ -115,12 +121,12 @@ public class Supply_Grade_4_down implements Runnable{
 		/*计算乘除*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2);
+				problem.add(num1+"*"+num2+"=");
 				answer.add(num1*num2);
 			}
 			else{
 				int ele_sum=num1*num2;
-				problem.add(ele_sum+"÷"+num1);
+				problem.add(ele_sum+"÷"+num1+"=");
 				answer.add(num2);
 			}
 		}
@@ -141,15 +147,13 @@ public class Supply_Grade_4_down implements Runnable{
 		}
 		
 		public void run() {
-			problem=new ArrayList<String>();
-			answer=new ArrayList<Integer>();
-			while(true){
+			while(!stopThread){
 				is_float=false;
 				CreateSubject();
 				Message message = new Message(); 
 				Bundle bundle=new Bundle();
-				bundle.putString("problem",problem.get(count));
 				if(!is_float){
+					bundle.putString("problem",problem.get(count));
 					bundle.putInt("answer", answer.get(count));
 					bundle.putBoolean("is_float",false);
 					message.setData(bundle);
@@ -157,7 +161,8 @@ public class Supply_Grade_4_down implements Runnable{
 					count++;
 				}
 				else{
-					bundle.putFloat("answer", answer2.get(count_float));
+					bundle.putString("problem",problem1.get(count_float));
+					bundle.putString("answer", answer1.get(count_float));
 					bundle.putBoolean("is_float",true);
 					message.setData(bundle);
 					handler_program.sendMessage(message);
