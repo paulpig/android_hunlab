@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="150dp"
-            android:text="3.若除不尽，保留两位小数。"
+            android:text="2.若除不尽，保留两位小数。"
             android:textSize="25dp" />
 
         <TextView
@@ -45,13 +45,14 @@
             android:textSize="25dp" />
 
         <TextView
+            android:id="@+id/remind_next_time"
             android:layout_width="130dp"
             android:layout_height="40dp"
             android:layout_marginLeft="180dp"
             android:layout_marginTop="250dp"
             android:background="@drawable/rect_org"
             android:gravity="center"
-            android:text="下次提醒"
+            android:text="进入游戏"
             android:textSize="20sp" />
 
         <TextView
@@ -64,6 +65,7 @@
             android:textSize="20sp" />
         
         <TextView
+            android:id="@+id/click_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="360dp"
@@ -72,11 +74,13 @@
             
             />
         <TextView
+            android:id="@+id/click_ok"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="360dp"
             android:layout_marginTop="260dp"
             android:background="@drawable/click_ok"
+            android:visibility="invisible"
             android:textSize="20sp" />
     </RelativeLayout>
     

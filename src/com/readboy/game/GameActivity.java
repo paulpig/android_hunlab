@@ -3,7 +3,6 @@ package com.readboy.game;
 import java.util.ArrayList;
 
 import com.readboy.mentalcalculation.R;
-
 import com.readboy.HandWrite.*;
 
 import android.app.Activity;
@@ -67,14 +66,15 @@ public  abstract class GameActivity  extends Activity{
         initView();
         Alock=new Object();
         backToStartView();
-        CountTimeThread();
+        //CountTimeThread();
         draftButton();
+        showEnterDialog();
     }
 	
 	protected void onDestroy() {
 		         System.out.println("-----------onDestroy------");
-		         //stopThread=true;
-		         //count_down_thread.setTag(stopThread);
+		         stopThread=true;
+		         count_down_thread.setTag(stopThread);
 		         readFile();
 		         updateGradeContent();
 		         updateGrade(grade_all[0],grade_all[1],grade_all[2]);
@@ -125,8 +125,10 @@ public  abstract class GameActivity  extends Activity{
 		         count_down_thread.setTag(stopThread);
 				GameActivity.this.finish();
 			}
-		});
-	 }
+	 });
+	}
+	
+	
 	 protected void draftButton(){
 		 draft.setOnClickListener(new OnClickListener() {
 				
@@ -396,5 +398,42 @@ public  abstract class GameActivity  extends Activity{
   			grade_all[2]=student_grade;
   		}
   	}
+  	
+  	public void showEnterDialog(){
+  		String name="test";
+	  	SharedPreferences sharedPreferences=this.getSharedPreferences(name, 
+	  				Activity.MODE_PRIVATE); 
+	  	
+	  	/*测试用的*/
+//	  	SharedPreferences.Editor editor = sharedPreferences.edit(); 
+//  		//用putString的方法保存数据 
+//  		editor.putBoolean("is_show", true); 
+//  		editor.commit(); 
+  		
+  		
+	  				// 使用getString方法获得value，注意第2个参数是value的默认值 
+	  	boolean is_show=sharedPreferences.getBoolean("is_show", true); 
+	  	
+	  	
+  		
+  		
+  		if(is_show){
+	  		final enterDialog ad=new enterDialog(this);
+	  		ad.setRemind_next_timeListenEvent( new OnClickListener() { 
+	  			@Override                  
+	  			public void onClick(View v) {
+	  			    // TODO Auto-generated method stub
+	  			    ad.dismiss();
+	  			    CountTimeThread();
+	  			    //Toast.makeText(Test.this, "被点到确定", Toast.LENGTH_LONG).show();        
+	  			}
+	  			});
+  		
+  		}
+  		else{
+  			CountTimeThread();
+  		}
     
+  	}
+  	
 }
