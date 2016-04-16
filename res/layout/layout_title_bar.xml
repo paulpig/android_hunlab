@@ -41,7 +41,7 @@
             android:layout_height="60dp"
             android:gravity="center"
             android:text="@string/first_grade" 
-             android:textSize="18dp"
+             android:textSize="18sp"
              android:layout_marginLeft="1054dp"
             />
         	

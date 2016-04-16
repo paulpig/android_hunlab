@@ -1,5 +1,4 @@
 package com.readboy.game;
-
 import android.R.string;
 import android.app.Activity;
 import android.content.Context;

@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.content.Context;
+import android.graphics.Color;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,10 +21,14 @@ import android.widget.Toast;
 public class enterDialog {
 	Context context;
     android.app.AlertDialog ad;
+
     TextView remind_next_time;
     TextView click_back;
     TextView click_ok;
     boolean is_show_next_time=true;
+
+    TextView titleView;
+    TextView messageView;
     LinearLayout buttonLayout;
     public enterDialog(Context context) {
         // TODO Auto-generated constructor stub

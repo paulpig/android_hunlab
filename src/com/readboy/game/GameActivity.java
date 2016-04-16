@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.readboy.mentalcalculation.R;
 import com.readboy.HandWrite.*;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,7 +46,7 @@ public  abstract class GameActivity  extends Activity{
 	protected ArrayList<Integer> keep_grade;
 	protected Object Alock;
 	protected int type;  //题目类型
-	protected int count_time=50;
+	protected int count_time=50;  //每题的时间
 	protected CountDownThread count_down_thread;
 	protected boolean stopThread=false;
 	protected ImageView draft;
@@ -72,9 +73,11 @@ public  abstract class GameActivity  extends Activity{
     }
 	
 	protected void onDestroy() {
+
 		         System.out.println("-----------onDestroy------");
 		         stopThread=true;
 		         count_down_thread.setTag(stopThread);
+
 		         readFile();
 		         updateGradeContent();
 		         updateGrade(grade_all[0],grade_all[1],grade_all[2]);
@@ -86,7 +89,10 @@ public  abstract class GameActivity  extends Activity{
 		    };       
 	
 	
-	/*初始化界面*/
+	
+	/**
+	 * 初始化界面
+	 */
 	protected void initView(){
 		Intent intent =getIntent();
 		String content = intent.getStringExtra("content");
@@ -97,7 +103,9 @@ public  abstract class GameActivity  extends Activity{
 	}
 	
 	
-	/*获取视图*/
+	/**
+	 * 获取界面
+	 */
 	protected void findView(){
 		back_bt=(ImageView)findViewById(R.id.back_bt);
 		type_view=(TextView) findViewById(R.id.type_view);
@@ -115,7 +123,10 @@ public  abstract class GameActivity  extends Activity{
 		dv.paint.setStrokeWidth(5);
 	}
 	
-	/*监听返回键*/
+	
+	/**
+	 * 返回键响应事件
+	 */
 	protected void backToStartView(){
 		 back_bt.setOnClickListener(new OnClickListener() {
 			
@@ -142,7 +153,10 @@ public  abstract class GameActivity  extends Activity{
 	 }
 	
 	
-	/*时间计时线程*/
+	/**
+	 * 时间计时线程
+	 */
+	@SuppressLint("HandlerLeak") 
 	protected void CountTimeThread(){
 		 Handler time_hander=new Handler(){
 			 public void handleMessage(Message msg) {
@@ -160,15 +174,23 @@ public  abstract class GameActivity  extends Activity{
 		 new Thread(count_down_thread).start();
 	 }
 	
-	 
-	 /*从 “出题”（supply_project_thread）线程中获取线程*/
+	
+	/**
+	 * 从 “出题”（supply_project_thread）线程中获取线程
+	 * @param type 
+	 */
 	protected   abstract void GetProAndAns( int type);
 	 
-	 
-	 /*判断输入的答案正确性，正确重新出题，错误无*/
+	/**
+	 * 判断输入的答案正确性，
+	 * 正确重新出题，
+	 * 错误无
+	 */
 	protected  abstract void IsRight();
 
-	 /*播放正确动画，并且更新分数和局数*/
+	/**
+	 * 播放正确动画，并且更新分数和局数
+	 */
 	protected void UpSuccessAndGrade(){
 		 student_grade+=10;
 		 grade_of_game.setText(student_grade+"");
@@ -184,8 +206,9 @@ public  abstract class GameActivity  extends Activity{
 		 }
 	 }
 	 
-	 
-	 /*播放错误动画*/
+	/**
+	 *  播放错误动画
+	 */
 	protected void UpFail(){
 		 Log.i("information", "错误");
 	 }
@@ -199,7 +222,6 @@ public  abstract class GameActivity  extends Activity{
      * @return	返回分数， 第一个字返回 5，第二个返回4，其他返回3，没找到返回0
 	 * @throws InterruptedException 
      */
-    @SuppressWarnings("unused")
 	public  int judgeHandPut(String word, int ncout, short[] polongArray) throws InterruptedException
     {
     	short[] rgResultBuff = new short[1024];
@@ -266,9 +288,10 @@ public  abstract class GameActivity  extends Activity{
     	return score;
     }
    
-    
-    
-    /*选择播放动画*/
+    /**
+     * 选择播放动画
+     * @param choosing 表示播放动画类型
+     */
     @SuppressWarnings("deprecation")
 	public void Animal(boolean choosing){
     	int duration=0;  // duration是记录第一个动画播放的总时间
@@ -289,7 +312,9 @@ public  abstract class GameActivity  extends Activity{
     		mImageViewFilling.setBackgroundDrawable(right_b);
     		animation=((AnimationDrawable) mImageViewFilling.getBackground());
     	}
-    	mImageViewFilling.post(new Runnable() {    //在异步线程中执行启动的方法
+    	
+    	//在异步线程中执行启动的方法
+    	mImageViewFilling.post(new Runnable() {    
     		                     
     		                    @Override
     		                    public void run() {
@@ -298,19 +323,20 @@ public  abstract class GameActivity  extends Activity{
     		                    	dv.clearScreen();
     	                   }
     		                });
-    		                 for(int i=0;i<animation.getNumberOfFrames();i++){
-    		                    duration+=animation.getDuration(i);     //计算动画播放的时间
-    		                 }
-    		         Handler handler=new Handler();
-    		         handler.postDelayed(new Runnable() {
-    		            public void run() {
-    		            	 animation.stop();
-    		            	 mImageViewFilling.setVisibility(4);
-        					 synchronized (Alock) {  
-           					 Alock.notifyAll();
-                               }      
-    		             }
-    		        }, duration);
+    	for(int i=0;i<animation.getNumberOfFrames();i++){
+            duration+=animation.getDuration(i);     //计算动画播放的时间
+         }
+    	
+    	Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+           public void run() {
+           	 animation.stop();
+           	 mImageViewFilling.setVisibility(4);
+				 synchronized (Alock) {  
+					 Alock.notifyAll();
+                  }      
+            }
+       }, duration);
     }
 
     
@@ -319,7 +345,10 @@ public  abstract class GameActivity  extends Activity{
 	}
 	
 	
-	/*定时接收后返回处理*/
+	/**
+	 * 定时接收后返回处理
+	 * @author nuanbing
+	 */
 	public class WorkThread extends Thread {  
         @Override  
         public void run() {  
@@ -337,7 +366,7 @@ public  abstract class GameActivity  extends Activity{
         @Override  
         public void handleMessage(Message msg) {  
             if (msg.what == COMPLETED) {  
-                //stateText.setText("completed");
+            	//stateText.setText("completed");
             	// TODO Auto-generated method stub
         		int count = dv.points.size();
         		short[] prolong = new short[count];
@@ -356,8 +385,12 @@ public  abstract class GameActivity  extends Activity{
         }  
     };  
     
-    
-  //设置保存的数据
+  	/**
+  	 * 设置保存的数据 排名
+  	 * @param fist_grade 第一名分数
+  	 * @param second_grade 第二名分数
+  	 * @param third_grade 第三名分数
+  	 */
   	public void updateGrade(int fist_grade,int second_grade,int third_grade){
   		//实例化SharedPreferences对象（第一步） 
   		String name="test";
@@ -378,7 +411,7 @@ public  abstract class GameActivity  extends Activity{
   		String name="test";
   		SharedPreferences sharedPreferences= getSharedPreferences(name, 
   				Activity.MODE_PRIVATE); 
-  				// 使用getString方法获得value，注意第2个参数是value的默认值 
+  		// 使用getString方法获得value，注意第2个参数是value的默认值 
   		grade_all[0]=sharedPreferences.getInt("fist_grade"+intent_type, 0); 
   		grade_all[1]=sharedPreferences.getInt("second_grade"+intent_type, 0); 
   		grade_all[2]=sharedPreferences.getInt("third_grade"+intent_type,0); 
@@ -386,7 +419,9 @@ public  abstract class GameActivity  extends Activity{
   	}
   	
   	
-  	//更新分数数组内容
+  	/**
+  	 * 更新名次
+  	 */
   	public void updateGradeContent(){
   		if(student_grade>=grade_all[0]){
   			grade_all[0]=student_grade;

@@ -1,11 +1,6 @@
 package com.readboy.mentalcalculation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -14,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -24,8 +18,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity{
@@ -42,7 +34,6 @@ public class MainActivity extends FragmentActivity{
 	private String[]grade={"一年级","二年级","三年级","四年级","五年级","六年级"};
 	private FragmentManager manager;
 	private Fragment mFragments1;
-	private Fragment mFragments2;
 	private int FragmentForButton[]={1,2};
 	private DrawerLayout mDrawerLayout;
 	private LinearLayout linerlayout;
@@ -59,7 +50,7 @@ public class MainActivity extends FragmentActivity{
        // adapterListView();
         manager = getSupportFragmentManager();
 		mFragments1 = manager.findFragmentById(R.id.MyFragment_Grade_1);  
-		mFragments2=manager.findFragmentById(R.id.left_framgment);
+		manager.findFragmentById(R.id.left_framgment);
     }
     
     public void findViewButton(){
@@ -79,6 +70,7 @@ public class MainActivity extends FragmentActivity{
     /*监听各个按钮*/
     public void clickListener(){
     	first_grade.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			public void onClick(View v) {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 				Resources resources=getBaseContext().getResources();
@@ -98,6 +90,7 @@ public class MainActivity extends FragmentActivity{
 			}
 		});
     	second_grade.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			public void onClick(View v) {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 				Resources resources=getBaseContext().getResources();
@@ -137,6 +130,7 @@ public class MainActivity extends FragmentActivity{
 			}
 		});
     	four_grade.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			public void onClick(View v) {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 				Resources resources=getBaseContext().getResources();
@@ -156,6 +150,7 @@ public class MainActivity extends FragmentActivity{
 			}
 		});
     	five_grade.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			public void onClick(View v) {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 				Resources resources=getBaseContext().getResources();
@@ -175,6 +170,7 @@ public class MainActivity extends FragmentActivity{
 			}
 		});
     	six_grade.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			public void onClick(View v) {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 				Resources resources=getBaseContext().getResources();
@@ -196,6 +192,7 @@ public class MainActivity extends FragmentActivity{
     	
     	left_button.setOnClickListener(new OnClickListener() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -256,6 +253,7 @@ public class MainActivity extends FragmentActivity{
     	
     	right_button.setOnClickListener(new OnClickListener() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View arg0) {
 				Resources resources=getBaseContext().getResources();
@@ -366,7 +364,11 @@ public class MainActivity extends FragmentActivity{
 				Gravity.LEFT);
 	}
 	
-	/*清除所有背景色，点击显示*/
+	/**
+	 * 设置年级选择侧边栏选中图标位置
+	 * @param tv
+	 */
+	@SuppressWarnings("deprecation")
 	public void clearChooseBack(TextView tv){
 		first_grade.setBackgroundDrawable(null);
 		second_grade.setBackgroundDrawable(null);

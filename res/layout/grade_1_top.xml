@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/grade_1_top_q1" 
         android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:textSize="18sp"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -34,7 +34,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="加法的计算方法"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
          <TextView
             android:id="@+id/grade_1_top_12"
             android:layout_width="200dp"
@@ -44,7 +44,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="减法的计算方法"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
          <TextView
              android:id="@+id/grade_1_top_13"
@@ -55,17 +55,17 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="0的计算（1）  -  同数相减"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
            <TextView
             android:id="@+id/grade_1_top_14"
             android:layout_width="200dp"
             android:layout_height="100dp"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="140dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="140dp"
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="0的计算（2）  -  一个数加、减0"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
 
     </RelativeLayout>
 	<TextView
@@ -75,7 +75,7 @@
         android:text="@string/grade_1_top_q2" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:textSize="18sp"/>
        
 <RelativeLayout
         android:id="@+id/relativeLayout2"
@@ -92,7 +92,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="6和7的加减法"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
          <TextView
             android:id="@+id/grade_1_top_22"
             android:layout_width="200dp"
@@ -102,7 +102,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="一图四式和8的加减法"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
          <TextView
              android:id="@+id/grade_1_top_23"
@@ -113,7 +113,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="9的加减法"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
          
           <TextView
             android:id="@+id/grade_1_top_24"
@@ -124,7 +124,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="9以内的加减法的应用"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
             <TextView
             android:id="@+id/grade_1_top_25"
             android:layout_width="200dp"
@@ -134,7 +134,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="10的加减法"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
          <TextView
              android:id="@+id/grade_1_top_26"
@@ -145,7 +145,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="填写未知加数"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
          
            <TextView
             android:id="@+id/grade_1_top_27"
@@ -156,7 +156,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="连加"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
             <TextView
             android:id="@+id/grade_1_top_28"
             android:layout_width="200dp"
@@ -166,7 +166,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="连减"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
          <TextView
              android:id="@+id/grade_1_top_29"
@@ -177,7 +177,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="先加后减的混合运算"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
 
          <TextView
             android:id="@+id/grade_1_top_210"
@@ -188,7 +188,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="先减后加的混合运算"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
     </RelativeLayout>
     
    	<TextView
@@ -198,7 +198,7 @@
         android:text="@string/grade_1_top_q3" 
         android:layout_marginTop="40dp"
         android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:textSize="18sp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
@@ -215,7 +215,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="10加几"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
          <TextView
             android:id="@+id/grade_1_top_32"
             android:layout_width="200dp"
@@ -225,7 +225,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="十几加几和相应的减法"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
          <TextView
              android:id="@+id/grade_1_top_33"
@@ -236,7 +236,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="加减法算式的各部分名称"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
         
         
      </RelativeLayout>
@@ -248,7 +248,7 @@
      android:text="@string/grade_1_top_q4" 
      android:layout_marginTop="40dp"
      android:textColor="#FFA500"
-     android:textSize="18dp"/>
+     android:textSize="18sp"/>
 	<RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
             android:background="@drawable/rect_blue" 
             android:gravity="center"
             android:text="9加几的计算方法"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
          <TextView
             android:id="@+id/grade_1_top_42"
             android:layout_width="200dp"
@@ -273,7 +273,7 @@
             android:background="@drawable/rect_pop"
             android:gravity="center"
             android:text="876加几的计算方法"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
          <TextView
              android:id="@+id/grade_1_top_43"
@@ -284,7 +284,7 @@
              android:background="@drawable/rect_org" 
              android:gravity="center"
              android:text="5432加几的计算方法"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
         
         
      </RelativeLayout>
