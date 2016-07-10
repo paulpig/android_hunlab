@@ -7,6 +7,8 @@ import com.readboy.HandWrite.*;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -16,8 +18,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -28,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public  abstract class GameActivity  extends Activity{
+	final private int STARTNUM=60;
 	protected ImageView back_bt;
 	protected TextView type_view;
 	protected TextView time_of_game;
@@ -35,6 +41,7 @@ public  abstract class GameActivity  extends Activity{
 	protected TextView number_of_game;
 	protected String problem;
 	protected int answer;
+	protected boolean is_quit=false;
 	protected String intent_type;
 	protected String answer_float;
 	protected boolean is_float=false;
@@ -43,10 +50,11 @@ public  abstract class GameActivity  extends Activity{
 	protected EditText answer_of_game;
 	protected TextView grade_of_game;
 	protected int student_grade;
+	protected int student_office=1;
 	protected ArrayList<Integer> keep_grade;
 	protected Object Alock;
 	protected int type;  //题目类型
-	protected int count_time=50;  //每题的时间
+	protected int count_time=0;  //每题的时间
 	protected CountDownThread count_down_thread;
 	protected boolean stopThread=false;
 	protected ImageView draft;
@@ -57,7 +65,14 @@ public  abstract class GameActivity  extends Activity{
 	protected AnimationDrawable animation;
 	protected ImageView mImageViewFilling = null;
 	protected Boolean correct;
+	protected int time_temp;
 	protected int[]grade_all=new int[3];
+	boolean is_show;
+	boolean is_first_in_game=false;
+	enterDialog enter_dialog;
+	finishDialog finish_dialog;
+	protected boolean is_over=true;
+	public int time; //倒计时当前的时间
 	final protected int []drawOfGame={10,20,30,400,500,600,700,800,900,1000};
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,27 +84,69 @@ public  abstract class GameActivity  extends Activity{
         backToStartView();
         //CountTimeThread();
         draftButton();
+        CountTimeThread();
+        //new startThread(this).start();
         showEnterDialog();
+       
+        //new showEnterDia(this).start();
+       
     }
 	
 	protected void onDestroy() {
-
-		         System.out.println("-----------onDestroy------");
-		         stopThread=true;
-		         count_down_thread.setTag(stopThread);
-
-		         readFile();
-		         updateGradeContent();
-		         updateGrade(grade_all[0],grade_all[1],grade_all[2]);
-		         /*上个页面回传数据*/
-		         Intent intent=new Intent();
-		         intent.putExtra("Type",type);
-		         setResult(RESULT_OK,intent);
+		         Log.i("lalala", "onDestroy");
+		         //enter_dialog.dismiss();
+		         //finish_dialog.dismiss();
+		         //更新文件中数据
+			     
+			      
 		         super.onDestroy();
 		    };       
 	
+		    
+    
+	protected void onPause(){
+		    super.onPause();
+		    Intent intent=new Intent();
+	        intent.putExtra("Type",type);
+	        setResult(RESULT_OK,intent);
+	        Log.i("lalala", "onPause");
+	        
+	        readFile();
+		    updateGradeContent();
+		    updateGrade(grade_all[0],grade_all[1]);
+	        
+	        
+	        if(is_over==true){
+		        //结束计数器进程
+	        	is_quit=true;
+		        stopThread=true;
+		        count_down_thread.setTag(stopThread);
+		        count_down_thread.setStartTime(1);
+		        //handler.removeCallbacks(count_down_thread);
+	        }
+	        else{
+	        	is_over=true;
+	        	time_temp=time;
+	        	count_down_thread.setStop(true, time_temp);
+	        }
+	        
+	}
 	
 	
+	
+	public void onResume() {
+	    super.onResume();  // Always call the superclass method first 
+	    if(is_first_in_game==false){
+	    	count_down_thread.setStop(false, 0);
+		    count_down_thread.setStartTime(time_temp);
+	    }
+	    else{
+	    	count_down_thread.setStartTime(STARTNUM);
+	    	is_first_in_game=false;
+	    }
+	    Log.i("lalala","onresume");
+
+	}
 	/**
 	 * 初始化界面
 	 */
@@ -134,6 +191,7 @@ public  abstract class GameActivity  extends Activity{
 			public void onClick(View arg0) {
 				 stopThread=true;
 		         count_down_thread.setTag(stopThread);
+		         /*上个页面回传数据*/
 				GameActivity.this.finish();
 			}
 	 });
@@ -145,9 +203,13 @@ public  abstract class GameActivity  extends Activity{
 				
 				@Override
 				public void onClick(View arg0) {
+					if(time!=0){
+						//time_of_game.setText(time+"");
+					 is_over=false;
 					 Intent intent = new Intent();  
 		             intent.setClass(GameActivity.this, draftActivity.class);  
 		             startActivity(intent);   
+					}
 				}
 			});
 	 }
@@ -161,10 +223,15 @@ public  abstract class GameActivity  extends Activity{
 		 Handler time_hander=new Handler(){
 			 public void handleMessage(Message msg) {
 				Bundle b = msg.getData();
-				int time = b.getInt("time");
+				time = b.getInt("time");
 				time_of_game.setText(time+"");
 				//Log.i("stopThread", "no");
 				if(time==0){
+					//showFinishDialog();
+					//finish_dialog.show();
+					if(is_quit==false)
+						showFinishDialog();
+						
 					grade_of_game.setText("0");
 					student_grade=0;
 				}
@@ -201,6 +268,7 @@ public  abstract class GameActivity  extends Activity{
 			 }
 			 else{
 				 number_of_game.setText(i+1+"");
+				 student_office=i+1;
 				 break;
 			 }
 		 }
@@ -212,8 +280,7 @@ public  abstract class GameActivity  extends Activity{
 	protected void UpFail(){
 		 Log.i("information", "错误");
 	 }
-	
-	
+ 
 	/**
      * 判断该手写的字是否正确
      * @param word	正确的字
@@ -266,6 +333,9 @@ public  abstract class GameActivity  extends Activity{
     					 correct = true;
     					 problem+=answerStr;
     					 content_of_game.setText(problem);
+    					 //设置textview的位置居中
+    					 //content_of_game.set
+    					 //content_of_game.setGravity(Gravity.CENTER);
         				 /*播放正确动画*/
     					 Animal(true); 
     					 break;
@@ -275,8 +345,9 @@ public  abstract class GameActivity  extends Activity{
     			if(!correct){
     				//problem+=result[0];
     				//content_of_game.setText(problem);
-    				problem+=answerStr;
+    				problem+=result[0];
 					content_of_game.setText(problem);
+					//content_of_game.setGravity(Gravity.CENTER);
     				Animal(false);
     			}
     			 
@@ -339,12 +410,15 @@ public  abstract class GameActivity  extends Activity{
        }, duration);
     }
 
+   
+    
+    
+    
+    
     
 	public void updateNotify() {
 		new WorkThread().start(); 
 	}
-	
-	
 	/**
 	 * 定时接收后返回处理
 	 * @author nuanbing
@@ -382,8 +456,46 @@ public  abstract class GameActivity  extends Activity{
         			e.printStackTrace();
         		}
             }  
+      
         }  
     };  
+    
+    
+    
+    
+    
+    /*开辟线程创建开始和结束界面*/
+    public void showEnterDialog(){
+    	String name="test";
+	  	SharedPreferences sharedPreferences=GameActivity.this.getSharedPreferences(name, 
+	  				Activity.MODE_PRIVATE); 	
+	  				// 使用getString方法获得value，注意第2个参数是value的默认值 
+	  	is_show=sharedPreferences.getBoolean("is_show", true); 
+	  	//is_show=true;
+	  	if(is_show){
+		        //错误在这里
+	  			enter_dialog=new enterDialog(this); 
+    			enter_dialog.setRemind_next_timeListenEvent( new OnClickListener() {                   
+    				public void onClick(View v) {
+						enter_dialog.dismiss();
+						count_time=STARTNUM;
+						count_down_thread.setStartTime(count_time);
+			}
+			});
+	
+    			}
+    			else{
+    						count_time=STARTNUM;
+							count_down_thread.setStartTime(count_time);
+							is_first_in_game=true;
+    				}
+	  	//设置监听事件
+	  	enter_dialog.setbackKey();
+    }
+    
+
+    
+    
     
   	/**
   	 * 设置保存的数据 排名
@@ -391,7 +503,7 @@ public  abstract class GameActivity  extends Activity{
   	 * @param second_grade 第二名分数
   	 * @param third_grade 第三名分数
   	 */
-  	public void updateGrade(int fist_grade,int second_grade,int third_grade){
+  	public void updateGrade(int fist_grade,int office){
   		//实例化SharedPreferences对象（第一步） 
   		String name="test";
   		SharedPreferences mySharedPreferences= getSharedPreferences(name, 
@@ -399,9 +511,8 @@ public  abstract class GameActivity  extends Activity{
   		//实例化SharedPreferences.Editor对象（第二步） 
   		SharedPreferences.Editor editor = mySharedPreferences.edit(); 
   		//用putString的方法保存数据 
-  		editor.putInt("fist_grade"+intent_type, grade_all[0]); 
-  		editor.putInt("second_grade"+intent_type, grade_all[1]); 
-  		editor.putInt("third_grade"+intent_type,grade_all[2]);
+  		editor.putInt("first_grade"+intent_type, fist_grade); 
+  		editor.putInt("office_grade"+intent_type, office);
   		//提交当前数据 
   		editor.commit(); 
   	}
@@ -412,9 +523,8 @@ public  abstract class GameActivity  extends Activity{
   		SharedPreferences sharedPreferences= getSharedPreferences(name, 
   				Activity.MODE_PRIVATE); 
   		// 使用getString方法获得value，注意第2个参数是value的默认值 
-  		grade_all[0]=sharedPreferences.getInt("fist_grade"+intent_type, 0); 
-  		grade_all[1]=sharedPreferences.getInt("second_grade"+intent_type, 0); 
-  		grade_all[2]=sharedPreferences.getInt("third_grade"+intent_type,0); 
+  		grade_all[0]=sharedPreferences.getInt("first_grade"+intent_type, 0); 
+  		grade_all[1]=sharedPreferences.getInt("office_grade"+intent_type, 1);
   				
   	}
   	
@@ -426,49 +536,40 @@ public  abstract class GameActivity  extends Activity{
   		if(student_grade>=grade_all[0]){
   			grade_all[0]=student_grade;
   		}
-  		else if(student_grade<grade_all[0] && student_grade>=grade_all[1]){
-  			grade_all[1]=student_grade;
-  		}
-  		else if(student_grade<grade_all[1] && student_grade>=grade_all[2]){
-  			grade_all[2]=student_grade;
+  		if(student_office>=grade_all[1]){
+  			grade_all[1]=student_office;
   		}
   	}
   	
-  	public void showEnterDialog(){
-  		String name="test";
-	  	SharedPreferences sharedPreferences=this.getSharedPreferences(name, 
-	  				Activity.MODE_PRIVATE); 
-	  	
-	  	/*测试用的*/
-//	  	SharedPreferences.Editor editor = sharedPreferences.edit(); 
-//  		//用putString的方法保存数据 
-//  		editor.putBoolean("is_show", true); 
-//  		editor.commit(); 
-  		
-  		
-	  				// 使用getString方法获得value，注意第2个参数是value的默认值 
-	  	boolean is_show=sharedPreferences.getBoolean("is_show", true); 
-	  	
-	  	
-  		
-  		
-  		if(is_show){
-	  		final enterDialog ad=new enterDialog(this);
-	  		ad.setRemind_next_timeListenEvent( new OnClickListener() { 
-	  			@Override                  
-	  			public void onClick(View v) {
-	  			    // TODO Auto-generated method stub
-	  			    ad.dismiss();
-	  			    CountTimeThread();
-	  			    //Toast.makeText(Test.this, "被点到确定", Toast.LENGTH_LONG).show();        
-	  			}
-	  			});
-  		
-  		}
-  		else{
-  			CountTimeThread();
-  		}
-    
-  	}
+	
+  	//显示结束的界面
+  	public void showFinishDialog(){
+  		finish_dialog=new finishDialog(this,student_office,student_grade,intent_type);
+        	finish_dialog.setClickQuitEvent( new OnClickListener() { 
+      			@Override                  
+      			public void onClick(View v) {
+      			    // TODO Auto-generated method stub
+      				finish_dialog.dismiss();
+      			    GameActivity.this.finish();      
+      			}
+      			});
+    	  	
+    	  	//继续游戏的监听
+        	finish_dialog.setClickContinueEvent( new OnClickListener() { 
+      			@Override                  
+      			public void onClick(View v) {
+      			    // TODO Auto-generated method stub
+      				finish_dialog.dismiss();
+      				
+    				count_time=STARTNUM;
+      			    count_down_thread.setStartTime(count_time);
+      			    grade_of_game.setText("0");
+      			    student_grade=0;
+      			    student_office=1;
+    				number_of_game.setText("1");
+      			}
+      			});
+        }
+	
   	
 }

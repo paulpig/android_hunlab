@@ -4,8 +4,11 @@ import com.readboy.mentalcalculation.R;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Context;
@@ -46,7 +49,6 @@ public class enterDialog {
         setClickOkListenEvent();
         //设置点击空白处
         ad.setCancelable(false);
-        
     }
     /**
      * 点击下一次发生的事件
@@ -59,6 +61,10 @@ public class enterDialog {
     	//dismiss();
     } 
 
+    
+    
+    
+    
     /**
      * 点击clickback按钮发生事件
      */
@@ -100,7 +106,7 @@ public class enterDialog {
   		//实例化SharedPreferences.Editor对象（第二步） 
   		SharedPreferences.Editor editor = mySharedPreferences.edit(); 
   		//用putString的方法保存数据 
-  		editor.putBoolean("is_show", true); 
+  		editor.putBoolean("is_show", is_show_next_time); 
   		editor.commit(); 
     	}
   
@@ -109,4 +115,20 @@ public class enterDialog {
         ad.dismiss();
         keepIsShow();
     } 
+    
+     public void setbackKey(){
+    	 ad.setOnKeyListener(new OnKeyListener() {
+             
+             @Override
+             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                 // TODO Auto-generated method stub
+                 if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0)
+                 {
+                     dialog.dismiss();
+                 }
+                 return false;
+             }
+         });
+    		 
+     }
 }

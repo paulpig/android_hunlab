@@ -10,14 +10,24 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
+<TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/bar_add"/>
 
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="920dp"
+       android:background="@drawable/between_bar"
+       >
     <TextView
         android:id="@+id/item_1_textview1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_3_down_q1" 
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -25,197 +35,223 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_1_textview1" >
 
-        <TextView
+         <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_11"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="用一位数除商是整十、整百、整千的口算方法"
-            android:textSize="18dp"/>
-         <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_12"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="一位数除两位数（被除数各个数位上的数都能被整除）的计算方法"
-            android:textSize="18dp" />
-
-         <TextView
-             android:id="@+id/grade_3_down_13"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="关于0的除法"
-            android:textSize="18dp"/>
-           <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_3_down_13"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
+      
+          <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_14"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="140dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="商中间有0的除法的计算方法（除的过程中没有余数）"
-            android:textSize="18dp"/>
-           <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="220dp"
+            />
+           <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_15"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignBottom="@id/grade_3_down_14"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="商末尾有0的除法的计算方法（商没有余数）"
-            android:textSize="18dp" />
-
-         <TextView
-             android:id="@+id/grade_3_down_16"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignBottom="@id/grade_3_down_14"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="商中间有0的除法的计算方法（除的过程中有余数）"
-            android:textSize="18dp"/>
-         
-           <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="420dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_3_down_16"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="420dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_17"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="280dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="商末尾有0的除法的计算方法 （商中有余数）"
-            android:textSize="18dp"/>
-
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="620dp"
+            />
+      
+        
     </RelativeLayout>
+    </RelativeLayout>
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/bar_add"/>
+
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="280dp"
+       android:background="@drawable/between_bar"
+       >
 	<TextView
         android:id="@+id/item_1_textview2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_3_down_q2" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
        
 <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+       	android:layout_below="@id/item_1_textview2" 
        >
 
-        <TextView
+       <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_21"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="平均数的含义及平均数的方法"
-            android:textSize="18dp"/>
-         
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />    
+    </RelativeLayout>
     </RelativeLayout>
     
+   <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+          android:layout_marginTop="40dp"
+        android:background="@drawable/bar_add"/>
+
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="280dp"
+       android:background="@drawable/between_bar"
+       >
    	<TextView
         android:id="@+id/item_1_textview3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_3_down_q3" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview3" 
        >
 
-        <TextView
+	       <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_31"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="两位数乘两位数（不进位）的笔算方法"
-            android:textSize="18dp"/>   
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
      </RelativeLayout>
-	  
+	</RelativeLayout>  
 	
+   <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+          android:layout_marginTop="40dp"
+        android:background="@drawable/bar_add"/>
+
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="280dp"
+       android:background="@drawable/between_bar"
+       >
 		<TextView
         android:id="@+id/item_1_textview5"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_3_down_q4" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
        
-	<RelativeLayout
+<RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview5" 
        >
-
-        <TextView
+	       
+	    
+	    
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_41"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="小数加法的计算方法"
-            android:textSize="18dp"/>   
-             <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_42"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="小数减法的计算方法"
-            android:textSize="18dp" />
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+
+       
      </RelativeLayout>
      
-	
+	</RelativeLayout>
+	<TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+          android:layout_marginTop="40dp"
+        android:background="@drawable/bar_add"/>
+
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="280dp"
+       android:background="@drawable/between_bar"
+       >
 		<TextView
+		android:id="@+id/item_1_textview6"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_3_down_q5" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
        
 	<RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview6" 
        >
 
-        <TextView
+	      <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_3_down_51"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="用乘法两步计算解决问题"
-            android:textSize="18dp"/>   
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+     </RelativeLayout>
      </RelativeLayout>
 </LinearLayout>
 </ScrollView>

@@ -19,14 +19,14 @@ import android.widget.Toast;
 
 
 public class rankingList extends Activity{
-	private TextView first_view;
-	private TextView second_view;
-	private TextView third_view;
+	private TextView grade_view;
+	private TextView office_view;
 	private TextView content_view;
 	private RelativeLayout relative_layout;
 	private String game_type; //用于储存数据库的名字
 	private int grade_intent; 
-	private int[]grade_all=new int[3];
+	private int office_intent;
+	private int[]grade_all=new int[2];
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
@@ -37,16 +37,15 @@ public class rankingList extends Activity{
         ListenButton();
         readFile();
         updateGradeContent();
-        updateGrade(grade_all[0],grade_all[1],grade_all[2]);
+        updateGrade(grade_all[0],grade_all[1]);
         showTextView();
 	}
 	
 	public void init(){
-		first_view=(TextView) findViewById(R.id.fist_ranking);
-		second_view=(TextView) findViewById(R.id.second_ranking);
-		third_view=(TextView) findViewById(R.id.third_ranking);
-		content_view=(TextView) findViewById(R.id.content_rank);
-		relative_layout=(RelativeLayout) findViewById(R.id.relative_view);
+		office_view=(TextView) findViewById(R.id.fist_ranking);
+		grade_view=(TextView) findViewById(R.id.second_ranking);
+		content_view=(TextView) findViewById(R.id.textview);
+		relative_layout=(RelativeLayout) findViewById(R.id.relative_views);
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class rankingList extends Activity{
 	 * @param second_grade
 	 * @param third_grade
 	 */
-	public void updateGrade(int fist_grade,int second_grade,int third_grade){
+	public void updateGrade(int fist_grade,int second_grade){
 		//实例化SharedPreferences对象（第一步） 
 		String name="test";
 		SharedPreferences mySharedPreferences= getSharedPreferences(name, 
@@ -90,9 +89,8 @@ public class rankingList extends Activity{
 		//实例化SharedPreferences.Editor对象（第二步） 
 		SharedPreferences.Editor editor = mySharedPreferences.edit(); 
 		//用putString的方法保存数据 
-		editor.putInt("fist_grade"+game_type, grade_all[0]); 
-		editor.putInt("second_grade"+game_type, grade_all[1]); 
-		editor.putInt("third_grade"+game_type,grade_all[2]);
+		editor.putInt("first_grade"+game_type, grade_all[1]); 
+  		editor.putInt("office_grade"+game_type,grade_all[0]);
 		//提交当前数据 
 		editor.commit(); 
 	}
@@ -105,17 +103,16 @@ public class rankingList extends Activity{
 		SharedPreferences sharedPreferences= getSharedPreferences(name, 
 				Activity.MODE_PRIVATE); 
 				// 使用getString方法获得value，注意第2个参数是value的默认值 
-		grade_all[0]=sharedPreferences.getInt("fist_grade"+game_type, 0); 
-		grade_all[1]=sharedPreferences.getInt("second_grade"+game_type, 0); 
-		grade_all[2]=sharedPreferences.getInt("third_grade"+game_type,0); 
+		grade_all[1]=sharedPreferences.getInt("first_grade"+game_type, 0); 
+		grade_all[0]=sharedPreferences.getInt("office_grade"+game_type, 1); 
 				
 	}
 	
 	//将内容显示出来
 	public void showTextView(){
-		first_view.setText(Integer.toString(grade_all[0]));
-		second_view.setText(Integer.toString(grade_all[1]));
-		third_view.setText(Integer.toString(grade_all[2]));
+		office_view.setText(Integer.toString(grade_all[0]));
+		grade_view.setText(Integer.toString(grade_all[1]));
+		//third_view.setText(Integer.toString(grade_all[2]));
 	}
 	
 	
@@ -123,20 +120,20 @@ public class rankingList extends Activity{
 	public void getIntentContent(){
 		Intent intent =getIntent();
 		grade_intent = intent.getIntExtra("grade",-1);
+		office_intent=intent.getIntExtra("office", -1);
 		game_type=intent.getStringExtra("game_type");	
 	}
 	
+	
 	//更新分数数组内容
 	public void updateGradeContent(){
-		if(grade_intent>=grade_all[0]){
-			grade_all[0]=grade_intent;
-		}
-		else if(grade_intent<grade_all[0] && grade_intent>=grade_all[1]){
+		if(grade_intent>=grade_all[1]){
 			grade_all[1]=grade_intent;
 		}
-		else if(grade_intent<grade_all[1] && grade_intent>=grade_all[2]){
-			grade_all[2]=grade_intent;
+		if(office_intent>=grade_all[0] ){
+			grade_all[0]=office_intent;
 		}
+		
 	}
 	
 }

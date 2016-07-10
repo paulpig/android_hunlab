@@ -5,9 +5,7 @@
     android:orientation="vertical"
 	android:background="@drawable/write_back"
     >
-
     
-
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="80dp" 
@@ -19,6 +17,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="50dp"
         android:background="@drawable/draftbook" />
+    
+    <!-- 手写按钮 -->
     <Button
         android:id="@+id/draft_write_button"
         android:layout_width="50dp"
@@ -27,6 +27,7 @@
         android:layout_marginLeft="600dp"
         android:background="@drawable/write_button" />
 
+    <!-- 橡皮擦 -->
     <Button
         android:id="@+id/draft_erase_button"
         android:layout_width="50dp"
@@ -36,6 +37,7 @@
         android:background="@drawable/erase_button"
          />
 
+    <!-- 移动按钮 -->
     <Button
         android:id="@+id/draft_move_button"
         android:layout_width="50dp"
@@ -44,16 +46,28 @@
         android:layout_marginLeft="40dp"
         android:background="@drawable/move_button"
          />
+    
+    <!-- 删除按钮 -->
+    <Button
+       android:id="@+id/draft_remove_button"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:layout_marginTop="20dp"
+       android:layout_marginLeft="40dp"
+       android:background="@drawable/delete_button"
+         />
 
+    <!-- 清除按钮 -->
     <Button
         android:id="@+id/draft_clean_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
         android:background="@drawable/erase"
          />
 
+    <!-- 完成按钮 -->
     <Button
         android:id="@+id/draft_finished_button"
         android:layout_width="wrap_content"
@@ -64,34 +78,65 @@
 
 </LinearLayout>
 
-
-<com.readboy.HandWrite.DraftView
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+    
+    <com.readboy.HandWrite.DraftView
 	      android:id="@+id/draft_screen"
 	      android:layout_width="fill_parent"
 	      android:layout_marginTop="10dp"
 	      android:layout_height="590dp"
-/>
-<LinearLayout 
-    android:layout_width="wrap_content"
+	/>
+    
+    <!-- 左移按钮 -->
+	   <Button
+        android:id="@+id/draft_left_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="550dp"
+        android:background="@drawable/right"
+         />
+	   
+    <!-- 右移按钮 -->
+      <Button
+        android:id="@+id/draft_right_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="550dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+         
+        android:background="@drawable/left"
+         />
+    
+    
+</RelativeLayout>
+
+
+
+<RelativeLayout 
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     >
-<Button
-       android:id="@+id/draft_remove_button"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_marginLeft="50dp"
-       android:background="@drawable/delete"
-         />
-<Button
-        android:id="@+id/draft_left_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="400dp"
-        android:background="@drawable/right"
-         />
+   
+      <TextView 
+        android:id="@+id/draft_bottom_splitline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="6dp"
+        android:text="/"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="30sp"
+        android:textColor="#778899"/>
       
-      
+      <!-- 当前草稿编号 -->
       <TextView 
         android:id="@+id/draft_current"
         android:layout_width="wrap_content"
@@ -100,40 +145,33 @@
         android:layout_marginTop="6dp"
         android:text="1"
         android:textSize="30sp"
+        android:layout_toLeftOf="@+id/draft_bottom_splitline"
+        android:layout_marginRight="10dp"
         android:textColor="#778899"
        />
-      <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="6dp"
-        android:text="/"
-        android:textSize="30sp"
-        android:textColor="#778899"/>
+      
+      
+       <!-- 总草稿数 -->
       <TextView 
         android:id="@+id/draft_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/draft_bottom_splitline"
+        android:layout_marginLeft="10dp"
         android:text="1"
         android:textSize="30sp"
         android:textColor="#778899"/>
       
-      <Button
-        android:id="@+id/draft_right_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="50dp"
-        android:background="@drawable/left"
-         />
-    
-    <Button
+      <!-- 添加草稿纸按钮 
+     <Button
         android:id="@+id/draft_add_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="370dp"
         android:background="@drawable/add" />
-</LinearLayout>
+    
+       -->
+</RelativeLayout>
      
 </LinearLayout>

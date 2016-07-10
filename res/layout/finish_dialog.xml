@@ -5,17 +5,17 @@
     android:gravity="center">
     
     <RelativeLayout 
-        android:layout_width="600dp"
-        android:layout_height="400dp"
+        android:layout_width="800dp"
+        android:layout_height="600dp"
         android:layout_marginTop="100dp"
-        android:background="@drawable/rect_blue"
+        android:background="@drawable/finishback"
         >
         
         <TextView 
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_centerHorizontal="true"
-        	android:layout_marginTop="20dp"
+        	android:layout_marginTop="90dp"
         	android:text="答题结束"
         	android:textSize="35dp"/>
         
@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_marginLeft="100dp"
-        	android:layout_marginTop="70dp"
-        	android:text="本次闯关：			关"
+        	android:layout_marginTop="200dp"
+        	android:text="本次闯关：			  关"
         	android:textSize="25dp"/>
         
          <TextView 
@@ -33,24 +33,24 @@
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_marginLeft="220dp"
-        	android:layout_marginTop="70dp"
+        	android:layout_marginTop="200dp"
         	android:text="40"
         	android:textSize="25dp"/>
         
          <TextView 
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:layout_marginLeft="300dp"
-        	android:layout_marginTop="70dp"
-        	android:text="获得积分:			分"
+        	android:layout_marginLeft="320dp"
+        	android:layout_marginTop="200dp"
+        	android:text="获得积分:			    分"
         	android:textSize="25dp"/>
          
           <TextView 
             android:id="@+id/current_grade"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:layout_marginLeft="410dp"
-        	android:layout_marginTop="70dp"
+        	android:layout_marginLeft="435dp"
+        	android:layout_marginTop="200dp"
         	android:text="40"
         	android:textSize="25dp"/>
         
@@ -60,8 +60,8 @@
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_marginLeft="100dp"
-        	android:layout_marginTop="200dp"
-        	android:text="最高闯关：			关"
+        	android:layout_marginTop="300dp"
+        	android:text="最高闯关：			  关"
         	android:textSize="25dp"/>
          
           <TextView 
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_marginLeft="220dp"
-        	android:layout_marginTop="200dp"
+        	android:layout_marginTop="300dp"
         	android:text="40"
         	android:textSize="25dp"/>
         
@@ -78,40 +78,36 @@
          <TextView 
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:layout_marginLeft="300dp"
-        	android:layout_marginTop="200dp"
-        	android:text="最高积分:			分"
+        	android:layout_marginLeft="320dp"
+        	android:layout_marginTop="300dp"
+        	android:text="最高积分:			    分"
         	android:textSize="25dp"/>
           <TextView 
             android:id="@+id/top_grade"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:layout_marginLeft="410dp"
-        	android:layout_marginTop="200dp"
+        	android:layout_marginLeft="435dp"
+        	android:layout_marginTop="300dp"
         	android:text="40"
         	android:textSize="25dp"/>
           
           
           <TextView 
             android:id="@+id/continue_game"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:background="@drawable/rect_pop"
-        	android:layout_marginLeft="100dp"
-        	android:layout_marginTop="300dp"
-        	android:text="再次挑战"
-        	android:textSize="35dp"
+            android:layout_width="150dp"
+        	android:layout_height="60dp"
+        	android:background="@drawable/again"
+        	android:layout_marginLeft="120dp"
+        	android:layout_marginTop="400dp"
               />
           
           <TextView 
             android:id="@+id/quit_game"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:background="@drawable/rect_pop"
-        	android:layout_marginLeft="410dp"
-        	android:layout_marginTop="300dp"
-        	android:text="退出挑战"
-        	android:textSize="35dp"
+            android:layout_width="150dp"
+        	android:layout_height="60dp"
+        	android:background="@drawable/quit"
+        	android:layout_marginLeft="330dp"
+        	android:layout_marginTop="400dp"
               />
          
     </RelativeLayout>

@@ -1,13 +1,16 @@
 package com.readboy.game;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.readboy.HandWrite.DraftView;
 import com.readboy.mentalcalculation.R;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -22,7 +25,6 @@ public class draftActivity extends Activity{
 	private Button clear_button;
 	private Button end_button;
 	private Button delete_button;
-	private Button add_button;
 	private Button left_button;
 	private Button right_button;
 	private TextView draft_current;
@@ -31,10 +33,10 @@ public class draftActivity extends Activity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
         setContentView(R.layout.draft_layout);
+        
         init();
         listenerEvent();
     }
-	
 	
 	protected void init(){
 		
@@ -45,20 +47,32 @@ public class draftActivity extends Activity{
 		end_button=(Button) findViewById(R.id.draft_finished_button);
 		d_v = (DraftView) findViewById(R.id.draft_screen);
 		delete_button=(Button) findViewById(R.id.draft_remove_button);
-		add_button=(Button) findViewById(R.id.draft_add_button);
 		left_button=(Button) findViewById(R.id.draft_left_button);
 		right_button=(Button) findViewById(R.id.draft_right_button);
 		draft_current=(TextView) findViewById(R.id.draft_current);
 		draft_all=(TextView) findViewById(R.id.draft_all);
-		//d_v.paint.setColor(Color.RED);
-		//d_v.paint.setStrokeWidth(5);
 		whichButtonShow(0);
 	}
 	
+	/**
+	 * 给按钮添加监听事件
+	 */
 	protected void listenerEvent(){
 		//完成按钮
 		end_button.setOnClickListener(new OnClickListener() {
 					public void onClick(View arg0) {
+						//清空草稿本
+						Thread thread = new Thread(new Runnable() {
+							String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"; 
+							File file = new File(path);
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								delete(file);
+							}
+						});
+						
+						thread.start();
 						draftActivity.this.finish();
 					}
 				});
@@ -105,27 +119,13 @@ public class draftActivity extends Activity{
 				int current_num=Integer.parseInt(draft_current.getText().toString());
 				int all_num=Integer.parseInt(draft_all.getText().toString());
 				if(all_num>=2){
-					draft_current.setText(1+"");
+					draft_current.setText(current_num-1+"");
 					draft_all.setText(all_num-1+"");
-					d_v.deleteButton(current_num-1);
+					d_v.deleteButton();
 					//whichButtonShow(0);
 				}
 				
 			
-			}
-		});
-		
-		//增加草稿纸
-		add_button.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				int current_num=Integer.parseInt(draft_current.getText().toString())+1;
-				int all_num=Integer.parseInt(draft_all.getText().toString())+1;
-				draft_current.setText(current_num+"");
-				draft_all.setText(all_num+"");
-				d_v.addButton(current_num-1);
-				//whichButtonShow(0);
 			}
 		});
 		
@@ -137,11 +137,11 @@ public class draftActivity extends Activity{
 				int current_num=Integer.parseInt(draft_current.getText().toString())-1;
 				
 				if(current_num>=1){
-					draft_current.setText(current_num+"");
-					d_v.leftButton(current_num-1);
+					if(d_v.leftButton())
+						draft_current.setText(current_num+"");
+					
 					//whichButtonShow(0);
 				}
-				
 			}
 		});
 		
@@ -154,19 +154,47 @@ public class draftActivity extends Activity{
 				
 				int all_num=Integer.parseInt(draft_all.getText().toString());
 				if(current_num<=all_num){
-					draft_current.setText(current_num+"");
-					d_v.leftButton(current_num-1);
+					if(d_v.rightButton())
+						draft_current.setText(current_num+"");
+					
 					//whichButtonShow(0);
+				}else{ //新增加一个草稿纸
+					try {
+						if(d_v.addButton()){
+							int add_all_num=Integer.parseInt(draft_all.getText().toString())+1;
+							draft_current.setText(current_num+"");
+							draft_all.setText(add_all_num+"");
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				
 			}
 		});
-		
-		
-		
 	}
 	
-	
+	 /**
+	  * 清空草稿本
+	 * @param file
+	 */
+	public static void delete(File file) {
+	        if (file.isFile()) {  
+	            file.delete();  
+	            return;  
+	        }  
+	          if(file.isDirectory()){  
+	            File[] childFiles = file.listFiles();  
+	            if (childFiles == null || childFiles.length == 0) {  
+	                file.delete();  
+	                return;  
+	            }        
+	            for (int i = 0; i < childFiles.length; i++) {  
+	            	delete(childFiles[i]);  
+	            }  
+	            file.delete();  
+	        }  
+	    } 
 	/*显示当前按钮状态*/
 	@SuppressWarnings("deprecation")
 	public void whichButtonShow(int type){

@@ -11,256 +11,246 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+    
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/bar_add"/>
+    <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="920dp"
+       android:background="@drawable/between_bar"
+       >
     <TextView
         android:id="@+id/item_1_textview1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_2_top_q1" 
-        android:textColor="#FFA500"
-        android:textSize="18sp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
 
-    <RelativeLayout
+  <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_1_textview1" >
-
-        <TextView
+        
+        
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_2_top_11"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="不进位加法"
-            android:textSize="18sp"/>
-         <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_2_top_12"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="进位加法"
-            android:textSize="18sp" />
-
-         <TextView
-             android:id="@+id/grade_2_top_13"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="不退位减法"
-            android:textSize="18sp"/>
-          <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_13"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
+      
+          <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_2_top_14"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="140dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="退位减法"
-            android:textSize="18sp"/>
-           <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="220dp"
+            />
+           <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_2_top_15"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignBottom="@id/grade_2_top_14"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="连加"
-            android:textSize="18sp" />
-
-         <TextView
-             android:id="@+id/grade_2_top_16"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-              android:layout_alignBottom="@id/grade_2_top_14"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="连减"
-            android:textSize="18sp"/>
-           
-            <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="420dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_16"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="420dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_2_top_17"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="280dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="加减混合"
-            android:textSize="18sp"/>
-           
-
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="620dp"
+            />
     </RelativeLayout>
+</RelativeLayout>
+
+<TextView 
+   android:layout_width="fill_parent"
+   android:layout_height="30dp"
+   android:background="@drawable/bar_add"/>
+
+<RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="920dp"
+       android:background="@drawable/between_bar"
+       >
 	<TextView
-        android:id="@+id/item_1_textview2"
+        android:id="@+id/item_2_textview2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_2_top_q2" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18sp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
        
 <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_2_textview2"
        >
 
-        <TextView
-            android:id="@+id/grade_2_top_21"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="乘法是相同的数相加的简便算法"
-            android:textSize="18sp"/>
-         <TextView
-            android:id="@+id/grade_2_top_22"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="5的乘法口诀"
-            android:textSize="18sp" />
-
-         <TextView
-             android:id="@+id/grade_2_top_23"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="2的乘法口诀"
-            android:textSize="18sp"/>
-         
-          <TextView
-            android:id="@+id/grade_2_top_24"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="140dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="3的乘法口诀"
-            android:textSize="18sp"/>
-            <TextView
-            android:id="@+id/grade_2_top_25"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignBottom="@id/grade_2_top_24"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="4的乘法口诀"
-            android:textSize="18sp" />
-
-         <TextView
-             android:id="@+id/grade_2_top_26"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignBottom="@id/grade_2_top_24"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="乘加、乘减"
-            android:textSize="18sp"/>
-         
-           <TextView
-            android:id="@+id/grade_2_top_27"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="280dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="6的乘法口诀"
-            android:textSize="18sp"/>
-          
-    </RelativeLayout>
     
+     <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_21"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_22"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_23"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
+      
+          <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_24"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="220dp"
+            />
+           <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_25"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="420dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_26"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="420dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_27"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="620dp"
+            />
+    </RelativeLayout>
+</RelativeLayout>
+  
+
+
+<TextView 
+   android:layout_width="fill_parent"
+   android:layout_height="30dp"
+   android:background="@drawable/bar_add"/>
+
+<RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="700dp"
+       android:background="@drawable/between_bar"
+       >
    	<TextView
-        android:id="@+id/item_1_textview3"
+        android:id="@+id/item_2_textview3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_2_top_q3" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18sp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_2_textview3"
        >
 
-        <TextView
+	      <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_2_top_31"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="7的乘法口诀"
-            android:textSize="18sp"/>
-         <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_2_top_32"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="求一个数的几倍是多少的问题的计算方法"
-            android:textSize="18sp" />
-
-         <TextView
-             android:id="@+id/grade_2_top_33"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="8的乘法口诀"
-            android:textSize="18sp"/>
-        <TextView
-            android:id="@+id/grade_2_top_34"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-             android:layout_marginLeft="10dp"
-             android:layout_marginTop="140dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="9的乘法口诀"
-            android:textSize="18sp"/>
-           <TextView
-            android:id="@+id/grade_2_top_35"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignBottom="@id/grade_2_top_34"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="乘法口诀表"
-            android:textSize="18sp" />
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
         
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_33"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
+      
+          <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_34"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="220dp"
+            />
+           <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_2_top_35"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="420dp"
+            />
      </RelativeLayout>
+</RelativeLayout>
 	  
 </LinearLayout>
 </ScrollView>

@@ -10,14 +10,24 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
+ <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/bar_add"/>
 
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:background="@drawable/between_bar"
+       >
     <TextView
         android:id="@+id/item_1_textview1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/grade_5_top_q1" 
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:text="@string/grade_5_top_q1"
+        android:layout_marginLeft="50dp" 
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -25,215 +35,215 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_1_textview1" >
 
-        <TextView
+        
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_11"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="小数乘整数的计算方式"
-            android:textSize="18dp"/>
-         <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_12"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="小数乘小数的算理及计算方法"
-            android:textSize="18dp" />
-
-         <TextView
-             android:id="@+id/grade_5_top_13"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="小数连乘的运算顺序"
-            android:textSize="18dp"/>
-          
-
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_5_top_13"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
     </RelativeLayout>
+    </RelativeLayout>
+     <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+         android:layout_marginTop="40dp"
+        android:background="@drawable/bar_add"/>
+
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:background="@drawable/between_bar"
+       
+       >
 	<TextView
         android:id="@+id/item_1_textview2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_5_top_q2" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
    <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview2"
        >
-
-        <TextView
-            android:id="@+id/grade_5_top_21"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="小数除以整数的计算方法"
-            android:textSize="18dp"/>
-         <TextView
-            android:id="@+id/grade_5_top_22"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="被除数的整数部分不够除的计算方法"
-            android:textSize="18dp" />
-
-         <TextView
-             android:id="@+id/grade_5_top_23"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="除到被除数的末位乃有余数的小数的计算方法"
-            android:textSize="18dp"/>
-         
-          
-         
         
-    </RelativeLayout>
+       <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_5_top_21"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
     
+        	 
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_5_top_22"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_5_top_23"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
+    </RelativeLayout>
+    </RelativeLayout>
+     <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bar_add"/>
+
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="720dp"
+       android:background="@drawable/between_bar"
+       >
    	<TextView
         android:id="@+id/item_1_textview3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_5_top_q3" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
        
 	<RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview3"
        >
-
-        <TextView
+        
+	     <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_31"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="形如x±a=b的方程的解法"
-            android:textSize="18dp"/>
-         <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_32"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="形如ax=b的方程的解法"
-            android:textSize="18dp" />
-
-         <TextView
-             android:id="@+id/grade_5_top_33"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="形如ax+b=c的方程的解法及其应用"
-            android:textSize="18dp"/>
-         <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_5_top_33"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
+      
+          <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_34"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="140dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="形如ax-b=c的方程的解法及其应用"
-            android:textSize="18dp"/>
-            <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="220dp"
+            />
+           <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_35"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignBottom="@id/grade_5_top_34"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="形如ax+ab=c的方程的解法及其应用"
-            android:textSize="18dp" />
-
-         <TextView
-             android:id="@+id/grade_5_top_36"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignBottom="@id/grade_5_top_34"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="形如ax±bx=c的方程的解法"
-            android:textSize="18dp"/>
-        
-        
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="420dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_5_top_36"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="420dp"
+            /> 
      </RelativeLayout>
+     </RelativeLayout>
+      <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bar_add"/>
+
+   <RelativeLayout 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:background="@drawable/between_bar"
+       >
 	  <TextView
         android:id="@+id/item_1_textview5"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/grade_5_top_q4" 
-        android:layout_marginTop="40dp"
-        android:textColor="#FFA500"
-        android:textSize="18dp"/>
+        android:layout_marginLeft="50dp"
+        android:textColor="#DC143C"
+        android:textSize="25sp"/>
    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/item_1_textview5"
        >
-
-        <TextView
+       
+         <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_41"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rect_blue" 
-            android:gravity="center"
-            android:text="平行四边形的面积计算公式"
-            android:textSize="18dp"/>
-         <TextView
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            />
+    
+        	 
+        <com.readboy.mentalcalculation.view 
             android:id="@+id/grade_5_top_42"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rect_pop"
-            android:gravity="center"
-            android:text="三角形面积的计算"
-            android:textSize="18dp" />
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="680dp"
+            android:layout_marginTop="20dp"
+            />
+        
+        <com.readboy.mentalcalculation.view 
+            android:id="@+id/grade_5_top_43"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="220dp"
+            />
 
-         <TextView
-             android:id="@+id/grade_5_top_43"
-             android:layout_width="200dp"
-             android:layout_height="100dp"
-             android:layout_alignParentRight="true"
-             android:layout_alignParentTop="true"
-             android:background="@drawable/rect_org" 
-             android:gravity="center"
-             android:text="梯形的面积计算公式的应用"
-            android:textSize="18dp"/>
+        
+    </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
 </ScrollView>

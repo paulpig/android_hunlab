@@ -3,6 +3,7 @@ package com.readboy.game;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class CountDownThread implements Runnable {
 
@@ -10,6 +11,8 @@ public class CountDownThread implements Runnable {
 	int start_time;
 	Handler mHandler;
 	boolean stopThread;
+	boolean stop=false;
+	int stop_time;
 	public CountDownThread(int count_time,Handler time_hander) {
 		// TODO Auto-generated constructor stub
 		this.count_time=count_time;
@@ -18,7 +21,14 @@ public class CountDownThread implements Runnable {
 		stopThread=false;
 	}
 	
+	public void setStartTime(int startTime){
+		count_time=startTime;
+	}
 	
+	public void setStop(boolean is_stop,int stop_time){
+		stop=is_stop;
+		this.stop_time=stop_time;
+	}
 	public void setTag(boolean stopThread){
 		this.stopThread=stopThread;
 	}
@@ -37,12 +47,17 @@ public class CountDownThread implements Runnable {
 			count_time--;
 			 Message message = new Message(); 
 			 Bundle bundle=new Bundle();
-			 bundle.putInt("time",count_time);
+			 if(stop==false)
+				 bundle.putInt("time",count_time);
+			 else
+				 bundle.putInt("time",stop_time);
 			 message.setData(bundle);
 			 mHandler.sendMessage(message);
 			}
-			count_time=start_time;
+			//count_time=start_time;
 		}
+		
+		 Log.i("lalala", "quitThread");
 
 }
 }

@@ -63,7 +63,7 @@ public class Grade_1_top extends GameActivity implements Watcher{
 	 }
 	
 	protected void onDestroy() {
-		System.out.println("-----------onDestroy------");
+		Log.i("lalala","top1_destory");
         stopThread=true;
         count_down_thread.setTag(stopThread);
         supply_project_thread.setTag(stopThread);
@@ -75,11 +75,17 @@ public class Grade_1_top extends GameActivity implements Watcher{
 	protected void rankingListen(){
 		 ranking.setOnClickListener(new OnClickListener() {
 				public void onClick(View arg0) {
-					 Intent intent = new Intent();  
-		             intent.setClass(Grade_1_top.this, rankingList.class);
-		             intent.putExtra("game_type",intent_type);
-		             intent.putExtra("grade",student_grade);
-		             startActivity(intent);
+					if(time!=0){
+						//time_of_game.setText(time+"");
+						is_over=false;
+						Intent intent = new Intent();  
+			            intent.setClass(Grade_1_top.this, rankingList.class);
+			            intent.putExtra("game_type",intent_type);
+			            intent.putExtra("grade",student_grade);
+			            intent.putExtra("office", student_office);
+			            startActivity(intent);
+			            //count_down_thread.setStartTime(time);
+					}
 				}
 			});
 	}

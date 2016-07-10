@@ -23,6 +23,7 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity{
 	private TextView TextContext;
 	private ImageView menuImg;
+	private ImageView imageView1;
 	private TextView first_grade;
 	private TextView second_grade;
 	private TextView third_grade;
@@ -62,6 +63,7 @@ public class MainActivity extends FragmentActivity{
     	six_grade= (TextView) findViewById(R.id.six_grade);
     	Log.i("tagg", "lalalal");
     	TextContext=(TextView)findViewById(R.id.title_bar_name);
+    	imageView1=(ImageView)findViewById(R.id.imageView1);
     	left_button=(Button)findViewById(R.id.first_volume);
     	right_button=(Button)findViewById(R.id.second_volume);
     	linerlayout=(LinearLayout) findViewById(R.id.layout_menu);
@@ -69,6 +71,22 @@ public class MainActivity extends FragmentActivity{
     
     /*监听各个按钮*/
     public void clickListener(){
+    	
+    	TextContext.setOnClickListener(new OnClickListener() {	
+			public void onClick(View v) {
+				OpenRightMenu();
+				
+			}
+		});
+    	
+    	
+    	imageView1.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				OpenRightMenu();
+			}
+		});
+    	
+    	
     	first_grade.setOnClickListener(new OnClickListener() {
 			@SuppressWarnings("deprecation")
 			public void onClick(View v) {
@@ -317,7 +335,7 @@ public class MainActivity extends FragmentActivity{
     
     
     
-    public void OpenRightMenu(View view)
+    public void OpenRightMenu()
 	{
 		mDrawerLayout.openDrawer(Gravity.LEFT);
 		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,Gravity.LEFT);
