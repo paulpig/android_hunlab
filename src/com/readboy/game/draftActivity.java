@@ -29,6 +29,13 @@ public class draftActivity extends Activity{
 	private Button right_button;
 	private TextView draft_current;
 	private TextView draft_all;
+	private int currentState;
+	
+	final private int WRITE=1;// Ð´×´Ì¬
+	final private int ERASE=2;//ÏðÆ¤²Á×´Ì¬
+	final private int MOVE=3;//ÒÆ¶¯×´Ì¬
+	
+	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
@@ -91,6 +98,7 @@ public class draftActivity extends Activity{
 					public void onClick(View arg0) {
 						whichButtonShow(2);
 						d_v.move();
+						currentState=MOVE;
 					}
 				});
 		//²Á³ý°´Å¥
@@ -100,6 +108,7 @@ public class draftActivity extends Activity{
 					public void onClick(View arg0) {
 						whichButtonShow(1);
 						d_v.erase();
+						currentState=ERASE;
 					}
 				});
 		//Á·Ï°°´Å¥
@@ -107,6 +116,7 @@ public class draftActivity extends Activity{
 			public void onClick(View arg0) {
 				whichButtonShow(0);
 				d_v.write();
+				currentState=WRITE;
 				
 			}
 		});
@@ -122,7 +132,6 @@ public class draftActivity extends Activity{
 					draft_current.setText(current_num-1+"");
 					draft_all.setText(all_num-1+"");
 					d_v.deleteButton();
-					//whichButtonShow(0);
 				}
 				
 			
@@ -139,9 +148,10 @@ public class draftActivity extends Activity{
 				if(current_num>=1){
 					if(d_v.leftButton())
 						draft_current.setText(current_num+"");
-					
-					//whichButtonShow(0);
 				}
+				
+				//±£´æµ±Ç°×´Ì¬
+				currentState(currentState);
 			}
 		});
 		
@@ -156,8 +166,6 @@ public class draftActivity extends Activity{
 				if(current_num<=all_num){
 					if(d_v.rightButton())
 						draft_current.setText(current_num+"");
-					
-					//whichButtonShow(0);
 				}else{ //ÐÂÔö¼ÓÒ»¸ö²Ý¸åÖ½
 					try {
 						if(d_v.addButton()){
@@ -170,6 +178,8 @@ public class draftActivity extends Activity{
 						e.printStackTrace();
 					}
 				}
+				//±£´æµ±Ç°×´Ì¬
+				currentState(currentState);
 			}
 		});
 	}
@@ -220,6 +230,31 @@ public class draftActivity extends Activity{
 			write_button.setBackgroundDrawable(bWrite1);
 			earse_button.setBackgroundDrawable(bErase1);
 			move_button.setBackgroundDrawable(bMove2);
+			break;
+		}
+	}
+	
+	
+	/**
+	 * ÅÐ¶Ïµ±Ç°×´Ì¬
+	 */
+	
+	public void currentState(int state){
+		switch (state) {
+		case WRITE:
+			whichButtonShow(0);
+			d_v.write();
+			break;
+		case ERASE:
+			whichButtonShow(1);
+			d_v.erase();
+			break;
+			
+		case MOVE:
+			whichButtonShow(2);
+			d_v.move();
+			break;
+		default:
 			break;
 		}
 	}

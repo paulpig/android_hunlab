@@ -1,6 +1,7 @@
 package com.readboy.mentalcalculation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -29,10 +30,15 @@ public class MyFragment_Grade_6_down extends Fragment{
 	    View view = inflater.inflate(R.layout.grade_6_down, container,
 	        false);
 	    
-	    //查找控件并设置点击事件
-	   
+	    new  AlertDialog.Builder(getActivity())    
+	  
+	                    .setTitle("速算练习---六年级下册" )  
+	     
+	                    .setMessage("对不起，暂时没有相关数据" )  
 	      
-	    //查找控件并设置点击事件
+	                    .setPositiveButton("确定" ,  null )  
+	      
+	                    .show();  
 	    
 	    return view;
 	  }

@@ -103,8 +103,8 @@ public class rankingList extends Activity{
 		SharedPreferences sharedPreferences= getSharedPreferences(name, 
 				Activity.MODE_PRIVATE); 
 				// 使用getString方法获得value，注意第2个参数是value的默认值 
-		grade_all[1]=sharedPreferences.getInt("first_grade"+game_type, 0); 
-		grade_all[0]=sharedPreferences.getInt("office_grade"+game_type, 1); 
+		grade_all[1]=sharedPreferences.getInt("first_grade"+game_type,0); 
+		grade_all[0]=sharedPreferences.getInt("office_grade"+game_type,0); 
 				
 	}
 	
@@ -112,7 +112,6 @@ public class rankingList extends Activity{
 	public void showTextView(){
 		office_view.setText(Integer.toString(grade_all[0]));
 		grade_view.setText(Integer.toString(grade_all[1]));
-		//third_view.setText(Integer.toString(grade_all[2]));
 	}
 	
 	

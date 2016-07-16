@@ -85,6 +85,8 @@ public class DraftView extends View
 		current_file_name = 0;
 		is_clear=false;
 		
+		
+		//橡皮擦的画笔
 		clearPaint = new Paint();
 		clearPaint.setAntiAlias(true);
 		clearPaint.setDither(true);
@@ -95,11 +97,11 @@ public class DraftView extends View
 		clearPaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
 		clearPaint.setStrokeWidth(20.6f);   
 
-		
+		//设置画笔
 		paint = new Paint(Paint.DITHER_FLAG);
 		paint.setColor(Color.RED);
 		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(1);
+		paint.setStrokeWidth(3.0f);
 		paint.setAntiAlias(true);
 		paint.setDither(true);
 		
@@ -187,14 +189,7 @@ public class DraftView extends View
 		}
 		else if(is_move==true){
 			Log.i("move", "dx_move:"+dx_move+"\ndy_move:"+dy_move);
-			
-//			int deltaX = VIEW_WIDTH-screen_width;
-//			int deltaY = VIEW_HEIGHT-screen_height;
-			
-			
-			//canvas.drawBitmap(cacheBitmap.elementAt(current_path), -dx_move, -dy_move, new Paint());
-			//if(dx_move<deltaX && dx_move>=0 && dy_move<deltaY && dy_move>=0)
-				canvas.drawBitmap(currentBitmap, -dx_move, -dy_move, new Paint());
+			canvas.drawBitmap(currentBitmap, -dx_move, -dy_move, new Paint());
 		}
 	}
 
@@ -244,13 +239,7 @@ public class DraftView extends View
 	
 	//删除按钮功能
 	public void deleteButton(){
-		//cacheBitmap.removeElementAt(num);
 		files_deleted.add(Integer.valueOf(current_file_name));
-		//current_path=0;
-//		is_write=true;
-//		rePostion();
-//		cacheCanvas.setBitmap(cacheBitmap.elementAt(current_path));
-//		invalidate();
 		leftButton();
 	}
 	
@@ -296,22 +285,13 @@ public class DraftView extends View
 						//currentBitmap.recycle(); 
 			        }  
 			    });  
-			    thread.start();
-				//保存之前的bitmap到文件中
-//				saveBitMap(currentBitmap, String.valueOf(current_file_name));
-//				currentBitmap.recycle();
-				
+			    thread.start();	
 				current_file_name = index;
 				break;
 			}
 		}
-		
-		//current_path=num;
 		is_write=true;
-		
 		rePostion();
-		
-		// = getBitMapWithName(String.valueOf(current_file_name));
 		try {
 			Bitmap bitmap = getBitMapWithName(String.valueOf(current_file_name));
 			currentBitmap = bitmap;
@@ -337,8 +317,6 @@ public class DraftView extends View
 		//这里需要注意，就是增加新的草稿本的时候需要先增加草稿本之后再右移
 		if(current_file_name == max_bitmap_index)
 			return false;
-		
-		
 		if(saveThreadNum>0){
 			return false;
 		}

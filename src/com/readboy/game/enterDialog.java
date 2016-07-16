@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class enterDialog {
+	final private int STARTNUM=61;
 	Context context;
     android.app.AlertDialog ad;
 
@@ -29,15 +30,18 @@ public class enterDialog {
     TextView click_back;
     TextView click_ok;
     boolean is_show_next_time=true;
-
+    CountDownThread count_down_thread;
     TextView titleView;
     TextView messageView;
     LinearLayout buttonLayout;
-    public enterDialog(Context context) {
+    public enterDialog(Context context,CountDownThread count_down_thread) {
         // TODO Auto-generated constructor stub
         this.context=context;
+        this.count_down_thread=count_down_thread;
         ad=new android.app.AlertDialog.Builder(context).create();
         ad.show();
+        
+        
         //关键在下面的两行,使用window.setContentView,替换整个对话框窗口的布局
         Window window = ad.getWindow();
         window.setContentView(R.layout.enter_dialog);
@@ -47,9 +51,13 @@ public class enterDialog {
         is_show_next_time=true;
         setClickBackListenEvent();
         setClickOkListenEvent();
+        
         //设置点击空白处
         ad.setCancelable(false);
     }
+    
+    
+    
     /**
      * 点击下一次发生的事件
      * @param text
@@ -66,7 +74,7 @@ public class enterDialog {
     
     
     /**
-     * 点击clickback按钮发生事件
+     * 下一次不显示对话框
      */
     
     public void setClickBackListenEvent(){
@@ -83,11 +91,11 @@ public class enterDialog {
     }
     
     
-    /*点击click_ok按钮发生事件*/
-    
+    /**
+     * 下一次显示对话框
+     * */
     public void setClickOkListenEvent(){
     	click_ok.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -98,15 +106,19 @@ public class enterDialog {
     	
     }
     
-    /*保存是否进入下一次变量在文件中*/
+    /**
+     * 保存是否进入下一次变量在文件中
+     * */
+    
     public void keepIsShow(){
     	String name="test";
   		SharedPreferences mySharedPreferences= context.getSharedPreferences(name, 
   		Activity.MODE_PRIVATE); 
   		//实例化SharedPreferences.Editor对象（第二步） 
   		SharedPreferences.Editor editor = mySharedPreferences.edit(); 
-  		//用putString的方法保存数据 
+  		//此处是用来控制是否显示输出框
   		editor.putBoolean("is_show", is_show_next_time); 
+  		//editor.putBoolean("is_show", true);
   		editor.commit(); 
     	}
   
@@ -125,6 +137,8 @@ public class enterDialog {
                  if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0)
                  {
                      dialog.dismiss();
+                     if(count_down_thread!=null)
+                    	 count_down_thread.setStartTime(STARTNUM);
                  }
                  return false;
              }

@@ -52,8 +52,27 @@ public class MainActivity extends FragmentActivity{
         manager = getSupportFragmentManager();
 		mFragments1 = manager.findFragmentById(R.id.MyFragment_Grade_1);  
 		manager.findFragmentById(R.id.left_framgment);
+		
+		Log.i("mentalcalculation", "main_activity_onCreative");
     }
     
+    
+    protected void onPause(){
+    	super.onPause();
+    	Log.i("mentalcalculation", "main_activity_onPause");
+    }
+    
+    
+	public void onResume() {
+		super.onResume();
+		Log.i("mentalcalculation", "main_activity_onResume");
+	}
+	
+	
+	protected void onDestroy() {
+		super.onDestroy();
+		Log.i("mentalcalculation", "main_activity_onDestory");
+	}
     public void findViewButton(){
     	first_grade = (TextView) findViewById(R.id.first_grade);
     	second_grade= (TextView) findViewById(R.id.second_grade);

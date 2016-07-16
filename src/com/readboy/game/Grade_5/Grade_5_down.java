@@ -84,10 +84,12 @@ public class Grade_5_down extends GameActivity implements Watcher{
 	protected void rankingListen(){
 		 ranking.setOnClickListener(new OnClickListener() {
 				public void onClick(View arg0) {
+					is_over=false;
 					 Intent intent = new Intent();  
 		             intent.setClass(Grade_5_down.this, rankingList.class);
 		             intent.putExtra("game_type",intent_type);
 		             intent.putExtra("grade",student_grade);
+		             intent.putExtra("office", student_office);
 		             startActivity(intent);
 				}
 			});

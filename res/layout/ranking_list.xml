@@ -38,7 +38,7 @@
         android:layout_marginTop="450dp"
         android:background="@drawable/topgrade" />
     
-    
+    <!-- pk的次数-->
      <TextView 	
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
@@ -58,6 +58,8 @@
      android:text="40"
      android:textSize="35dp"/>
       
+      
+     <!-- 得到的分数 -->
        <TextView 	
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
