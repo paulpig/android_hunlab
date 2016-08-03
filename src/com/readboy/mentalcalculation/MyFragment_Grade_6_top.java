@@ -156,7 +156,7 @@ public class MyFragment_Grade_6_top extends Fragment{
           intent.setClass(getActivity(), Grade_6_top.class);  
           intent.putExtra("content",content_intent);
           intent.putExtra("type", type);
-          startActivity(intent);    
+          startActivityForResult(intent,type);   
 	  }
 	  
 	  

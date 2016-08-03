@@ -218,7 +218,7 @@ public class MyFragment_Grade_5_top extends Fragment{
           intent.setClass(getActivity(), Grade_5_top.class);  
           intent.putExtra("content",content_intent);
           intent.putExtra("type", type);
-          startActivity(intent);    
+          startActivityForResult(intent,type);    
 	  }
 	  /*重新从文件中读取最大值*/
 	  public void setGrade(view tv,int type){

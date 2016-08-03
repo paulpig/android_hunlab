@@ -208,9 +208,9 @@ public class Supply_Grade_5_down implements Runnable{
 				ele_three=(int)(1100+Math.random()*1899);
 				boolean whichChoose1=addStrElement(ele_one*0.01*ele_two*0.01+ele_one*0.01*ele_three*0.01+ele_two*0.01*ele_three*0.01,2*1.0,false);
 				if(whichChoose1==true)
-					problem1.add("("+df.format(ele_one*0.01)+"*"+df.format(ele_two*0.01)+"+"+df.format(ele_one*0.01)+"*"+df.format(ele_three*0.01)+"+"+df.format(ele_two*0.01)+"*"+df.format(ele_three*0.01)+")×2"+"=");
+					problem1.add("("+df.format(ele_one*0.01)+"×"+df.format(ele_two*0.01)+"+"+df.format(ele_one*0.01)+"×"+df.format(ele_three*0.01)+"+"+df.format(ele_two*0.01)+"×"+df.format(ele_three*0.01)+")×2"+"=");
 				else 
-					problem.add("("+df.format(ele_one*0.01)+"*"+df.format(ele_two*0.01)+"+"+df.format(ele_one*0.01)+"*"+df.format(ele_three*0.01)+"+"+df.format(ele_two*0.01)+"*"+df.format(ele_three*0.01)+")×2"+"=");
+					problem.add("("+df.format(ele_one*0.01)+"×"+df.format(ele_two*0.01)+"+"+df.format(ele_one*0.01)+"×"+df.format(ele_three*0.01)+"+"+df.format(ele_two*0.01)+"×"+df.format(ele_three*0.01)+")×2"+"=");
 				//problem.add("("+ele_one*0.01+"*"+ele_two*0.01+"+"+ele_one*0.01+"*"+ele_three*0.01+"+"+ele_two*0.01+"*"+ele_three*0.01+")×2"+"=");
 				//answer2.add((float)((ele_one*0.01*ele_two*0.01+ele_one*0.01*ele_three*0.01+ele_two*0.01*ele_three*0.01)*2));
 				break;
@@ -221,9 +221,9 @@ public class Supply_Grade_5_down implements Runnable{
 				ele_three=(int)(1000+Math.random()*999);
 				boolean whichChoose2=addStrElement(ele_one*0.01*ele_two*0.01*ele_three*0.01,1*1.0,false);
 				if(whichChoose2==true)
-					problem1.add(df.format(ele_one*0.01)+"*"+df.format(ele_two*0.01)+"*"+df.format(ele_three*0.01)+"=");
+					problem1.add(df.format(ele_one*0.01)+"×"+df.format(ele_two*0.01)+"×"+df.format(ele_three*0.01)+"=");
 				else 
-					problem.add(df.format(ele_one*0.01)+"*"+df.format(ele_two*0.01)+"*"+df.format(ele_three*0.01)+"=");
+					problem.add(df.format(ele_one*0.01)+"×"+df.format(ele_two*0.01)+"×"+df.format(ele_three*0.01)+"=");
 				//problem.add(ele_one*0.01+"*"+ele_two*0.01+"*"+ele_three*0.01+"=");
 				//answer2.add((float)(ele_one*0.01*ele_two*0.01*ele_three*0.01));
 				break;
@@ -233,9 +233,9 @@ public class Supply_Grade_5_down implements Runnable{
 				ele_two=(int)(1100+Math.random()*1899);
 				boolean whichChoose3=addStrElement(6*ele_two*0.01*ele_two*0.01,1.0,false);
 				if(whichChoose3==true)
-					problem1.add("6"+"*"+df.format(ele_two*0.01)+"²"+"=");
+					problem1.add("6"+"×"+df.format(ele_two*0.01)+"²"+"=");
 				else 
-					problem.add("6"+"*"+df.format(ele_two*0.01)+"²"+"=");
+					problem.add("6"+"×"+df.format(ele_two*0.01)+"²"+"=");
 				//problem.add(ele_one*0.01+"×"+ele_two*0.01+"²"+"=");
 				//answer2.add((float)(ele_one*0.01*ele_two*0.01*ele_two*0.01));
 				break;
@@ -309,7 +309,7 @@ public class Supply_Grade_5_down implements Runnable{
 		/*计算乘除*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2);
+				problem.add(num1+"×"+num2);
 				answer.add(num1*num2);
 			}
 			else{

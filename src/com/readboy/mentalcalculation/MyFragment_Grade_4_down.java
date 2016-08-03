@@ -118,7 +118,7 @@ public class MyFragment_Grade_4_down extends Fragment {
           intent.setClass(getActivity(), Grade_4_down.class);  
           intent.putExtra("content",content_intent);
           intent.putExtra("type", type);
-          startActivity(intent);    
+          startActivityForResult(intent,type);   
 	  }
 	  
 	  /*重新从文件中读取最大值*/

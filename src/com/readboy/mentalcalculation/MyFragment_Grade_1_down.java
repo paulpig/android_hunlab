@@ -218,6 +218,7 @@ public class MyFragment_Grade_1_down extends Fragment {
 	  
 	  /*跳转到游戏界面*/
 	  public void intentToGame(String content_intent,int type){
+		  setAllBlue();
 		  Intent intent = new Intent();  
           intent.setClass(getActivity(), Grade_1_down.class);  
           intent.putExtra("content",content_intent);
@@ -231,7 +232,7 @@ public class MyFragment_Grade_1_down extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.i("lalala", "onActivity()");
+		Log.i("mentalcalculation", "onActivity()_grade_down_1");
 		
 		setData(requestCode);
 		

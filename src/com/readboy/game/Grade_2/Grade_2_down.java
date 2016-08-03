@@ -36,6 +36,11 @@ public class Grade_2_down extends GameActivity implements Watcher{
 		IsRight();
 		intent_type="21"+type;
 		rankingListen();
+		
+		enter_dialog.dismiss();
+		count_time=STARTNUM;
+		count_down_thread.setStartTime(count_time);
+		is_first_in_game=true;
     }
 	
 	protected void initTimer(){

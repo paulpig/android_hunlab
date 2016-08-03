@@ -1,6 +1,19 @@
 package com.readboy.mentalcalculation;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import com.readboy.game.GameActivity;
+
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -38,6 +51,7 @@ public class MainActivity extends FragmentActivity{
 	private int FragmentForButton[]={1,2};
 	private DrawerLayout mDrawerLayout;
 	private LinearLayout linerlayout;
+	private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +60,10 @@ public class MainActivity extends FragmentActivity{
         initView();
 		initEvents();
         findViewButton();
+        if(fistTimeInGame()==true){
+        	inputThread();
+        }
         clickListener();
-        
        // adapterListView();
         manager = getSupportFragmentManager();
 		mFragments1 = manager.findFragmentById(R.id.MyFragment_Grade_1);  
@@ -425,4 +441,51 @@ public class MainActivity extends FragmentActivity{
         return true;
     }
     
+    /**
+     * 开辟线程将数据输入到SD卡中
+     */
+    void inputThread(){
+    	final AlertDialog alertdialog = new  AlertDialog.Builder(MainActivity.this)     
+        .setTitle("注意事项" )  
+        .setMessage("数据正在copy，请等待！" ).create();
+    	
+    	
+    	handler=new Handler(){
+    	public void handleMessage(Message msg) {
+			if(msg.arg1==101){
+				Log.i("mentalcalculation", "main_message_101");
+				alertdialog.dismiss();
+			}
+			if(msg.arg1==110){
+				Log.i("mentalcalculation", "main_message_110");
+				alertdialog.show();  
+			}
+			}
+         };
+    	outPutToSD outputToSdThread=new outPutToSD(this,handler);
+    	new Thread(outputToSdThread).start();
+    }
+    
+    
+    /**
+     * 判断是否是第一次进入游戏
+     * @return  返回是否是第一次，true表示是，false表示错误
+     */
+    public boolean fistTimeInGame(){
+    	String name="fist_in_game";
+	  	SharedPreferences sharedPreferences=MainActivity.this.getSharedPreferences(name, 
+	  				Activity.MODE_PRIVATE); 	
+	  				// 使用getString方法获得value，注意第2个参数是value的默认值 
+	  	
+	  	//是否是第一次
+	  	boolean is_show=sharedPreferences.getBoolean("is_in_first", true); 
+	  	
+	  	if(is_show==true){
+	  		SharedPreferences.Editor editor = sharedPreferences.edit(); 
+	  		editor.putBoolean("is_in_first", false);   		
+	  		editor.commit(); 
+	  	}
+	  	
+	  	return is_show;
+    }
 }

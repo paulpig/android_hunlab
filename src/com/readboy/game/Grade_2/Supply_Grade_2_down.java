@@ -61,7 +61,7 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=IntFactor(ele_one*ele_two);
-			problem.add(ele_one+"*"+ele_two+"÷"+ele_three+"=");
+			problem.add(ele_one+"×"+ele_two+"÷"+ele_three+"=");
 			answer.add(ele_one*ele_two/ele_three);
 			break;
 		case CANDIVALL://求一个数是另一个数几倍的解题方法
@@ -97,7 +97,7 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=IntFactor(ele_one*ele_two);
-			problem.add(ele_one+"*"+ele_two+"÷"+ele_three+"=");
+			problem.add(ele_one+"×"+ele_two+"÷"+ele_three+"=");
 			answer.add(ele_one*ele_two/ele_three);
 			break;
 			
@@ -105,7 +105,7 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=(int)(1+Math.random()*8);
-			problem.add(ele_one+"*"+ele_two+"+"+ele_three+"=");
+			problem.add(ele_one+"×"+ele_two+"+"+ele_three+"=");
 			answer.add(ele_one*ele_two+ele_three);
 			break;
 			
@@ -114,7 +114,7 @@ public class Supply_Grade_2_down implements Runnable  {
 			ele_one=(int)(1+Math.random()*8);
 			ele_two=(int)(1+Math.random()*8);
 			ele_three=(int)(1+Math.random()*(ele_one*ele_two-1));
-			problem.add(ele_one+"*"+ele_two+"-"+ele_three+"=");
+			problem.add(ele_one+"×"+ele_two+"-"+ele_three+"=");
 			answer.add(ele_one*ele_two-ele_three);
 			break;
 			
@@ -191,7 +191,7 @@ public class Supply_Grade_2_down implements Runnable  {
 	/*计算乘除*/
 	public void MulAndDivMethod(int num1,int num2,int choose){
 		if(choose==1){
-			problem.add(num1+"*"+num2+"=");
+			problem.add(num1+"×"+num2+"=");
 			answer.add(num1*num2);
 		}
 		else{

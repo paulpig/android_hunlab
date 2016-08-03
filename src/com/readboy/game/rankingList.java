@@ -66,13 +66,9 @@ public class rankingList extends Activity{
 	 * ¼àÌıÏÔÊ¾ÄÚÈİ
 	 */
 	public void ListenButton(){
-		content_view.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				Log.i("dianji","button");
-			}
-		});
+		
+		content_view.setOnClickListener(null);
+		//content_view.setClickable(false);
 	}
 	
 	/** 

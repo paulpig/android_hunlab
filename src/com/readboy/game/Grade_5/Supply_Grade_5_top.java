@@ -79,9 +79,9 @@ public class Supply_Grade_5_top implements Runnable{
 				ele_three=(int)(1+Math.random()*98);
 				is_string=addStrElement((ele_two+ele_one*1.0/100),ele_three,false);
 				if(is_string==true)
-					problem1.add(df.format((ele_two+ele_one*1.0/100))+"*"+ele_three+"=");
+					problem1.add(df.format((ele_two+ele_one*1.0/100))+"×"+ele_three+"=");
 				else
-					problem.add(df.format((ele_two+ele_one*1.0/100))+"*"+ele_three+"=");
+					problem.add(df.format((ele_two+ele_one*1.0/100))+"×"+ele_three+"=");
 				//answer1.add(str.substring(0, length+1));
 				//problem1.add(df.format((ele_two+ele_one*1.0/100))+"*"+ele_three+"=");
 				break;
@@ -92,9 +92,9 @@ public class Supply_Grade_5_top implements Runnable{
 				ele_three=(int)(1+Math.random()*98);
 				is_string=addStrElement((ele_two+ele_one*1.0/100)/2.0,ele_three,false);
 				if(is_string==true)
-					problem1.add(df.format((ele_two+ele_one*1.0/100))+"*"+ele_three+"÷ 2"+"=");
+					problem1.add(df.format((ele_two+ele_one*1.0/100))+"×"+ele_three+"÷ 2"+"=");
 				else
-					problem.add(df.format((ele_two+ele_one*1.0/100))+"*"+ele_three+"÷ 2"+"=");
+					problem.add(df.format((ele_two+ele_one*1.0/100))+"×"+ele_three+"÷ 2"+"=");
 				//answer1.add(str.substring(0, length+1));
 				//problem1.add(df.format((ele_two+ele_one*1.0/100))+"*"+ele_three+"÷ 2"+"=");
 				break;
@@ -109,16 +109,16 @@ public class Supply_Grade_5_top implements Runnable{
 				//str = String.valueOf((ele_two+ele_one*1.0/100+ele_five+ele_four*1.0/100)*(ele_three*2.0));
 				is_string=addStrElement((ele_two+ele_one*1.0/100+ele_five+ele_four*1.0/100)/2.0,ele_three,false);
 				if(is_string==true)
-					problem1.add("("+df.format((ele_two+ele_one*1.0/100))+"+"+temp+")"+"*"+ele_three+"÷ 2"+"=");
+					problem1.add("("+df.format((ele_two+ele_one*1.0/100))+"+"+temp+")"+"×"+ele_three+"÷ 2"+"=");
 				else
-					problem.add("("+df.format(ele_two+ele_one*1.0/100)+"+"+temp+")"+"*"+ele_three+"÷ 2"+"=");
+					problem.add("("+df.format(ele_two+ele_one*1.0/100)+"+"+temp+")"+"×"+ele_three+"÷ 2"+"=");
 				break;
 			case DIVSPACE://形如ax+ab=c的方程的解法及其应用
 				ele_one=(int)(1+Math.random()*8);;
 				ele_two=(int)(1+Math.random()*8);
 				ele_three=(int)(ele_one*ele_two+20+Math.random()*79);
 				ele_four=IntFactor(ele_three-ele_one*ele_two);
-				problem.add(ele_four+"x"+"+"+ele_one+"*"+ele_two+"="+ele_three+";"+"x=");
+				problem.add(ele_four+"x"+"+"+ele_one+"×"+ele_two+"="+ele_three+";"+"x=");
 				answer.add((ele_three-ele_one*ele_two)/ele_four);
 				break;
 			case DIVWAY://形如ax+b=c的方程的解法及其应用
@@ -155,7 +155,7 @@ public class Supply_Grade_5_top implements Runnable{
 					ele_two=IntFactor(ele_one);
 					ele_three=(int)(1+Math.random()*(ele_two-1));
 					ele_four=ele_two-ele_three;
-					problem.add(ele_three+"*x"+"+"+ele_four+"*x"+"="+ele_one+";"+"x=");
+					problem.add(ele_three+"× x"+"+"+ele_four+"× x"+"="+ele_one+";"+"x=");
 					answer.add(ele_one/ele_two);
 				}
 				else{
@@ -163,7 +163,7 @@ public class Supply_Grade_5_top implements Runnable{
 					ele_two=IntFactor(ele_one);
 					ele_three=(int)(1+Math.random()*8);
 					ele_four=ele_two+ele_three;
-					problem.add(ele_four+"*x"+"-"+ele_three+"*x"+"="+ele_one+";"+"x=");
+					problem.add(ele_four+"× x"+"-"+ele_three+"× x"+"="+ele_one+";"+"x=");
 					answer.add(ele_one/ele_two);
 				}
 				break;
@@ -208,9 +208,9 @@ public class Supply_Grade_5_top implements Runnable{
 				ele_three=(int)(10+Math.random()*89);
 				is_string=addStrElement((ele_one+ele_two*0.01),ele_three*1.0,false);
 				if(is_string==true)
-					problem1.add(ele_one+ele_two*0.01+"*"+ele_three+"=");
+					problem1.add(ele_one+ele_two*0.01+"×"+ele_three+"=");
 				else
-					problem.add(ele_one+ele_two*0.01+"*"+ele_three+"=");
+					problem.add(ele_one+ele_two*0.01+"×"+ele_three+"=");
 				//problem.add(ele_one+ele_two*0.01+"*"+ele_three+"=");
 				//answer2.add((float)((ele_one+ele_two*0.01)*ele_three));
 				break;
@@ -224,9 +224,9 @@ public class Supply_Grade_5_top implements Runnable{
 				temp=ele_three+ele_four*0.01;
 				is_string=addStrElement((ele_one+ele_two*0.01),ele_three+ele_four*0.01,false);
 				if(is_string==true)
-					problem1.add(ele_one+ele_two*0.01+"*"+temp+"=");
+					problem1.add(ele_one+ele_two*0.01+"×"+temp+"=");
 				else
-					problem.add(ele_one+ele_two*0.01+"*"+temp+"=");
+					problem.add(ele_one+ele_two*0.01+"×"+temp+"=");
 				//problem.add(ele_one+ele_two*0.01+"*"+ele_three+ele_four*0.01+"=");
 				//answer2.add((float)((ele_one+ele_two*0.01)*(ele_three+ele_four*0.01)));
 				break;
@@ -242,9 +242,9 @@ public class Supply_Grade_5_top implements Runnable{
 				is_string=addStrElement((ele_one+ele_two*0.01)*(ele_three+ele_four*0.01),temp2,false);
 				temp=ele_three*1.0+ele_four*0.01;
 				if(is_string==true)
-					problem1.add(ele_one+ele_two*0.01+"*"+temp+"*"+temp2+"=");
+					problem1.add(ele_one+ele_two*0.01+"×"+temp+"×"+temp2+"=");
 				else
-					problem.add(ele_one+ele_two*0.01+"*"+temp+"*"+temp2+"=");
+					problem.add(ele_one+ele_two*0.01+"×"+temp+"×"+temp2+"=");
 				break;
 			case SUBTHENADD: //被除数的整数部分不够除的计算方法
 				is_float=true;
@@ -311,7 +311,7 @@ public class Supply_Grade_5_top implements Runnable{
 		/*计算乘除*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2+"=");
+				problem.add(num1+"×"+num2+"=");
 				answer.add(num1*num2);
 			}
 			else{

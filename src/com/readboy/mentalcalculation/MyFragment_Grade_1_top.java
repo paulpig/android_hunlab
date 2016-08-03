@@ -298,7 +298,7 @@ public class MyFragment_Grade_1_top extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.i("lalala", "onActivity()");
+		Log.i("mentalcalculation", "onActivity()_grade_top_1");
 		//show_num=requestCode; 
 		//设置文件中数据
 		

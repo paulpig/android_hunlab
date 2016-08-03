@@ -36,7 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public  abstract class GameActivity  extends Activity{
-	final private int STARTNUM=61;
+	final protected int STARTNUM=61;
 	protected ImageView back_bt;
 	protected TextView type_view;
 	protected TextView time_of_game;
@@ -71,8 +71,8 @@ public  abstract class GameActivity  extends Activity{
 	protected int time_temp;
 	protected int[]grade_all=new int[3];
 	boolean is_show;
-	boolean is_first_in_game=false;
-	enterDialog enter_dialog;
+	protected boolean is_first_in_game=false;
+	protected enterDialog enter_dialog;
 	finishDialog finish_dialog;
 	protected boolean is_over=true;
 	public int time; //倒计时当前的时间
@@ -639,6 +639,12 @@ public  abstract class GameActivity  extends Activity{
       			    student_grade=0;
       			    student_office=1;
     				number_of_game.setText("1");
+    				
+    				//重新出题
+    				dv.clearScreen();
+    				synchronized (Alock) {  
+   					 Alock.notifyAll();
+                     }    
       			}
       			});
         }

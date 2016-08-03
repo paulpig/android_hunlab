@@ -108,7 +108,7 @@ public class MyFragment_Grade_4_top extends Fragment {
           intent.setClass(getActivity(), Grade_4_top.class);  
           intent.putExtra("content",content_intent);
           intent.putExtra("type", type);
-          startActivity(intent);    
+          startActivityForResult(intent,type);   
 	  }
 	  
 	  

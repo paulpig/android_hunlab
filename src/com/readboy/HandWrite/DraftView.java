@@ -239,8 +239,14 @@ public class DraftView extends View
 	
 	//删除按钮功能
 	public void deleteButton(){
+		
+		int temp_current=current_file_name;
+		
 		files_deleted.add(Integer.valueOf(current_file_name));
-		leftButton();
+		
+		if(leftButton()==false){
+			files_deleted.remove(Integer.valueOf(temp_current));
+		}
 	}
 	
 	
@@ -256,7 +262,7 @@ public class DraftView extends View
 		if(saveThreadNum>0){
 			return false;
 		}
-		
+	
 		//前向遍历找到最近的一个没有被删除的bitmap
 		int index = -1;
 		for (int i = current_file_name-1; i >=0; i--) {
@@ -375,7 +381,7 @@ public class DraftView extends View
 	//添加按钮
 	public boolean addButton() throws IOException{
 		
-		if(saveThreadNum>2)
+		if(saveThreadNum>1)
 			return false;
 		final int temp_index = current_file_name;
 		final Bitmap tempmap = currentBitmap;
@@ -393,6 +399,7 @@ public class DraftView extends View
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Log.i("mentalcalculation", "exception before wrong1");
 				}
 				//currentBitmap.recycle(); 
 	        }  
@@ -405,11 +412,13 @@ public class DraftView extends View
 		Bitmap bitmap = null;  
 	    try {  
 	    	bitmap = Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,Config.ARGB_8888);  
+	    	Log.i("mentalcalculation", "addbutton try bitmap");
 	    } catch (OutOfMemoryError e) {  
 	        while(bitmap == null) {  
 	            System.gc();  
 	            System.runFinalization();  
 	            bitmap = Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,Config.ARGB_8888); 
+	            Log.i("mentalcalculation", "addbutton catch bitmap");
 	        }  
 	    }  
 		

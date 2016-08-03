@@ -64,7 +64,7 @@ public class Supply_Grade_4_down implements Runnable{
 				ele_two=IntFactor(ele_one);
 				ele_three=ele_one/ele_two;
 				ele_four=(int)(10+Math.random()*89);
-				problem.add(ele_four+"*"+ele_two+"*"+ele_three+"=");
+				problem.add(ele_four+"×"+ele_two+"×"+ele_three+"=");
 				answer.add(ele_four*ele_two*ele_three);
 				break;
 			case SEVENDIV://加法交换律、加法结合律的运用
@@ -121,7 +121,7 @@ public class Supply_Grade_4_down implements Runnable{
 		/*计算乘除*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2+"=");
+				problem.add(num1+"×"+num2+"=");
 				answer.add(num1*num2);
 			}
 			else{

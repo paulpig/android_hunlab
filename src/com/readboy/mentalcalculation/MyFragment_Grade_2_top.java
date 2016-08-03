@@ -258,7 +258,7 @@ public class MyFragment_Grade_2_top extends Fragment {
           intent.setClass(getActivity(), Grade_2_top.class);  
           intent.putExtra("content",content_intent);
           intent.putExtra("type", type);
-          startActivity(intent);    
+          startActivityForResult(intent,type);    
 	  }
 
 	  
@@ -288,7 +288,7 @@ public class MyFragment_Grade_2_top extends Fragment {
 		public void onActivityResult(int requestCode, int resultCode, Intent data) {
 			// TODO Auto-generated method stub
 			super.onActivityResult(requestCode, resultCode, data);
-			Log.i("lalala", "onActivity()");
+			Log.i("mentalcalculation", "onActivity()_grade_top_2");
 			
 			setData(requestCode);
 			

@@ -129,11 +129,11 @@ public class Supply_Grade_3_top implements Runnable{
 				ele_one=(int)(100+Math.random()*899);
 				ele_two=(int)(100+Math.random()*899);
 				if(choose==1){
-					problem.add(ele_one+"*2"+ele_two+"*2"+"=");
+					problem.add(ele_one+"¡Á 2"+ele_two+"¡Á 2"+"=");
 					answer.add(ele_one*2+ele_two*2);
 				}
-				else{
-					problem.add("("+ele_one+"+"+ele_two+")*2"+"=");
+				else{ 
+					problem.add("("+ele_one+"+"+ele_two+")¡Á 2"+"=");
 					answer.add(ele_one*2+ele_two*2);
 				}
 				break;
@@ -200,7 +200,7 @@ public class Supply_Grade_3_top implements Runnable{
 		/*¼ÆËã³Ë³ý*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2+"=");
+				problem.add(num1+"¡Á"+num2+"=");
 				answer.add(num1*num2);
 			}
 			else{

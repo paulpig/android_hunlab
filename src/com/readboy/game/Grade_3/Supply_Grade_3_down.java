@@ -131,7 +131,7 @@ public class Supply_Grade_3_down implements Runnable{
 				ele_one=(int)(10+Math.random()*89);
 				ele_two=(int)(1+Math.random()*8);
 				ele_three=(int)(1+Math.random()*8);;
-				problem.add(ele_one+"*"+ele_two+"*"+ele_three+"=");
+				problem.add(ele_one+"¡Á"+ele_two+"¡Á"+ele_three+"=");
 				answer.add(ele_one*ele_two*ele_three);
 				break;
 				
@@ -141,7 +141,7 @@ public class Supply_Grade_3_down implements Runnable{
 				ele_three=(int)(2+Math.random()*7);
 				ele_four=(int)(1+Math.random()*((int)(10/ele_three)-1));
 				int temp=ele_two+ele_four*10;
-				problem.add(ele_one+ele_three*10+"*"+temp+"=");
+				problem.add(ele_one+ele_three*10+"¡Á"+temp+"=");
 				answer.add((ele_one+ele_three*10)*(ele_two+ele_four*10));
 				break;
 				
@@ -258,7 +258,7 @@ public class Supply_Grade_3_down implements Runnable{
 		/*¼ÆËã³Ë³ý*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2);
+				problem.add(num1+"¡Á"+num2);
 				answer.add(num1*num2);
 			}
 			else{

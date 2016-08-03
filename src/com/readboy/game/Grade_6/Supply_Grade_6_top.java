@@ -202,7 +202,7 @@ public class Supply_Grade_6_top implements Runnable{
 		/*计算乘除*/
 		public void MulAndDivMethod(int num1,int num2,int choose){
 			if(choose==1){
-				problem.add(num1+"*"+num2);
+				problem.add(num1+"×"+num2);
 				answer.add(num1*num2);
 			}
 			else{

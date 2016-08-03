@@ -45,6 +45,7 @@ public class enterDialog {
         //关键在下面的两行,使用window.setContentView,替换整个对话框窗口的布局
         Window window = ad.getWindow();
         window.setContentView(R.layout.enter_dialog);
+        window.setBackgroundDrawableResource(android.R.color.transparent);
         remind_next_time=(TextView)window.findViewById(R.id.remind_next_time);
         click_back=(TextView)window.findViewById(R.id.click_back);
         click_ok=(TextView)window.findViewById(R.id.click_ok);
