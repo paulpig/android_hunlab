@@ -238,7 +238,7 @@ public class DraftView extends View
 	}
 	
 	//删除按钮功能
-	public void deleteButton(){
+	public boolean deleteButton(){
 		
 		int temp_current=current_file_name;
 		
@@ -246,7 +246,10 @@ public class DraftView extends View
 		
 		if(leftButton()==false){
 			files_deleted.remove(Integer.valueOf(temp_current));
+			return false;
 		}
+		
+		return true;
 	}
 	
 	

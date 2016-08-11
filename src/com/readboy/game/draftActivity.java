@@ -129,9 +129,10 @@ public class draftActivity extends Activity{
 				int current_num=Integer.parseInt(draft_current.getText().toString());
 				int all_num=Integer.parseInt(draft_all.getText().toString());
 				if(all_num>=2){
-					draft_current.setText(current_num-1+"");
-					draft_all.setText(all_num-1+"");
-					d_v.deleteButton();
+					if(d_v.deleteButton()){
+						draft_current.setText(current_num-1+"");
+						draft_all.setText(all_num-1+"");
+					}
 				}
 				
 			
