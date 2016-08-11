@@ -57,12 +57,25 @@ public class DraftView extends View
 	private Bitmap currentBitmap = null; //当前bitmap
 	private int saveThreadNum = 0;		 //记录当前执行的保存文件线程数
 	private int max_bitmap_index = 0;
+	private int is_detele[]=new int[100];
 	//ArrayList<integer> files_deleted = new ArrayList<integer>();  //保存删除的草稿本下标
 	HashSet<Integer> files_deleted = new HashSet<Integer>(); 
 	@SuppressWarnings("deprecation")
 	public DraftView(Context context, AttributeSet set) throws IOException
 	{
 		super(context, set);
+		
+		initData();
+	}
+
+	
+	/**
+	 * 初始化数据，将is_detele初始化
+	 */
+	private void initData(){
+		for(int i=1;i<=100;i++){
+			is_detele[i-1]=i;
+		}
 		is_erase=false;
 		current_path=0;
 		
@@ -104,10 +117,8 @@ public class DraftView extends View
 		paint.setStrokeWidth(3.0f);
 		paint.setAntiAlias(true);
 		paint.setDither(true);
-		
-		
 	}
-
+	
 	
 	/* (non-Javadoc)
 	 * 点击事件
@@ -244,7 +255,7 @@ public class DraftView extends View
 		
 		files_deleted.add(Integer.valueOf(current_file_name));
 		
-		if(leftButton()==false){
+		if(leftButton(1)==false){
 			files_deleted.remove(Integer.valueOf(temp_current));
 			return false;
 		}
@@ -253,59 +264,35 @@ public class DraftView extends View
 	}
 	
 	
+
 	/**
-	 *  left按钮功能
+	 * left按钮功能
+	 * @param step
+	 * @return 
 	 */
-	public boolean leftButton(){
+	public boolean leftButton(int step){
 		
-		//如果当前下标为0则直接返回
-		if(current_file_name == 0)
-			return false;
-		
-		if(saveThreadNum>0){
-			return false;
-		}
-	
+		int temp=0;
 		//前向遍历找到最近的一个没有被删除的bitmap
-		int index = -1;
 		for (int i = current_file_name-1; i >=0; i--) {
-			
 			if(!files_deleted.contains(Integer.valueOf(i))){
-				index = i;
-				
-				final int temp_index = current_file_name;
-				final Bitmap tempmap = currentBitmap;
-				
-				//增加线程计数
-				saveThreadNum++;
-				Thread thread=new Thread(new Runnable()  
-			    {  
-			        @Override  
-			        public void run()
-			        {
-			            try {
-							saveBitMap(tempmap, String.valueOf(temp_index));
-							tempmap.recycle();
-							saveThreadNum--;
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						//currentBitmap.recycle(); 
-			        }  
-			    });  
-			    thread.start();	
-				current_file_name = index;
-				break;
+				temp++;
+				if(temp==step){
+					current_file_name=i;
+					break;
+				}
 			}
 		}
+		
+		Log.i("mentalwubingchao", "find index leftbutton is ok");
+		
+		
 		is_write=true;
 		rePostion();
+		
+		
 		try {
-			Bitmap bitmap = getBitMapWithName(String.valueOf(current_file_name));
-			currentBitmap = bitmap;
-			cacheCanvas.setBitmap(currentBitmap);
-			
+			GetOrBuildFromSD(current_file_name);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -314,85 +301,39 @@ public class DraftView extends View
 		invalidate();
 		
 		return true;
+		
+		
 	}
 	
-
+	
 	/**
-	 * right按钮功能
+	 * 创建或者得到图片
+	 * @throws IOException 
 	 */
-	public boolean rightButton(){
-
-		//如果当前下标为最大则直接返回  
-		//这里需要注意，就是增加新的草稿本的时候需要先增加草稿本之后再右移
-		if(current_file_name == max_bitmap_index)
-			return false;
-		if(saveThreadNum>0){
-			return false;
-		}
+	public void GetOrBuildFromSD(int current_name) throws IOException{
 		
-		//前后遍历找到最近的一个没有被删除的bitmap
-		int index = -1;
-		for (int i = current_file_name+1; i <=max_bitmap_index ; i++) {
-			
-			if(!files_deleted.contains(Integer.valueOf(i))){
-				index = i;
-				final int temp_index = current_file_name;
-				final Bitmap tempmap = currentBitmap;
-				
-				//增加线程计数
-				saveThreadNum++;
-				Thread thread=new Thread(new Runnable()  
-			    {  
-			        @Override  
-			        public void run()
-			        {
-			            try {
-							saveBitMap(tempmap, String.valueOf(temp_index));
-							tempmap.recycle();
-							//线程执行完成
-							saveThreadNum--;
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						//currentBitmap.recycle(); 
-			        }  
-			    });  
-			    thread.start();
-				current_file_name = index;
-				break;
-			}
-		}
+		Bitmap bitmap = getBitMapWithName(String.valueOf(current_name));
+		currentBitmap = bitmap;
+		cacheCanvas.setBitmap(currentBitmap);
 		
-		//current_path=num;
-		is_write=true;
-		rePostion();
-		try {
-			Bitmap bitmap = getBitMapWithName(String.valueOf(current_file_name));
-			currentBitmap = bitmap;
-			cacheCanvas.setBitmap(currentBitmap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//cacheCanvas.setBitmap(cacheBitmap.elementAt(current_path));
-		invalidate();
-		return true;
 	}
 	
 	
-	//添加按钮
-	public boolean addButton() throws IOException{
+	/**
+	 * 保存图片到本地的线程
+	 */
+	public void  savaThread(){
+		if(saveThreadNum>0)
+			return;
 		
-		if(saveThreadNum>1)
-			return false;
 		final int temp_index = current_file_name;
 		final Bitmap tempmap = currentBitmap;
 		
-		//增加线程计数
+		//增加线程计数,保存图片
 		saveThreadNum++;
-		Thread thread = new Thread(new Runnable() {
-			@Override  
+		Thread thread=new Thread(new Runnable()  
+	    {  
+	        @Override  
 	        public void run()
 	        {
 	            try {
@@ -402,41 +343,69 @@ public class DraftView extends View
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					Log.i("mentalcalculation", "exception before wrong1");
 				}
 				//currentBitmap.recycle(); 
 	        }  
-		});
-		thread.start();
+	    });  
+	    thread.start();
+	}
+	
+	
+	
+	
+
+	/**
+	 * right按钮功能
+	 */
+	public boolean rightButton(int temp_right){
 		
-		//saveBitMap(currentBitmap, String.valueOf(max_bitmap_index));
-		//currentBitmap.recycle();
+		//前后遍历找到最近的一个没有被删除的bitmap
+		int temp = 0;
+		for (int i = current_file_name+1; i <=max_bitmap_index ; i++) {
+			if(!files_deleted.contains(Integer.valueOf(i))){
+				temp++;
+				if(temp==temp_right){
+					current_file_name=i;
+					break;
+				}
+			}
+		}
 		
-		Bitmap bitmap = null;  
-	    try {  
-	    	bitmap = Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,Config.ARGB_8888);  
-	    	Log.i("mentalcalculation", "addbutton try bitmap");
-	    } catch (OutOfMemoryError e) {  
-	        while(bitmap == null) {  
-	            System.gc();  
-	            System.runFinalization();  
-	            bitmap = Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,Config.ARGB_8888); 
-	            Log.i("mentalcalculation", "addbutton catch bitmap");
-	        }  
-	    }  
-		
-		//增加草稿本之后增加草稿本计数
-		max_bitmap_index++;
-		//cacheBitmap.addElement(Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,Config.ARGB_8888));
-		 
-		
-		//current_path=num;
 		is_write=true;
 		rePostion();
 		
+		try {
+			GetOrBuildFromSD(current_file_name);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Log.i("mentalwubingchao", "find index rightbutton is ok");
+		
+		invalidate();
+		return true;
+	}
+	
+	
+	//添加按钮
+	public boolean addButton(int temp_add) throws IOException{ 
+		//增加草稿本之后增加草稿本计数
+		max_bitmap_index+=temp_add;
 		current_file_name = max_bitmap_index;
-		currentBitmap = bitmap;
-		cacheCanvas.setBitmap(currentBitmap);
+		
+		try {
+			GetOrBuildFromSD(current_file_name);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		is_write=true;
+		rePostion();
+		
+		
 		invalidate();
 		return true;
 	}
@@ -458,7 +427,7 @@ public class DraftView extends View
     	String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/";     
         Log.i("filePath:", path);
     	File dirFile = new File(path);  
-       	if(!dirFile.exists()){  
+       	if(!dirFile.exists()){ 
             dirFile.mkdir();  
         }  
         File myCaptureFile = new File(path + fileName);  
@@ -469,14 +438,25 @@ public class DraftView extends View
     }
     
     /**
-     * 根据文件名字获取文件
+     * 根据文件名字获取文件,不存在文件则创建文件
      * @param fileName
      * @return
      * @throws IOException
      */
     public Bitmap getBitMapWithName(String fileName) throws IOException{
     	String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"+fileName;
-    	Bitmap bitmap=BitmapFactory.decodeFile(path);
+    	
+    	File file = new File(path);
+    	Bitmap bitmap = null;
+    	
+    	if(file.exists()){
+    		bitmap=BitmapFactory.decodeFile(path);
+    		Log.i("mentalwubingchao", "file is exit!");
+    	}
+    	else{
+    		bitmap=Bitmap.createBitmap(VIEW_WIDTH, VIEW_HEIGHT,Config.ARGB_8888);  
+    		Log.i("mentalwubingchao", "file is not exit!");
+    	}
     	
     	//复制bitmap以设置可修改属性
     	Bitmap bmp2 = bitmap.copy(bitmap.getConfig(), true);

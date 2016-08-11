@@ -2,8 +2,11 @@ package com.readboy.game;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.readboy.HandWrite.DraftView;
+import com.readboy.HandWrite.startThread;
 import com.readboy.mentalcalculation.R;
 
 import android.app.Activity;
@@ -11,6 +14,9 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -34,6 +40,22 @@ public class draftActivity extends Activity{
 	final private int WRITE=1;// 写状态
 	final private int ERASE=2;//橡皮擦状态
 	final private int MOVE=3;//移动状态
+	final private int ADD=4;
+	final private int LEFT=5;
+	final private int RIGHT=6;
+	
+	
+	private int temp_left=0;
+	private int temp_add=0;
+	private int temp_right=0;
+	
+	private Timer timer = new Timer();
+	
+	private boolean is_ok=false;
+	
+	private startThread startthread;
+	
+	
 	
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +143,55 @@ public class draftActivity extends Activity{
 			}
 		});
 		
+		
+		final Handler handler=new Handler(){
+			 public void handleMessage(Message msg) {
+				Bundle b = msg.getData();
+				int time = b.getInt("type");
+				switch (time) {
+				case ADD:
+					try {
+						if(d_v.addButton(temp_add)){
+							temp_add=0;
+							temp_right=0;
+							temp_left=0;
+							Log.i("mentalwubingchao", "handler add success");
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						Log.i("mentalwubingchao", "ADD 创建失败 ");
+					}
+					break;
+				case LEFT:
+					if(d_v.leftButton(temp_left)){
+						temp_add=0;
+						temp_right=0;
+						temp_left=0;
+						Log.i("mentalwubingchao", "3333");
+					}
+					else{
+						Log.i("mentalwubingchao", "leftbutton读取错误");
+					}
+					break;
+					
+				case RIGHT:
+					if(d_v.rightButton(temp_right)){
+						temp_add=0;
+						temp_right=0;
+						temp_left=0;
+						Log.i("mentalwubingchao", "4444");
+					}
+					else{
+						Log.i("mentalwubingchao", "rightbutton读取错误");
+					}
+					break;
+				default:
+					break;
+				}
+			 }
+		};
+		
 		//删除草稿纸
 		delete_button.setOnClickListener(new OnClickListener() {
 			
@@ -144,17 +215,43 @@ public class draftActivity extends Activity{
 			
 			@Override
 			public void onClick(View arg0) {
-				int current_num=Integer.parseInt(draft_current.getText().toString())-1;
-				
-				if(current_num>=1){
-					if(d_v.leftButton())
-						draft_current.setText(current_num+"");
+				/*第一次按键的时候，存储图片*/
+				if(temp_left==0){
+					d_v.savaThread();
 				}
 				
+				/*将屏幕的计数改变，但是暂时不显示bitmap的内容*/
+				int current_num=Integer.parseInt(draft_current.getText().toString())-1;
+				if(current_num>=1){
+					draft_current.setText(current_num+"");
+					temp_left++;   //用来计数移动了多少位置
+				}
+				else{
+					draft_current.setText("1");
+					return;
+				}
+				
+				
+				/*当手指释放一秒钟的时候，显示bitmap的内容*/
+				timer.cancel();
+				timer = new Timer(); 
+	    		timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						startthread=new startThread(LEFT,handler);
+						new Thread(startthread).start();
+					}
+				}, 1000);
+				
+	    		
 				//保存当前状态
 				currentState(currentState);
 			}
 		});
+		
+		
+		
+	
 		
 		//查看right草稿纸
 		right_button.setOnClickListener(new OnClickListener() {
@@ -164,21 +261,58 @@ public class draftActivity extends Activity{
 				int current_num=Integer.parseInt(draft_current.getText().toString())+1;
 				
 				int all_num=Integer.parseInt(draft_all.getText().toString());
+				//没有增加，只是简单的切换到右边的bitmap
 				if(current_num<=all_num){
-					if(d_v.rightButton())
-						draft_current.setText(current_num+"");
-				}else{ //新增加一个草稿纸
-					try {
-						if(d_v.addButton()){
-							int add_all_num=Integer.parseInt(draft_all.getText().toString())+1;
-							draft_current.setText(current_num+"");
-							draft_all.setText(add_all_num+"");
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+//					if(d_v.rightButton())
+//						draft_current.setText(current_num+"");
+					if(temp_right==0){
+						d_v.savaThread();
 					}
+					
+					/*将屏幕的计数改变，但是暂时不显示bitmap的内容*/
+					draft_current.setText(current_num+"");
+					temp_right++;   //用来计数移动了多少位置
+					
+					
+					/*当手指释放一秒钟的时候，显示bitmap的内容*/
+					timer.cancel();
+					timer = new Timer(); 
+		    		timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							startthread=new startThread(RIGHT,handler);
+							new Thread(startthread).start();
+						}
+					}, 1000);
+					
+				//新增加一个草稿纸
+				}else{ 
+					//当第一次点击的时候保存当前图片
+					if(temp_add==0){
+						d_v.savaThread();
+					}
+					
+					/*判断到了第几张图片了*/
+					temp_add++;
+					
+					int add_all_num=Integer.parseInt(draft_all.getText().toString())+1;
+					draft_current.setText(current_num+"");
+					draft_all.setText(add_all_num+"");
+					
+					
+					/*手指离开一点时间后，加载或者创建bitmap的内容*/
+					timer.cancel();
+					timer = new Timer(); 
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							startthread=new startThread(ADD,handler);
+							new Thread(startthread).start();
+						}
+					}, 1000);
 				}
+				
+				
 				//保存当前状态
 				currentState(currentState);
 			}
