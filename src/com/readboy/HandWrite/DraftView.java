@@ -58,6 +58,8 @@ public class DraftView extends View
 	private int saveThreadNum = 0;		 //记录当前执行的保存文件线程数
 	private int max_bitmap_index = 0;
 	private int is_detele[]=new int[100];
+	final private int LEFT=5;
+	final private int RIGHT=6;
 	//ArrayList<integer> files_deleted = new ArrayList<integer>();  //保存删除的草稿本下标
 	HashSet<Integer> files_deleted = new HashSet<Integer>(); 
 	@SuppressWarnings("deprecation")
@@ -249,17 +251,24 @@ public class DraftView extends View
 	}
 	
 	//删除按钮功能
-	public boolean deleteButton(){
+	public boolean deleteButton(int leftOrRight){
 		
 		int temp_current=current_file_name;
 		
 		files_deleted.add(Integer.valueOf(current_file_name));
 		
-		if(leftButton(1)==false){
-			files_deleted.remove(Integer.valueOf(temp_current));
-			return false;
+		if(leftOrRight==LEFT){
+			if(leftButton(1)==false){
+				files_deleted.remove(Integer.valueOf(temp_current));
+				return false;
+			}
 		}
-		
+		else if(leftOrRight==RIGHT){
+			if(rightButton(1)==false){
+				files_deleted.remove(Integer.valueOf(temp_current));
+				return false;
+			}
+		}
 		return true;
 	}
 	
@@ -432,7 +441,8 @@ public class DraftView extends View
         }  
         File myCaptureFile = new File(path + fileName);  
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));  
-        bm.compress(Bitmap.CompressFormat.PNG, 100, bos);  
+        bm.compress(Bitmap.CompressFormat.PNG, 100, bos); 
+        //bm.recycle();
         bos.flush();  
         bos.close();  
     }
@@ -462,5 +472,10 @@ public class DraftView extends View
     	Bitmap bmp2 = bitmap.copy(bitmap.getConfig(), true);
 		bitmap.recycle();
 		return bmp2;
+    }
+    
+    
+    public void clearCurrentBitMap(){
+    	currentBitmap.recycle();
     }
 }

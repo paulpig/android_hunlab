@@ -67,6 +67,27 @@ public class draftActivity extends Activity{
         listenerEvent();
     }
 	
+	
+	protected void onDestroy(){
+		Log.i("mentalwubingchao", "on destorys");
+		
+		//清空本地文件中存放的bitmap
+		Thread thread = new Thread(new Runnable() {
+			String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"; 
+			File file = new File(path);
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				delete(file);
+			}
+		});
+		
+		thread.start();
+		
+		//清空当前存在的currentBitmap
+		d_v.clearCurrentBitMap();
+		super.onDestroy();
+	}
 	protected void init(){
 		
 		write_button=(Button) findViewById(R.id.draft_write_button);
@@ -90,18 +111,18 @@ public class draftActivity extends Activity{
 		//完成按钮
 		end_button.setOnClickListener(new OnClickListener() {
 					public void onClick(View arg0) {
-						//清空草稿本
-						Thread thread = new Thread(new Runnable() {
-							String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"; 
-							File file = new File(path);
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								delete(file);
-							}
-						});
-						
-						thread.start();
+//						//清空草稿本
+//						Thread thread = new Thread(new Runnable() {
+//							String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"; 
+//							File file = new File(path);
+//							@Override
+//							public void run() {
+//								// TODO Auto-generated method stub
+//								delete(file);
+//							}
+//						});
+//						
+//						thread.start();
 						draftActivity.this.finish();
 					}
 				});
@@ -199,12 +220,20 @@ public class draftActivity extends Activity{
 			public void onClick(View arg0) {
 				int current_num=Integer.parseInt(draft_current.getText().toString());
 				int all_num=Integer.parseInt(draft_all.getText().toString());
-				if(all_num>=2){
-					if(d_v.deleteButton()){
+				if(all_num>=2 && current_num!=1){
+					if(d_v.deleteButton(LEFT)){
 						draft_current.setText(current_num-1+"");
 						draft_all.setText(all_num-1+"");
 					}
 				}
+				
+				if(all_num>=2 && current_num==1){
+					if(d_v.deleteButton(RIGHT)){
+						draft_current.setText("1");
+						draft_all.setText(all_num-1+"");
+					}
+				}
+				
 				
 			
 			}

@@ -78,7 +78,7 @@ public  abstract class GameActivity  extends Activity{
 	public int time; //倒计时当前的时间
 	private boolean stop_judge=false;
 	boolean isScreenOn=true;//判断屏幕亮暗
-	private PlaySound playSound=new PlaySound(this);
+	private PlaySound playSound;
 	int successOrFail=-1;
     
 	final protected int []drawOfGame={10,20,30,400,500,600,700,800,900,1000};
@@ -116,9 +116,9 @@ public  abstract class GameActivity  extends Activity{
             startActivity(intent);
             this.finish();
         }
+        playSound=new PlaySound(this);
         
-        
-        playSound.PlaySound(1);
+        //playSound.PlaySoundSuccessOrFail(1);
         //new showEnterDia(this).start();
         Log.i("mentalcalculation", "game_activity_onCreative");
     }
@@ -433,7 +433,7 @@ public  abstract class GameActivity  extends Activity{
     	if(choosing==true){
     		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
     		mImageViewFilling.setVisibility(0);
-    		successOrFail=2;
+    		successOrFail=1;
     		Resources resources=getBaseContext().getResources();
     		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_success);
     		mImageViewFilling.setBackgroundDrawable(right_b);
@@ -443,7 +443,7 @@ public  abstract class GameActivity  extends Activity{
     	else{
     		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
     		mImageViewFilling.setVisibility(0);
-    		successOrFail=1;
+    		successOrFail=2;
     		Resources resources=getBaseContext().getResources();
     		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_fail);
     		mImageViewFilling.setBackgroundDrawable(right_b);
@@ -457,7 +457,7 @@ public  abstract class GameActivity  extends Activity{
     		                    public void run() {
     		                        // TODO Auto-generated method stub
     		                    	animation.start();   //启动动画
-    		                    	playSound.PlaySound(successOrFail);
+    		                    	playSound.PlaySoundSuccessOrFail(successOrFail);
     		                    	dv.clearScreen();
     	                   }
     		                });
@@ -469,6 +469,7 @@ public  abstract class GameActivity  extends Activity{
         handler.postDelayed(new Runnable() {
            public void run() {
            	 animation.stop();
+           	 playSound.StopSoundSuccessOrFail(successOrFail);
            	 mImageViewFilling.setVisibility(4);
 				 synchronized (Alock) {  
 					 Alock.notifyAll();
