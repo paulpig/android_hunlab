@@ -16,5 +16,10 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+       
+    <style name="MyThemeStyle" parent="AppBaseTheme"> <!-- 禁止多点触控 -->
+         <item name="android:windowEnableSplitTouch">false</item>
+         <item name="android:splitMotionEvents">false</item>
+	</style>
 
 </resources>

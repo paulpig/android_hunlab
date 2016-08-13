@@ -18,6 +18,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.os.Environment;
+import android.text.format.Time;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -56,12 +57,14 @@ public class DraftView extends View
 	int current_file_name = 0;           //当前bitmap文件下标
 	private Bitmap currentBitmap = null; //当前bitmap
 	private int saveThreadNum = 0;		 //记录当前执行的保存文件线程数
-	private int max_bitmap_index = 0;
-	private int is_detele[]=new int[100];
+	public int max_bitmap_index = 0;
+	private int is_detele[]=new int[40];
 	final private int LEFT=5;
 	final private int RIGHT=6;
+	boolean isReadBitmapFromSD[]=new boolean[40];
 	//ArrayList<integer> files_deleted = new ArrayList<integer>();  //保存删除的草稿本下标
 	HashSet<Integer> files_deleted = new HashSet<Integer>(); 
+	Object Alock=new Object();
 	@SuppressWarnings("deprecation")
 	public DraftView(Context context, AttributeSet set) throws IOException
 	{
@@ -75,8 +78,9 @@ public class DraftView extends View
 	 * 初始化数据，将is_detele初始化
 	 */
 	private void initData(){
-		for(int i=1;i<=100;i++){
+		for(int i=1;i<=40;i++){
 			is_detele[i-1]=i;
+			isReadBitmapFromSD[i-1]=false;
 		}
 		is_erase=false;
 		current_path=0;
@@ -147,6 +151,7 @@ public class DraftView extends View
 	       if(is_move==false)
 	    	   touchMove(upx, upy); 
            chooseWhichAction();
+           Log.i("mentalwubingchao","move result ondraw");
            invalidate();  
            break;
          case MotionEvent.ACTION_UP:  
@@ -156,6 +161,7 @@ public class DraftView extends View
         		 startY=dy_move;
         	 }
            path.reset();
+           Log.i("mentalwubingchao","up result ondraw");
            invalidate();  
            break;  
          case MotionEvent.ACTION_CANCEL:  
@@ -186,6 +192,7 @@ public class DraftView extends View
 	@SuppressLint("DrawAllocation") @Override
 	public void onDraw(Canvas canvas)
 	{
+		Log.i("mentalwubingchao", "who draw bitmap");
 		super.onDraw(canvas);  
 		if(is_clear==true){
 			canvas.drawPath(path, new Paint());
@@ -198,11 +205,13 @@ public class DraftView extends View
 		}
 		else if(is_move==false){
 			//canvas.drawBitmap(cacheBitmap.elementAt(current_path), -dx_move, -dy_move, new Paint());
-			canvas.drawBitmap(currentBitmap, -dx_move, -dy_move, new Paint());
+			if(!currentBitmap.isRecycled())
+				canvas.drawBitmap(currentBitmap, -dx_move, -dy_move, new Paint());
 		}
 		else if(is_move==true){
 			Log.i("move", "dx_move:"+dx_move+"\ndy_move:"+dy_move);
-			canvas.drawBitmap(currentBitmap, -dx_move, -dy_move, new Paint());
+			if(!currentBitmap.isRecycled())
+				canvas.drawBitmap(currentBitmap, -dx_move, -dy_move, new Paint());
 		}
 	}
 
@@ -215,6 +224,7 @@ public class DraftView extends View
 		path.reset();
 		is_clear=true;
 		//cacheCanvas.drawPath(path, paint);
+		 Log.i("mentalwubingchao","reSetPath result ondraw");
 		invalidate();
 	}
 	
@@ -293,7 +303,7 @@ public class DraftView extends View
 			}
 		}
 		
-		Log.i("mentalwubingchao", "find index leftbutton is ok");
+		//Log.i("mentalwubingchao", "find index leftbutton is ok");
 		
 		
 		is_write=true;
@@ -306,7 +316,7 @@ public class DraftView extends View
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		 Log.i("mentalwubingchao","leftbutton result ondraw");
 		invalidate();
 		
 		return true;
@@ -315,61 +325,55 @@ public class DraftView extends View
 	}
 	
 	
-	/**
-	 * 创建或者得到图片
-	 * @throws IOException 
-	 */
-	public void GetOrBuildFromSD(int current_name) throws IOException{
-		
-		Bitmap bitmap = getBitMapWithName(String.valueOf(current_name));
-		currentBitmap = bitmap;
-		cacheCanvas.setBitmap(currentBitmap);
-		
-	}
 	
 	
-	/**
-	 * 保存图片到本地的线程
+	/**移动的最后的位置还是当前位置。
+	 * @return
 	 */
-	public void  savaThread(){
-		if(saveThreadNum>0)
-			return;
-		
-		final int temp_index = current_file_name;
-		final Bitmap tempmap = currentBitmap;
-		
-		//增加线程计数,保存图片
-		saveThreadNum++;
+	public boolean moveToCurrentPosition(){
 		Thread thread=new Thread(new Runnable()  
 	    {  
 	        @Override  
 	        public void run()
 	        {
-	            try {
-					saveBitMap(tempmap, String.valueOf(temp_index));
-					tempmap.recycle();
-					saveThreadNum--;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	        	Log.i("mentalwubingchao", "isReadBitmapFromSD is "+isReadBitmapFromSD[current_file_name]  + "currentNum is "+ current_file_name);
+	        	if(isReadBitmapFromSD[current_file_name]==false){
+		        	//先将该线程锁住，直到有储存完毕之后，再来触发(读取比写先完成)
+		        	synchronized(Alock) {
+						try {
+							Alock.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						}
+	        	}
+	        	
+	            	try {
+	            		Log.i("mentalwubingchao", "get bitmap is start");
+	        			GetOrBuildFromSD(current_file_name);
+	        			
+	        		} catch (IOException e) {
+	        			// TODO Auto-generated catch block
+	        			e.printStackTrace();
+	        		}
+					//saveThreadNum--;
+		
 				//currentBitmap.recycle(); 
 	        }  
 	    });  
 	    thread.start();
+		return true;
 	}
-	
-	
-	
 	
 
 	/**
 	 * right按钮功能
 	 */
 	public boolean rightButton(int temp_right){
-		
 		//前后遍历找到最近的一个没有被删除的bitmap
+		Log.i("mentalwubingchao:", "temp_right is  "+temp_right);
 		int temp = 0;
+		//max_bit_index=;
 		for (int i = current_file_name+1; i <=max_bitmap_index ; i++) {
 			if(!files_deleted.contains(Integer.valueOf(i))){
 				temp++;
@@ -390,8 +394,8 @@ public class DraftView extends View
 			e.printStackTrace();
 		}
 		
-		Log.i("mentalwubingchao", "find index rightbutton is ok");
-		
+		//Log.i("mentalwubingchao", "find index rightbutton is ok");
+		 Log.i("mentalwubingchao","rightbutton result ondraw");
 		invalidate();
 		return true;
 	}
@@ -400,8 +404,10 @@ public class DraftView extends View
 	//添加按钮
 	public boolean addButton(int temp_add) throws IOException{ 
 		//增加草稿本之后增加草稿本计数
-		max_bitmap_index+=temp_add;
+		max_bitmap_index=temp_add+current_file_name;
 		current_file_name = max_bitmap_index;
+		
+		Log.i("mentalwubingchao", "all num is"+current_file_name+"");
 		
 		try {
 			GetOrBuildFromSD(current_file_name);
@@ -414,7 +420,7 @@ public class DraftView extends View
 		is_write=true;
 		rePostion();
 		
-		
+		 Log.i("mentalwubingchao","addButton result ondraw");
 		invalidate();
 		return true;
 	}
@@ -434,7 +440,7 @@ public class DraftView extends View
      */  
     public void saveBitMap(Bitmap bm, String fileName) throws IOException { 
     	String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/";     
-        Log.i("filePath:", path);
+        Log.i("mentalwubingchao:", "save bitmapNumber "+fileName);
     	File dirFile = new File(path);  
        	if(!dirFile.exists()){ 
             dirFile.mkdir();  
@@ -442,7 +448,7 @@ public class DraftView extends View
         File myCaptureFile = new File(path + fileName);  
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));  
         bm.compress(Bitmap.CompressFormat.PNG, 100, bos); 
-        //bm.recycle();
+        bm.recycle();
         bos.flush();  
         bos.close();  
     }
@@ -456,6 +462,8 @@ public class DraftView extends View
     public Bitmap getBitMapWithName(String fileName) throws IOException{
     	String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"+fileName;
     	
+    	Log.i("mentalwubingchao:", "get bitmap number "+fileName);
+    	 
     	File file = new File(path);
     	Bitmap bitmap = null;
     	
@@ -469,11 +477,70 @@ public class DraftView extends View
     	}
     	
     	//复制bitmap以设置可修改属性
+    	currentBitmap.recycle();
     	Bitmap bmp2 = bitmap.copy(bitmap.getConfig(), true);
-		bitmap.recycle();
+    	bitmap.recycle();
+    	//Bitmap bmp2=bitmap;
 		return bmp2;
     }
     
+    /**
+	 * 创建或者得到图片
+	 * @throws IOException 
+	 */
+	public void GetOrBuildFromSD(int current_name) throws IOException{
+		
+		Bitmap bitmap = getBitMapWithName(String.valueOf(current_name));
+		currentBitmap = bitmap;
+		cacheCanvas.setBitmap(currentBitmap);
+		Log.i("mentalwubingchao", "GetOrBuildFromSD is  "+current_name);
+		isReadBitmapFromSD[current_name]=false;
+	}
+	
+	
+	/**
+	 * 保存图片到本地的线程
+	 */
+	public void  savaThread(){
+		final int temp_index = current_file_name;
+		final Bitmap tempmap = currentBitmap;
+		//增加线程计数,保存图片
+		//saveThreadNum++;
+		Thread thread=new Thread(new Runnable()  
+	    {  
+	        @Override  
+	        public void run()
+	        {
+	            try {
+//	            	Time t=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+//	            	t.setToNow(); // 取得系统时间。
+//	            	int second = t.second;
+	            	
+	            	
+					saveBitMap(tempmap, String.valueOf(temp_index));
+//					Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+//	            	t1.setToNow(); // 取得系统时间。
+//	            	int second1 =  t1.second-second;
+					
+//	            	Log.i("mentalwubingchao", "save bitmap time is  "+second1);
+	            	
+					tempmap.recycle();
+					Log.i("mentalwubingchao", "save bitmap is done "+temp_index);
+					Log.i("mentalwubingchao", "current_file_name is  "+current_file_name);
+					isReadBitmapFromSD[temp_index]=true;
+					 synchronized (Alock) {  
+						 Alock.notify();
+	                  }						//saveThreadNum--;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//currentBitmap.recycle(); 
+	        }  
+	    });  
+	    thread.start();
+	}
+	
     
     public void clearCurrentBitMap(){
     	currentBitmap.recycle();

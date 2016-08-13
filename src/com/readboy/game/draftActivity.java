@@ -12,6 +12,7 @@ import com.readboy.mentalcalculation.R;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -43,18 +44,20 @@ public class draftActivity extends Activity{
 	final private int ADD=4;
 	final private int LEFT=5;
 	final private int RIGHT=6;
+	final private int NONE=7;
 	
 	
 	private int temp_left=0;
 	private int temp_add=0;
 	private int temp_right=0;
+	private int temp_move=0;
+	private int state=-1;
 	
 	private Timer timer = new Timer();
 	
 	private boolean is_ok=false;
 	
 	private startThread startthread;
-	
 	
 	
 	
@@ -65,6 +68,7 @@ public class draftActivity extends Activity{
         
         init();
         listenerEvent();
+        
     }
 	
 	
@@ -81,13 +85,13 @@ public class draftActivity extends Activity{
 				delete(file);
 			}
 		});
-		
 		thread.start();
 		
 		//清空当前存在的currentBitmap
 		d_v.clearCurrentBitMap();
 		super.onDestroy();
 	}
+	
 	protected void init(){
 		
 		write_button=(Button) findViewById(R.id.draft_write_button);
@@ -102,6 +106,18 @@ public class draftActivity extends Activity{
 		draft_current=(TextView) findViewById(R.id.draft_current);
 		draft_all=(TextView) findViewById(R.id.draft_all);
 		whichButtonShow(0);
+		
+		//清空本地文件中存放的bitmap
+				Thread thread = new Thread(new Runnable() {
+					String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"; 
+					File file = new File(path);
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						delete(file);
+					}
+				});
+				thread.start();
 	}
 	
 	/**
@@ -111,18 +127,6 @@ public class draftActivity extends Activity{
 		//完成按钮
 		end_button.setOnClickListener(new OnClickListener() {
 					public void onClick(View arg0) {
-//						//清空草稿本
-//						Thread thread = new Thread(new Runnable() {
-//							String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"; 
-//							File file = new File(path);
-//							@Override
-//							public void run() {
-//								// TODO Auto-generated method stub
-//								delete(file);
-//							}
-//						});
-//						
-//						thread.start();
 						draftActivity.this.finish();
 					}
 				});
@@ -159,59 +163,10 @@ public class draftActivity extends Activity{
 			public void onClick(View arg0) {
 				whichButtonShow(0);
 				d_v.write();
-				currentState=WRITE;
+				currentState=WRITE;  
 				
 			}
 		});
-		
-		
-		final Handler handler=new Handler(){
-			 public void handleMessage(Message msg) {
-				Bundle b = msg.getData();
-				int time = b.getInt("type");
-				switch (time) {
-				case ADD:
-					try {
-						if(d_v.addButton(temp_add)){
-							temp_add=0;
-							temp_right=0;
-							temp_left=0;
-							Log.i("mentalwubingchao", "handler add success");
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						Log.i("mentalwubingchao", "ADD 创建失败 ");
-					}
-					break;
-				case LEFT:
-					if(d_v.leftButton(temp_left)){
-						temp_add=0;
-						temp_right=0;
-						temp_left=0;
-						Log.i("mentalwubingchao", "3333");
-					}
-					else{
-						Log.i("mentalwubingchao", "leftbutton读取错误");
-					}
-					break;
-					
-				case RIGHT:
-					if(d_v.rightButton(temp_right)){
-						temp_add=0;
-						temp_right=0;
-						temp_left=0;
-						Log.i("mentalwubingchao", "4444");
-					}
-					else{
-						Log.i("mentalwubingchao", "rightbutton读取错误");
-					}
-					break;
-				default:
-					break;
-				}
-			 }
-		};
 		
 		//删除草稿纸
 		delete_button.setOnClickListener(new OnClickListener() {
@@ -244,13 +199,13 @@ public class draftActivity extends Activity{
 			
 			@Override
 			public void onClick(View arg0) {
-				/*第一次按键的时候，存储图片*/
-				if(temp_left==0){
-					d_v.savaThread();
-				}
+				
 				
 				/*将屏幕的计数改变，但是暂时不显示bitmap的内容*/
 				int current_num=Integer.parseInt(draft_current.getText().toString())-1;
+				if(current_num!=0){
+					saveThreadJudge();
+				}
 				if(current_num>=1){
 					draft_current.setText(current_num+"");
 					temp_left++;   //用来计数移动了多少位置
@@ -261,26 +216,13 @@ public class draftActivity extends Activity{
 				}
 				
 				
-				/*当手指释放一秒钟的时候，显示bitmap的内容*/
-				timer.cancel();
-				timer = new Timer(); 
-	    		timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						startthread=new startThread(LEFT,handler);
-						new Thread(startthread).start();
-					}
-				}, 1000);
+				showScreenContent();
 				
 	    		
 				//保存当前状态
 				currentState(currentState);
 			}
 		});
-		
-		
-		
-	
 		
 		//查看right草稿纸
 		right_button.setOnClickListener(new OnClickListener() {
@@ -290,36 +232,21 @@ public class draftActivity extends Activity{
 				int current_num=Integer.parseInt(draft_current.getText().toString())+1;
 				
 				int all_num=Integer.parseInt(draft_all.getText().toString());
+				
 				//没有增加，只是简单的切换到右边的bitmap
 				if(current_num<=all_num){
-//					if(d_v.rightButton())
-//						draft_current.setText(current_num+"");
-					if(temp_right==0){
-						d_v.savaThread();
-					}
-					
+					saveThreadJudge();
 					/*将屏幕的计数改变，但是暂时不显示bitmap的内容*/
 					draft_current.setText(current_num+"");
 					temp_right++;   //用来计数移动了多少位置
 					
+					showScreenContent();
 					
-					/*当手指释放一秒钟的时候，显示bitmap的内容*/
-					timer.cancel();
-					timer = new Timer(); 
-		    		timer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							startthread=new startThread(RIGHT,handler);
-							new Thread(startthread).start();
-						}
-					}, 1000);
 					
 				//新增加一个草稿纸
 				}else{ 
 					//当第一次点击的时候保存当前图片
-					if(temp_add==0){
-						d_v.savaThread();
-					}
+					saveThreadJudge();
 					
 					/*判断到了第几张图片了*/
 					temp_add++;
@@ -329,16 +256,7 @@ public class draftActivity extends Activity{
 					draft_all.setText(add_all_num+"");
 					
 					
-					/*手指离开一点时间后，加载或者创建bitmap的内容*/
-					timer.cancel();
-					timer = new Timer(); 
-					timer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							startthread=new startThread(ADD,handler);
-							new Thread(startthread).start();
-						}
-					}, 1000);
+					showScreenContent();
 				}
 				
 				
@@ -346,6 +264,131 @@ public class draftActivity extends Activity{
 				currentState(currentState);
 			}
 		});
+	}
+	
+	public void saveThreadJudge(){
+		/*第一次按键的时候，存储图片*/
+		if(temp_left==0 && temp_right==0 && temp_add==0){
+			d_v.savaThread();
+		}
+		
+	}
+	
+	/**
+	 * 接收到向左or向右线程的反馈结果
+	 */
+	final Handler handler=new Handler(){
+		 public void handleMessage(Message msg) {
+			Bundle b = msg.getData();
+			int time = b.getInt("type");
+			d_v.setVisibility(View.VISIBLE);
+			switch (time) {
+			case ADD:
+				Log.i("", "handler add in");
+				try {
+					if(d_v.addButton(temp_move)){
+						temp_add=0;
+						temp_right=0;
+						temp_left=0;
+						temp_move=0;
+						Log.i("mentalwubingchao", "handler add success");
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					Log.i("mentalwubingchao", "ADD 创建失败 ");
+				}
+				break;
+			case LEFT:
+				if(d_v.leftButton(-temp_move)){
+					temp_add=0;
+					temp_right=0;
+					temp_left=0;
+					temp_move=0;
+					Log.i("mentalwubingchao", "handler leftmove success");
+				}
+				else{
+					Log.i("mentalwubingchao", "leftbutton读取错误");
+				}
+				break;
+				
+			case RIGHT:
+				d_v.max_bitmap_index=Integer.parseInt(draft_all.getText().toString());
+				if(d_v.rightButton(temp_move)){
+					temp_add=0;
+					temp_right=0;
+					temp_left=0;
+					temp_move=0;
+					Log.i("mentalwubingchao", "handler rightmove success");
+				}
+				else{
+					Log.i("mentalwubingchao", "rightbutton读取错误");
+				}
+				break;
+				
+			case NONE:
+				if(d_v.moveToCurrentPosition()==true){
+					temp_add=0;
+					temp_right=0;
+					temp_left=0;
+					temp_move=0;
+					Log.i("mentalwubingchao", "handler moveCurrent success");
+				}
+				break;
+			default:
+				break;
+			}
+		 }
+	};
+	
+	/**手指离开一段时间后，屏幕中从sd卡中加载内容
+	 * state_temp:1代表向右，2代表增加
+	 */
+	public void showScreenContent(){
+		/*当手指释放一秒钟的时候，显示bitmap的内容*/
+		int current_num=Integer.parseInt(draft_current.getText().toString());
+		int all_num=Integer.parseInt(draft_all.getText().toString());
+		//d_v.setClickable(false);
+		d_v.setVisibility(View.INVISIBLE);
+		if(current_num==all_num){
+			state=2;
+		}
+		else{
+			state=1;
+		}
+		timer.cancel();
+		timer = new Timer(); 
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				//d_v.setClickable(true);
+				Log.i("mentalwubingchao", "run is start");
+				temp_move=temp_right+temp_add-temp_left;//大于等于0表示想右移动
+				Log.i("mentalwubingchao", "really move "+temp_move+" steps");
+				if(temp_move==0){
+					//do nothing 
+					startthread=new startThread(NONE,handler);
+					new Thread(startthread).start();
+				}
+				else if(temp_move<0){
+					startthread=new startThread(LEFT,handler);
+					new Thread(startthread).start();
+					Log.i("mentalwubingchao", "step into leftmove");
+				}
+				else {
+					if(state==1){
+						startthread=new startThread(RIGHT,handler);
+						new Thread(startthread).start();
+						Log.i("mentalwubingchao", "step into rightmove");
+					}
+					else if(state==2){
+						startthread=new startThread(ADD,handler);
+						new Thread(startthread).start();
+						Log.i("mentalwubingchao", "step into addmove");
+					}
+				}
+			}
+		}, 1000);
 	}
 	
 	 /**

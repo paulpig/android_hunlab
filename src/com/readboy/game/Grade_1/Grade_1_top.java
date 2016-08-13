@@ -67,11 +67,12 @@ public class Grade_1_top extends GameActivity implements Watcher{
 	 }
 	
 	protected void onDestroy() {
-		Log.i("lalala","top1_destory");
+		super.onDestroy();
+		Log.i("mentalcalculation","activity top1_destory");
         stopThread=true;
         count_down_thread.setTag(stopThread);
         supply_project_thread.setTag(stopThread);
-        super.onDestroy();
+       
 	}
 	
 	

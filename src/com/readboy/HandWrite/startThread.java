@@ -3,6 +3,7 @@ package com.readboy.HandWrite;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class startThread implements Runnable{
 
@@ -16,6 +17,7 @@ public class startThread implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		 Log.i("mentalwubingchao", "thread is start running");
 		 Message message = new Message(); 
 		 Bundle bundle=new Bundle();
 		 bundle.putInt("type",type);

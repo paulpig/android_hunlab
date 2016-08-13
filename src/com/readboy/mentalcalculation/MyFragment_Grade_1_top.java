@@ -96,17 +96,29 @@ public class MyFragment_Grade_1_top extends Fragment {
 	   refreshData();
 	   //得到关于实现粉色的数据
 	   getData();
-	   if(show_num==-1)
-		   setAllBlue();
-	   else{
-		   setAllBlue();
-		   setStartColor(show_num);
-	   }
+	   judgeIsAllBlue();
 	   return view;
 	  }
 
 	  
-	  public void init(){
+	  
+	 /**判断是否设置成全部蓝色
+	 * 
+	 */
+	public void judgeIsAllBlue(){
+		 if(show_num==-1)
+			   setAllBlue();
+		   else{
+			   setAllBlue();
+			   setStartColor(show_num);
+		   }
+	 }
+	 
+	 
+	  /**初始化操作
+	 * 
+	 */
+	public void init(){
 		  tv1=(view)view.findViewById(R.id.grade_1_top_11);
 		  tv1.setText(intent_content[0]);
 		  tv2=(view)view.findViewById(R.id.grade_1_top_12);
@@ -152,7 +164,10 @@ public class MyFragment_Grade_1_top extends Fragment {
 		  
 	  }
 	  
-	  public void ListenEvent(){
+	  /**每个按钮设置监听器
+	 * 
+	 */
+	public void ListenEvent(){
 		  tv1.setOnClickListener(new OnClickListener() {
 				public void onClick(View arg0) {
 					intentToGame(intent_content[0],ADDINFIVE);     
@@ -258,8 +273,13 @@ public class MyFragment_Grade_1_top extends Fragment {
 	  }
 	  
 	  
-	  /*重新从文件中读取最大值*/
-	  public void setGrade(view tv,int type){
+	  
+	  /**
+	   * 从xml文件中读取到最佳成绩
+	 * @param tv：屏幕上的某个模块
+	 * @param type:模块对应的编号
+	 */
+	public void setGrade(view tv,int type){
 		String name="test";
 		String intent_type="10"+type;   //不同年级的修改
 	  	SharedPreferences sharedPreferences= getActivity().getSharedPreferences(name, 
@@ -270,8 +290,13 @@ public class MyFragment_Grade_1_top extends Fragment {
 	  
 	  
 	  
-	  //设置星星的个数
-	  public void judgeGrade(int topGrade,view tv){
+	  
+	  /**
+	   * 设置模块的星星个数
+	 * @param topGrade
+	 * @param tv
+	 */
+	public void judgeGrade(int topGrade,view tv){
 		  if(topGrade/20 <6)
 			  tv.setStarNum((int)(topGrade/20));
 		  else{
@@ -281,8 +306,12 @@ public class MyFragment_Grade_1_top extends Fragment {
 	  
 	  
 	  
-	  /*跳转到游戏界面*/
-	  public void intentToGame(String content_intent,int type){
+	
+	  /**转跳到游戏中，同时接受游戏的反馈值
+	 * @param content_intent
+	 * @param type
+	 */
+	public void intentToGame(String content_intent,int type){
 		  setAllBlue();
 		  Intent intent = new Intent();  
           intent.setClass(getActivity(), Grade_1_top.class);  
@@ -294,117 +323,95 @@ public class MyFragment_Grade_1_top extends Fragment {
 	  
 	  
 	  
-	 /*接受下一个界面返回的值*/
+	 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
+	 */
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.i("mentalcalculation", "onActivity()_grade_top_1");
-		//show_num=requestCode; 
+		Log.i("mentalcalculation", "MyFragment_grade_top_1  get result from GameActivity");
 		//设置文件中数据
-		
-		
-		setData(requestCode);
-		
-		
-		
+		setData(requestCode);	
 		switch(requestCode){
 			case ADDINFIVE:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv1,ADDINFIVE);
 				tv1.setColor(true);
 				break;
 			case SUBINFIVE:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv2,SUBINFIVE);
 				tv2.setColor(true);
 				break;
-			case ZEROONE:
-				Log.i("lalala", "onActivity().in");
+			case ZEROONE: 
 				setGrade(tv3,ZEROONE);
 				tv3.setColor(true);
 				break;
 			case ZERTWO:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv4,ZERTWO);
 				tv4.setColor(true);
 				break;
 			case ADDINFIVEANDSIX:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv5,ADDINFIVEANDSIX);
 				tv5.setColor(true);
 				break;
-			case ADDFOREIGHT:
-				Log.i("lalala", "onActivity().in");
+			case ADDFOREIGHT: 
 				setGrade(tv6,ADDFOREIGHT);
 				tv6.setColor(true);
 				break;
 			case ADDFORNINE:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv7,ADDFORNINE);
 				tv7.setColor(true);
 				break;
 			case ADDINNINE:
-				Log.i("lalala", "onActivity().in");
+				 
 				setGrade(tv8,ADDINNINE);
 				tv8.setColor(true);
 				break;
-			case ADDFORTEN:
-				Log.i("lalala", "onActivity().in");
+			case ADDFORTEN: 
 				setGrade(tv9,ADDFORTEN);
 				tv9.setColor(true);
 				break;
 			case UNKOWNNUM:
-				Log.i("lalala", "onActivity().in");
+				 
 				setGrade(tv10,UNKOWNNUM);
 				tv10.setColor(true);
 				break;
 			case CONTINUEADD:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv11,CONTINUEADD);
 				tv11.setColor(true);
 				break;
-			case CONTINUESUD:
-				Log.i("lalala", "onActivity().in");
+			case CONTINUESUD: 
 				setGrade(tv12,CONTINUESUD);
 				tv12.setColor(true);
 				break;
-			case ADDTHENSUB:
-				Log.i("lalala", "onActivity().in");
+			case ADDTHENSUB: 
 				setGrade(tv13,ADDTHENSUB);
 				tv13.setColor(true);
 				break;
 			case SUBTHENADD:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv14,SUBTHENADD);
 				tv14.setColor(true);
 				break;
 			case TENADD:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv15,TENADD);
 				tv15.setColor(true);
 				break;
 			case ADDFORTWI:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv16,ADDFORTWI);
 				tv16.setColor(true);
 				break;
 			case ADDNAME:
-				Log.i("lalala", "onActivity().in");
 				setGrade(tv17,ADDNAME);
 				tv17.setColor(true);
 				break;
-			case NINEADDWHAT:
-				Log.i("lalala", "onActivity().in");
+			case NINEADDWHAT: 
 				setGrade(tv18,NINEADDWHAT);
 				tv18.setColor(true);
 				break;
-			case SEVENEIGHT:
-				Log.i("lalala", "onActivity().in");
+			case SEVENEIGHT: 
 				setGrade(tv19,SEVENEIGHT);
 				tv19.setColor(true);
 				break;
-			case FIVETOTWO:
-				Log.i("lalala", "onActivity().in");
+			case FIVETOTWO: 
 				setGrade(tv20,FIVETOTWO);
 				tv20.setColor(true);
 				break;
@@ -412,8 +419,10 @@ public class MyFragment_Grade_1_top extends Fragment {
 		}
 	}
 	  
-	 //进入界面之后的更新星星的个数
-	 public  void refreshData(){
+	 /**
+	 * 刷新每个模块星星的个数
+	 */
+	public  void refreshData(){
 		 setGrade(tv1,ADDINFIVE);
 		 setGrade(tv2,SUBINFIVE);
 		 setGrade(tv3,ZEROONE);
