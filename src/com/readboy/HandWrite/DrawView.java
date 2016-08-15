@@ -127,6 +127,7 @@ public class DrawView extends View implements Watched
 	@SuppressLint("DrawAllocation") @Override
 	public void onDraw(Canvas canvas)
 	{
+		Log.i("mentalwubingchao", "on draw(drawview)");
 		Paint bmpPaint = new Paint();
 		canvas.drawBitmap(cacheBitmap, 0, 0, bmpPaint);
 		canvas.drawPath(path, paint);

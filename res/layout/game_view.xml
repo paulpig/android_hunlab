@@ -150,7 +150,6 @@
         android:layout_height="200dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="500dp"
-        android:background="@drawable/animation_list_filling_success"
         android:visibility="invisible" />
    
     </RelativeLayout>

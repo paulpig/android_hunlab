@@ -70,7 +70,8 @@ public  abstract class GameActivity  extends Activity{
 	protected DraftView draft_view;
 	protected RelativeLayout liner;
 	protected static final int COMPLETED = 0;
-	protected AnimationDrawable animation;
+	//protected AnimationDrawable animation;
+	costomAnimation costom_animation;
 	protected ImageView mImageViewFilling = null;
 	protected Boolean correct;
 	protected int time_temp;
@@ -85,7 +86,13 @@ public  abstract class GameActivity  extends Activity{
 	boolean isScreenOn=true;//判断屏幕亮暗
 	private PlaySound playSound;
 	int successOrFail=-1;
-    
+	final int SUCCESS=100;
+	final int FAIL=101;
+	private int durationTime;
+	private int stayAnimationSuccessTime;
+	private int stayAnimationFailTime;
+	private List<Integer> resourceIdListSuccess=new ArrayList<Integer>();//存放成功图片id的list
+	private List<Integer> resourceIdListFail=new ArrayList<Integer>();//存放失败图片id的list
 	final protected int []drawOfGame={10,20,30,400,500,600,700,800,900,1000};
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +116,7 @@ public  abstract class GameActivity  extends Activity{
 
 	protected void onPause(){
 		    super.onPause();
-		    freeAnimationDrawable(animation);
+		    //freeAnimationDrawable(animation);
 		    /*将结果反馈给上一个界面*/
 		    Intent intent=new Intent();
 	        intent.putExtra("Type",type);
@@ -226,6 +233,7 @@ public  abstract class GameActivity  extends Activity{
 		Alock=new Object();
 	    backToStartView();
         draftButton();
+        addResource();
 	}
 	
 	
@@ -458,52 +466,91 @@ public  abstract class GameActivity  extends Activity{
      */
     @SuppressWarnings("deprecation")
 	public void Animal(boolean choosing){
-    	int duration=0;  // duration是记录第一个动画播放的总时间
     	if(choosing==true){
     		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
     		mImageViewFilling.setVisibility(0);
     		successOrFail=1;
-    		Resources resources=getBaseContext().getResources();
-    		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_success);
-    		mImageViewFilling.setBackgroundDrawable(right_b);
-    		animation=((AnimationDrawable) mImageViewFilling.getBackground());
+    		durationTime=300;
+    		//Resources resources=getBaseContext().getResources();
+    		//Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_success);
+    		//mImageViewFilling.setBackgroundDrawable(right_b);
+    		//animation=((AnimationDrawable) mImageViewFilling.getBackground());
+    		costom_animation.setAnimation(mImageViewFilling, resourceIdListSuccess);
     		UpSuccessAndGrade();
     	}
     	else{
     		mImageViewFilling = (ImageView) findViewById(R.id.imageview_animation_list_filling);
     		mImageViewFilling.setVisibility(0);
     		successOrFail=2;
-    		Resources resources=getBaseContext().getResources();
-    		Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_fail);
-    		mImageViewFilling.setBackgroundDrawable(right_b);
-    		animation=((AnimationDrawable) mImageViewFilling.getBackground());
+    		durationTime=100;
+    		//Resources resources=getBaseContext().getResources();
+    		//Drawable right_b = resources.getDrawable(R.drawable.animation_list_filling_fail);
+    		//mImageViewFilling.setBackgroundDrawable(right_b);
+    		//animation=((AnimationDrawable) mImageViewFilling.getBackground());
+    		costom_animation.setAnimation(mImageViewFilling, resourceIdListFail);
     	}
     	
-    	//在异步线程中执行启动的方法
-    	mImageViewFilling.post(new Runnable() {     
-    		                    @Override
-    		                    public void run() {
-    		                        // TODO Auto-generated method stub
-    		                    	animation.start();   //启动动画
-    		                    	playSound.PlaySoundSuccessOrFail(successOrFail);
-    		                    	dv.clearScreen();
-    	                   }
-    		                });
-    	for(int i=0;i<animation.getNumberOfFrames();i++){
-            duration+=animation.getDuration(i);     //计算动画播放的时间
-         }
+//    	//在异步线程中执行启动的方法
+//    	mImageViewFilling.post(new Runnable() {     
+//    		                    @Override
+//    		                    public void run() {
+//    		                        // TODO Auto-generated method stub
+//    		                    	costom_animation.start(false,1000);   //启动动画
+//    		                    	playSound.PlaySoundSuccessOrFail(successOrFail);
+//    		                    	dv.clearScreen();
+//    	                   }
+//    		                });
+//    	for(int i=0;i<animation.getNumberOfFrames();i++){
+//            duration+=animation.getDuration(i);     //计算动画播放的时间
+//         }
+    	
+    	
+    	costom_animation.start(false,durationTime);   //启动动画
+    	playSound.PlaySoundSuccessOrFail(successOrFail);
+    	dv.clearScreen();
+    	
     	
     	Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
            public void run() {
-           	 animation.stop();
+        	 costom_animation.stop();
            	 playSound.StopSoundSuccessOrFail(successOrFail);
            	 mImageViewFilling.setVisibility(4);
 				 synchronized (Alock) {  
 					 Alock.notifyAll();
                   }      
             }
-       }, duration);
+       }, stayAnimationSuccessTime);
+    }
+    
+    
+    void addResource(){
+    		costom_animation=new costomAnimation();
+			resourceIdListSuccess.add(R.drawable.success1);
+			resourceIdListSuccess.add(R.drawable.success2);
+			resourceIdListSuccess.add(R.drawable.success3);
+			resourceIdListSuccess.add(R.drawable.success4);
+			resourceIdListSuccess.add(R.drawable.success5);
+			resourceIdListSuccess.add(R.drawable.success6);
+			stayAnimationSuccessTime=6*300;
+			resourceIdListFail.add(R.drawable.fail1);
+			resourceIdListFail.add(R.drawable.fail2);
+			resourceIdListFail.add(R.drawable.fail3);
+			resourceIdListFail.add(R.drawable.fail4);
+			resourceIdListFail.add(R.drawable.fail5);
+			resourceIdListFail.add(R.drawable.fail6);
+			resourceIdListFail.add(R.drawable.fail7);
+			resourceIdListFail.add(R.drawable.fail8);
+			resourceIdListFail.add(R.drawable.fail9);
+			resourceIdListFail.add(R.drawable.fail10);
+			resourceIdListFail.add(R.drawable.fail11);
+			resourceIdListFail.add(R.drawable.fail12);
+			resourceIdListFail.add(R.drawable.fail13);
+			resourceIdListFail.add(R.drawable.fail14);
+			resourceIdListFail.add(R.drawable.fail15);
+			resourceIdListFail.add(R.drawable.fail16);
+			resourceIdListFail.add(R.drawable.fail17);
+			stayAnimationFailTime=17*100;
     }
     
     

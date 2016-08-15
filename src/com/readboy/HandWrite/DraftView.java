@@ -192,7 +192,7 @@ public class DraftView extends View
 	@SuppressLint("DrawAllocation") @Override
 	public void onDraw(Canvas canvas)
 	{
-		Log.i("mentalwubingchao", "who draw bitmap");
+		Log.i("mentalwubingchao", "who draw bitmap(draftview)");
 		super.onDraw(canvas);  
 		if(is_clear==true){
 			canvas.drawPath(path, new Paint());
