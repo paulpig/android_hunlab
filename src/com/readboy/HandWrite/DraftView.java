@@ -64,7 +64,8 @@ public class DraftView extends View
 	boolean isReadBitmapFromSD[]=new boolean[40];
 	//ArrayList<integer> files_deleted = new ArrayList<integer>();  //保存删除的草稿本下标
 	HashSet<Integer> files_deleted = new HashSet<Integer>(); 
-	Object Alock=new Object();
+	//Object Alock=new Object();
+	Object AllAlock[]=new Object[40];
 	@SuppressWarnings("deprecation")
 	public DraftView(Context context, AttributeSet set) throws IOException
 	{
@@ -81,6 +82,7 @@ public class DraftView extends View
 		for(int i=1;i<=40;i++){
 			is_detele[i-1]=i;
 			isReadBitmapFromSD[i-1]=false;
+			AllAlock[i-1]=new Object();
 		}
 		is_erase=false;
 		current_path=0;
@@ -309,13 +311,9 @@ public class DraftView extends View
 		is_write=true;
 		rePostion();
 		
+		GetBitMapCommentWay();
 		
-		try {
-			GetOrBuildFromSD(current_file_name);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		 Log.i("mentalwubingchao","leftbutton result ondraw");
 		invalidate();
 		
@@ -331,37 +329,7 @@ public class DraftView extends View
 	 * @return
 	 */
 	public boolean moveToCurrentPosition(){
-		Thread thread=new Thread(new Runnable()  
-	    {  
-	        @Override  
-	        public void run()
-	        {
-	        	Log.i("mentalwubingchao", "isReadBitmapFromSD is "+isReadBitmapFromSD[current_file_name]  + "currentNum is "+ current_file_name);
-	        	if(isReadBitmapFromSD[current_file_name]==false){
-		        	//先将该线程锁住，直到有储存完毕之后，再来触发(读取比写先完成)
-		        	synchronized(Alock) {
-						try {
-							Alock.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						}
-	        	}
-	        	
-	            	try {
-	            		Log.i("mentalwubingchao", "get bitmap is start");
-	        			GetOrBuildFromSD(current_file_name);
-	        			
-	        		} catch (IOException e) {
-	        			// TODO Auto-generated catch block
-	        			e.printStackTrace();
-	        		}
-					//saveThreadNum--;
-		
-				//currentBitmap.recycle(); 
-	        }  
-	    });  
-	    thread.start();
+		GetBitMapCommentWay();
 		return true;
 	}
 	
@@ -387,12 +355,8 @@ public class DraftView extends View
 		is_write=true;
 		rePostion();
 		
-		try {
-			GetOrBuildFromSD(current_file_name);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		GetBitMapCommentWay();
+		
 		
 		//Log.i("mentalwubingchao", "find index rightbutton is ok");
 		 Log.i("mentalwubingchao","rightbutton result ondraw");
@@ -400,6 +364,51 @@ public class DraftView extends View
 		return true;
 	}
 	
+	
+	/**
+	 * 左、右、回到原位置都调用此方法获取bitmap,但是添加不用加锁。
+	 */
+	public void GetBitMapCommentWay(){
+		
+		String path = Environment.getExternalStorageDirectory().getPath() +"/BitMapCacheFiles/"+current_file_name;
+    	File file = new File(path);
+    	
+    	if(file.exists()){//文件存在的时候要上锁
+    		Log.i("mentalwubingchao", "isReadBitmapFromSD is "+isReadBitmapFromSD[current_file_name]  + "currentNum is "+ current_file_name);
+    		if(isReadBitmapFromSD[current_file_name]==false){
+    	    	//先将该线程锁住，直到有储存完毕之后，再来触发(读取比写先完成)
+    	    	synchronized(AllAlock[current_file_name]) {
+    				try {
+    					AllAlock[current_file_name].wait();
+    				} catch (InterruptedException e) {
+    					e.printStackTrace();
+    				}
+    				}
+    		}
+    		
+    	    	try {
+    	    		Log.i("mentalwubingchao", "get bitmap is start");
+    				GetOrBuildFromSD(current_file_name);
+    				
+    			} catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    				//return false;
+    			}
+    	}
+    	else{//文件不存在的时候，不需要上锁，不会出现null的情况
+    		try {
+	    		Log.i("mentalwubingchao", "get bitmap is start");
+				GetOrBuildFromSD(current_file_name);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				//return false;
+			}
+    	}
+		
+	}
 	
 	//添加按钮
 	public boolean addButton(int temp_add) throws IOException{ 
@@ -528,8 +537,8 @@ public class DraftView extends View
 					Log.i("mentalwubingchao", "save bitmap is done "+temp_index);
 					Log.i("mentalwubingchao", "current_file_name is  "+current_file_name);
 					isReadBitmapFromSD[temp_index]=true;
-					 synchronized (Alock) {  
-						 Alock.notify();
+					 synchronized (AllAlock[temp_index]) {  
+						 AllAlock[temp_index].notify();
 	                  }						//saveThreadNum--;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
